@@ -2,14 +2,12 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TenantIdentifierKey, TokenHeaderKey, TokenPrefix } from 'src/app/constants/constants';
+import { mergeRoutePaths } from './route.helper';
 
 @Injectable({ providedIn: 'root' })
 export class BaseDataService {
 
-    baseUrl = 'https://localhost:7192/api/';
-
-    constructor() {
-    }
+    baseUrl = 'https://localhost:7061/api/';
 
     protected getHttpHeaders(isMultiPart: boolean) {
         const headers = new HttpHeaders({
@@ -47,5 +45,16 @@ export class BaseDataService {
         httpOptions.headers = headers;
         return httpOptions;
     }
+
+    /**
+   * @param url specific url endpoint like (users/sign_in)
+   * @returns full api url like http://test-api/v1/api/users/sign_in
+   */
+  protected getFullApiUrl(module: string, url: string,): string {
+    const apiBaseUrl = this.baseUrl;
+    return mergeRoutePaths([apiBaseUrl, module, url]);
+    //return mergeRoutePaths([apiBaseUrl,module, AppRouteUrlConstant.ROUTE_API, apiVersion, url]);
+
+  }
 
 }
