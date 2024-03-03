@@ -16,7 +16,7 @@ export class AppMenuComponent implements OnInit {
     public tenantService: TenantService) { }
 
   ngOnInit() {
-    this.initMenu('');
+    // this.initMenu('');
     console.log('ass1-->');
     this.tenantService
       .getCurrentTenantIdentifier()
@@ -39,7 +39,13 @@ export class AppMenuComponent implements OnInit {
           { label: 'Faculties', icon: 'pi pi-fw pi-users', routerLink: ['/', tenantIdentifier, 'faculties'] }
         ]
       },
-
+      {
+        label: 'Faculty View',
+        items: [
+          { label: 'Manage Programs', icon: 'pi pi-fw pi-home', routerLink: ['/', tenantIdentifier, 'manage-programs'] },
+          { label: 'Course Archive', icon: 'pi pi-fw pi-list', routerLink: ['/', tenantIdentifier, 'manage-courses'] },
+        ]
+      },
       {
         label: 'UI Components',
         items: [

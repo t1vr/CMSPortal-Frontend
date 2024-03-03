@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { AuthDataService } from './auth.data.service';
 import { LoginRequestModel, LoginResponseModel, SignUpTenantRequestModel, SignUpTenantResponseModel } from 'src/app/models/tenant.model';
 import { LocalStorageService } from './local.storage.service';
@@ -14,7 +14,9 @@ export class AuthService {
 
   login(loginRequestModel: LoginRequestModel): Observable<LoginResponseModel> {
     this.localStorageService.setTenantIdentifier(loginRequestModel.tenantIdentifier);
-    return this.authDataService.login(loginRequestModel);
+    return this.authDataService.login(loginRequestModel).pipe(tap(x => {
+      this.localStorageService.setUserToken(x.token);
+    }));
   }
 
 }

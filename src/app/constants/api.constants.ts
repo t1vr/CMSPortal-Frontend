@@ -17,7 +17,7 @@ export class AuthApiConstants {
 }
 
 export class ProgramApiConstants {
-  public static readonly PROGRAM_MODULE = "program"
+  public static readonly PROGRAM_MODULE = "programs"
   public static readonly CREATE_ENDPOINT = "";
   public static readonly UPDATE_ENDPOINT = "";
   public static readonly GET_ALL_ENDPOINT = "";

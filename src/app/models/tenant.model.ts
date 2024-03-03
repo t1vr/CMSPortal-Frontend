@@ -1,3 +1,5 @@
+import { FormControl } from "@angular/forms";
+
 //Tenant
 export class SignUpTenantRequestModel {
   identifier!: string;
@@ -21,7 +23,7 @@ export interface LoginRequestModel {
 }
 
 export interface LoginResponseModel {
-  userResponse:AppUser
+  userResponse: AppUser
   token: string;
   refreshToken: string;
   refreshTokenExpiryTime: string;
@@ -62,4 +64,39 @@ export interface Tenant extends BaseAuditableResponse {
   adminEmail: string;
   isActive: boolean;
   validUpTo: Date;
+}
+
+
+export class ProgramItem {
+  name: string;
+  description: string;
+}
+
+
+export class CreateProgramRequest {
+  name: string;
+  description: string;
+}
+
+
+export interface CourseForm {
+  title: FormControl<string>;
+  creditHour: FormControl<number>;
+  description: FormControl<string>;
+  courseCode: FormControl<string>;
+}
+
+export interface CourseItem {
+  id: number;
+  courseCode: string;
+  title: string;
+  creditHour: number;
+  description: string
+}
+
+export interface CreateCourseRequest {
+  courseCode: string;
+  name: string;
+  creditHour: number;
+  semester: string;
 }
