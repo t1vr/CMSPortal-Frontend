@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
 import { CreateCourseRequest, BaseResponse, CourseItem } from 'src/app/models/tenant.model';
 import { CourseDataService } from './course.data.service';

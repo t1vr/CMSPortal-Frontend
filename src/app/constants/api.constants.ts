@@ -31,3 +31,11 @@ export class CourseApiConstants {
   public static readonly DELETE_ENDPOINT = "";
   public static readonly GET_ALL_ENDPOINT = "";
 }
+
+export class CurriculumApiConstants {
+  public static readonly COURSE_MODULE = "curriculum"
+  public static readonly CREATE_ENDPOINT = "";
+  public static readonly UPDATE_ENDPOINT = "";
+  public static readonly DELETE_ENDPOINT = "";
+  public static readonly GET_ALL_ENDPOINT = "";
+}

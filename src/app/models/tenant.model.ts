@@ -68,6 +68,7 @@ export interface Tenant extends BaseAuditableResponse {
 
 
 export class ProgramItem {
+  id: number;
   name: string;
   description: string;
 }
@@ -99,4 +100,24 @@ export interface CreateCourseRequest {
   name: string;
   creditHour: number;
   semester: string;
+}
+
+
+export class CurriculumItem {
+  id: number;
+  title: string;
+  description: string;
+  programs: ProgramItem[];
+}
+
+export class CreateCurriculumRequest {
+  title: string;
+  description: string;
+  programs:string[];
+}
+
+export interface CurriculumForm {
+  title: FormControl<string>;
+  description: FormControl<string>;
+  programs:FormControl<string[]>
 }

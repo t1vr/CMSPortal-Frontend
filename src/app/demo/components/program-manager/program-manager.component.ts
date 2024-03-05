@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BaseResponse, ProgramItem, Tenant } from 'src/app/models/tenant.model';
+import { ProgramItem } from 'src/app/models/tenant.model';
 import { ProgramService } from '../../service/program.service';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProgramFormComponent } from '../program-form/program-form.component';
-import { ActivatedRoute, Params } from '@angular/router';
-import { TenantService } from '../../service/tenant.service';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-program-manager',
@@ -22,9 +18,7 @@ export class ProgramManagerComponent implements OnInit {
 
   constructor(private programService: ProgramService,
     private dialogService: DialogService,
-    private messageService: MessageService,
-    private acitvatedRoute: ActivatedRoute,
-    private tenantService: TenantService) { }
+    private messageService: MessageService) { }
 
   ngOnInit() {
     // this.tenantService.getCurrentTenantIdentifier()

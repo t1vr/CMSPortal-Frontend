@@ -1,7 +1,6 @@
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
-import { LocalStorageService } from '../demo/service/local.storage.service';
 import { TenantService } from '../demo/service/tenant.service';
 
 @Component({
@@ -44,6 +43,8 @@ export class AppMenuComponent implements OnInit {
         items: [
           { label: 'Manage Programs', icon: 'pi pi-fw pi-home', routerLink: ['/', tenantIdentifier, 'manage-programs'] },
           { label: 'Course Archive', icon: 'pi pi-fw pi-list', routerLink: ['/', tenantIdentifier, 'manage-courses'] },
+          { label: 'Manage Curriculums', icon: 'pi pi-fw pi-list', routerLink: ['/', tenantIdentifier, 'manage-curriculums'] },
+
         ]
       },
       {
