@@ -24,26 +24,17 @@ export class CourseManagerComponent implements OnInit {
 
   submitted: boolean = false;
 
-  statuses!: any[];
-
   courseForm: FormGroup<CourseForm>;
   selectedCourse: CourseForm;
+  courses: CourseItem[] = [];
 
   constructor(private fb: FormBuilder,
-    private productService: ProductService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private courseService: CourseService) { }
 
   ngOnInit() {
-    // this.productService.getProducts().then((data) => (this.products = data));
-    this.initForm();
-
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' }
-    ];
+    this.getAllCourses();
   }
 
 
@@ -56,41 +47,19 @@ export class CourseManagerComponent implements OnInit {
     });
   }
 
+  getAllCourses() {
+    this.courseService.getCourses().subscribe(x => {
+      if (x.data) {
+        this.courses = x.data;
+        console.log(this.courses)
+      }
+    })
+  }
+
   openNew() {
     this.product = {};
     this.submitted = false;
     this.productDialog = true;
-  }
-
-  deleteSelectedProducts() {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
-        this.selectedProducts = null;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-      }
-    });
-  }
-
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.productDialog = true;
-  }
-
-  deleteProduct(product: Product) {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + product.name + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.products = this.products.filter((val) => val.id !== product.id);
-        this.product = {};
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-      }
-    });
   }
 
   hideDialog() {
@@ -139,19 +108,6 @@ export class CourseManagerComponent implements OnInit {
     return id;
   }
 
-  getSeverity(status: string) {
-    switch (status) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warning';
-      case 'OUTOFSTOCK':
-        return 'danger';
-      default:
-        return "";
-    }
-  }
-
   submitForm(): void {
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
 
@@ -161,6 +117,8 @@ export class CourseManagerComponent implements OnInit {
         if (x.data) {
           this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
           this.hideDialog();
+          this.getAllCourses();
+
         }
       })
   }

@@ -9,6 +9,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { PanelModule } from 'primeng/panel';
+import { CourseUpsertComponent } from '../course-manager/course-upsert/course-upsert.component';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -20,6 +22,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     ButtonModule,
     CardModule,
+    PanelModule,
     DynamicDialogModule,
     MultiSelectModule,
     RouterModule.forChild(routes),

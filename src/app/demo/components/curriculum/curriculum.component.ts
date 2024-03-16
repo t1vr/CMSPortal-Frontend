@@ -24,12 +24,21 @@ export class CurriculumComponent implements OnInit {
 
   ngOnInit() {
     this.getAllPrograms();
+    this.getAllCurriculums();
   }
 
   getAllPrograms() {
     this.programService.getAllPrograms().subscribe(x => {
       if (x.data) {
         this.programs = x.data;
+      }
+    })
+  }
+
+  getAllCurriculums() {
+    this.curriculumService.getAllCurriculums().subscribe(x => {
+      if (x.data) {
+        this.curriculums = x.data;
       }
     })
   }

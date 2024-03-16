@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CurriculumItem } from 'src/app/models/tenant.model';
 
 @Component({
@@ -7,7 +7,7 @@ import { CurriculumItem } from 'src/app/models/tenant.model';
   styleUrls: ['./curriculum-list.component.css']
 })
 export class CurriculumListComponent implements OnInit {
-  curriculums: CurriculumItem[] = [];
+  @Input() curriculums: CurriculumItem[] = [];
 
   constructor() { }
 

@@ -1,0 +1,7 @@
+::ng-deep .course-form .p-inputnumber {
+    width: 100%;
+}
+
+::ng-deep .course-form .p-editor-container {
+    margin-bottom: 1rem;
+}

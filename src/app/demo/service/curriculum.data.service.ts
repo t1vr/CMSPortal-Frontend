@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ProgramApiConstants } from "src/app/constants/api.constants";
+import { CurriculumApiConstants, ProgramApiConstants } from "src/app/constants/api.constants";
 import { BaseResponse, CurriculumItem, CreateCurriculumRequest } from "src/app/models/tenant.model";
 import { BaseDataService } from "./base.data.service";
 
@@ -14,15 +14,15 @@ export class CurriculumDataService extends BaseDataService {
 
   getAllCurriculums(): Observable<BaseResponse<CurriculumItem[]>> {
     return this.httpClient.get<BaseResponse<CurriculumItem[]>>(
-      this.getFullApiUrl(ProgramApiConstants.PROGRAM_MODULE, ProgramApiConstants.GET_ALL_ENDPOINT),
+      this.getFullApiUrl(CurriculumApiConstants.CURRICULUM_MODULE, ProgramApiConstants.GET_ALL_ENDPOINT),
       this.getHttpOptions(false, false, false)
     );
   }
 
-  createCurriculum(createProgramRequest: CreateCurriculumRequest): Observable<BaseResponse<CurriculumItem>> {
+  createCurriculum(createCurriculumRequest: CreateCurriculumRequest): Observable<BaseResponse<CurriculumItem>> {
     return this.httpClient.post<BaseResponse<CurriculumItem>>(
-      this.getFullApiUrl(ProgramApiConstants.PROGRAM_MODULE, ProgramApiConstants.CREATE_ENDPOINT),
-      createProgramRequest,
+      this.getFullApiUrl(CurriculumApiConstants.CURRICULUM_MODULE, ProgramApiConstants.CREATE_ENDPOINT),
+      createCurriculumRequest,
       this.getHttpOptions(false, true, false));
   }
 }

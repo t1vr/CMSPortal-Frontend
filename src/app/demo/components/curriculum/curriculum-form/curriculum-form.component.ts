@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { CurriculumService } from 'src/app/demo/service/curriculum.service';
-import { ProgramService } from 'src/app/demo/service/program.service';
 import { BaseResponse, CurriculumForm, CreateCurriculumRequest, CurriculumItem, ProgramItem } from 'src/app/models/tenant.model';
 
 @Component({
@@ -12,7 +11,6 @@ import { BaseResponse, CurriculumForm, CreateCurriculumRequest, CurriculumItem, 
   styleUrls: ['./curriculum-form.component.css']
 })
 export class CurriculumFormComponent implements OnInit {
-
   programs: ProgramItem[] = [];
   curriculumForm: FormGroup<CurriculumForm>;
 
@@ -21,21 +19,19 @@ export class CurriculumFormComponent implements OnInit {
     public messageService: MessageService,
     public dialogConfig: DynamicDialogConfig) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initForm();
     this.programs = this.dialogConfig.data;
     console.log(this.programs)
   }
 
-  initForm() {
+  initForm(): void {
     this.curriculumForm = this.fb.group<CurriculumForm>({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      programs: new FormControl([], Validators.required),
+      programIds: new FormControl([], Validators.required),
     });
   }
-
-
 
   onSubmitCurriculumForm(): void {
     this.curriculumService.createCurriculum(this.curriculumForm.value as CreateCurriculumRequest)

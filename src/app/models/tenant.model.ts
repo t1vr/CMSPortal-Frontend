@@ -102,6 +102,13 @@ export interface CreateCourseRequest {
   semester: string;
 }
 
+export interface UpdateCourseRequest {
+  courseCode: string;
+  title: string;
+  creditHour: number;
+  semester: string;
+}
+
 
 export class CurriculumItem {
   id: number;
@@ -113,11 +120,11 @@ export class CurriculumItem {
 export class CreateCurriculumRequest {
   title: string;
   description: string;
-  programs:string[];
+  programIds: number[];
 }
 
 export interface CurriculumForm {
   title: FormControl<string>;
   description: FormControl<string>;
-  programs:FormControl<string[]>
+  programIds: FormControl<number[]>
 }

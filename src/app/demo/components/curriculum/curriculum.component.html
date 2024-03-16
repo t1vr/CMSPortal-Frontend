@@ -1,9 +1,9 @@
 <p-card>
-  <div class="flex justify-content-between">
-    <span class="font-bold text-xl">Curriculums</span>
-    <p-button label="Add" [text]="true" [raised]="true" (click)="onClickCreateBtn()"></p-button>
-  </div>
-  <!-- <ng-container *ngFor="let program of curriculums">
+    <div class="flex justify-content-between">
+        <span class="font-bold text-xl">Curriculums</span>
+        <p-button label="Add" [text]="true" [raised]="true" (click)="onClickCreateBtn()"></p-button>
+    </div>
+    <!-- <ng-container *ngFor="let program of curriculums">
 
     <p-panel [toggleable]="true">
       <ng-template pTemplate="header">
@@ -22,4 +22,5 @@
       </p>
     </p-panel>
   </ng-container> -->
+    <app-curriculum-list [curriculums]="curriculums"></app-curriculum-list>
 </p-card>

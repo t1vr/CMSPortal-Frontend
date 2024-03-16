@@ -9,11 +9,14 @@ import { TableModule } from 'primeng/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { CourseUpsertComponent } from './course-upsert/course-upsert.component';
 
 const routes: Routes = [
-  { path: "", component: CourseManagerComponent }
-];
+  { path: "", component: CourseManagerComponent },
+  { path: 'create', component: CourseUpsertComponent },
+  { path: 'edit/:courseId', component: CourseUpsertComponent },
 
+];
 
 @NgModule({
   imports: [
@@ -27,6 +30,7 @@ const routes: Routes = [
     InputNumberModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [CourseManagerComponent]
+  declarations: [CourseManagerComponent,
+    CourseUpsertComponent]
 })
 export class CourseManagerModule { }
