@@ -92,7 +92,8 @@ export interface CourseItem {
   courseCode: string;
   title: string;
   creditHour: number;
-  description: string
+  description: string;
+  courseRevisionId: number;
 }
 
 export interface CreateCourseRequest {

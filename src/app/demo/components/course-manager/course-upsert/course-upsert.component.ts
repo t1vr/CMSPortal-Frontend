@@ -27,8 +27,8 @@ export class CourseUpsertComponent implements OnInit {
     this.courseId = this.activatedRoute.snapshot.paramMap.get('courseId');
     if (this.courseId)
       this.getCourseById(this.courseId);
-
   }
+
   initForm() {
     this.courseForm = this.fb.group<CourseForm>({
       title: new FormControl("", Validators.required),
