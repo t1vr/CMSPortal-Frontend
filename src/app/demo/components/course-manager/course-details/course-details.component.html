@@ -1,0 +1,26 @@
+<p-card class="course-content">
+    <div class="flex justify-content-end flex-column-reverse md:flex-row align-items-center">
+        <div class="flex flex-wrap justify-content-center md:justify-content-start gap-3 course-details-menu">
+            <p-button
+                (click)="onClickHistoryBtn()"
+                icon="pi pi-history"
+                label="History"
+                severity="primary"
+                size="small"
+            >
+                <!-- <i class="pi pi-history text-primary mr-2"></i>
+                <span class="text-900">History</span> -->
+            </p-button>
+            <p-button
+                icon="pi pi-pencil"
+                label="Edit"
+                severity="secondary"
+                size="small"
+            >
+                <!-- <i class="pi pi-history text-primary mr-2"></i>
+                <span class="text-900">History</span> -->
+            </p-button>
+        </div>
+    </div>
+    <span [innerHTML]="course?.description"></span>
+</p-card>

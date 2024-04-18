@@ -10,12 +10,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CourseUpsertComponent } from './course-upsert/course-upsert.component';
+import { MessagesModule } from 'primeng/messages';
+import { CourseDetailsComponent } from './course-details/course-details.component';
+import { CardModule } from 'primeng/card';
+import { CourseHistoryComponent } from './course-history/course-history.component';
+import { TimelineModule } from 'primeng/timeline';
+import { FieldsetModule } from 'primeng/fieldset';
+import { ListboxModule } from 'primeng/listbox';
+import { DropdownModule } from 'primeng/dropdown';
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
   { path: 'create', component: CourseUpsertComponent },
+  { path: ':courseId', component: CourseDetailsComponent },
   { path: 'edit/:courseId', component: CourseUpsertComponent },
-
+  { path: 'history/:courseId', component: CourseHistoryComponent },
 ];
 
 @NgModule({
@@ -29,8 +38,15 @@ const routes: Routes = [
     ReactiveFormsModule,
     InputNumberModule,
     RouterModule.forChild(routes),
+    MessagesModule,
+    CardModule,
+    TimelineModule,
+    FieldsetModule,
+    DropdownModule
   ],
   declarations: [CourseManagerComponent,
-    CourseUpsertComponent]
+    CourseUpsertComponent,
+    CourseDetailsComponent,
+    CourseHistoryComponent]
 })
 export class CourseManagerModule { }

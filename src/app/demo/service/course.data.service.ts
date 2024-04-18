@@ -9,8 +9,6 @@ import { BaseResponse, CourseItem, CreateCourseRequest, UpdateCourseRequest } fr
 @Injectable({ providedIn: "root" })
 export class CourseDataService extends BaseDataService {
 
-
-
   constructor(private httpClient: HttpClient) {
     super();
   }
@@ -21,7 +19,7 @@ export class CourseDataService extends BaseDataService {
       this.getHttpOptions(false, true, false));
   }
 
-  getCourseById(courseId: string): Observable<BaseResponse<CourseItem>> {
+  getCourseById(courseId: number): Observable<BaseResponse<CourseItem>> {
     return this.httpClient.get<BaseResponse<CourseItem>>(
       this.getFullApiUrl(CourseApiConstants.COURSE_MODULE, CourseApiConstants.GET_BY_ID_ENDPOINT + courseId),
       this.getHttpOptions(false, true, false));
@@ -34,11 +32,19 @@ export class CourseDataService extends BaseDataService {
       this.getHttpOptions(false, true, false));
   }
 
-  updateCourseById(courseId: string, updateCourseRequest: UpdateCourseRequest): Observable<BaseResponse<CourseItem>> {
+  updateCourseById(courseId: number, updateCourseRequest: UpdateCourseRequest): Observable<BaseResponse<CourseItem>> {
     return this.httpClient.put<BaseResponse<CourseItem>>(
       this.getFullApiUrl(CourseApiConstants.COURSE_MODULE, CourseApiConstants.UPDATE_ENDPOINT + courseId),
       updateCourseRequest,
       this.getHttpOptions(false, true, false));
   }
+
+  reviseCourseByCourseId(courseId: number): Observable<BaseResponse<CourseItem>> {
+    return this.httpClient.post<BaseResponse<CourseItem>>(
+      this.getFullApiUrl(CourseApiConstants.COURSE_MODULE, CourseApiConstants.REVISE_ENDPOINT + courseId),
+      null,
+      this.getHttpOptions(false, true, false));
+  }
+
 
 }

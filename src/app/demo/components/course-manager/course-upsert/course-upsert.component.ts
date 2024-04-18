@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CourseService } from 'src/app/demo/service/course.service';
-import { BaseResponse, CourseForm, CourseItem, CreateCourseRequest, UpdateCourseRequest } from 'src/app/models/tenant.model';
+import { BaseResponse, CourseForm, CourseItem, CreateCourseRequest, CurriculumItem, UpdateCourseRequest } from 'src/app/models/tenant.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CurriculumService } from 'src/app/demo/service/curriculum.service';
 
 @Component({
   selector: 'app-course-upsert',
@@ -14,19 +15,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CourseUpsertComponent implements OnInit {
   courseForm: FormGroup<CourseForm>;
   course: CourseItem;
-  courseId: string;
+  courseId: number;
+  curriculums: CurriculumItem[] = [];
+
   constructor(private fb: FormBuilder,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
+    private curriculumService: CurriculumService,
     private courseService: CourseService,
     private router: Router,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.initForm();
-    this.courseId = this.activatedRoute.snapshot.paramMap.get('courseId');
+    this.courseId = this.activatedRoute.snapshot.paramMap.get('courseId') as unknown as number;
     if (this.courseId)
       this.getCourseById(this.courseId);
+    this.getAllCurriculums();
   }
 
   initForm() {
@@ -35,10 +39,11 @@ export class CourseUpsertComponent implements OnInit {
       creditHour: new FormControl(null, Validators.required),
       description: new FormControl("", Validators.required),
       courseCode: new FormControl(""),
+      curriculumId: new FormControl(null)
     });
   }
 
-  getCourseById(courseId: string) {
+  getCourseById(courseId: number) {
     this.courseService.getCourseById(courseId).subscribe(x => {
       if (x.data) {
         this.course = x.data;
@@ -58,8 +63,7 @@ export class CourseUpsertComponent implements OnInit {
     this.courseService.updateCourseById(this.courseId, this.courseForm.value as UpdateCourseRequest)
       .subscribe((x: BaseResponse<CourseItem>) => {
         if (x.data) {
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-          this.router.navigate(['../../'], { relativeTo: this.activatedRoute });
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Saved as draft', life: 3000 });
         }
       });
   }
@@ -68,9 +72,16 @@ export class CourseUpsertComponent implements OnInit {
     this.courseService.createCourse(this.courseForm.value as CreateCourseRequest)
       .subscribe((x: BaseResponse<CourseItem>) => {
         if (x.data) {
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
           this.router.navigate(['../'], { relativeTo: this.activatedRoute });
         }
       });
+  }
+
+  getAllCurriculums() {
+    this.curriculumService.getAllCurriculums().subscribe(x => {
+      if (x.data) {
+        this.curriculums = x.data;
+      }
+    })
   }
 }

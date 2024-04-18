@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Product } from '../../api/product';
-import { ProductService } from '../../service/product.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BaseResponse, CourseForm, CourseItem, CreateCourseRequest } from 'src/app/models/tenant.model';
+import { BaseResponse, CourseForm, CourseItem, CreateCourseRequest, CurriculumItem } from 'src/app/models/tenant.model';
 import { CourseService } from '../../service/course.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CurriculumService } from '../../service/curriculum.service';
 
 @Component({
   selector: 'app-course-manager',
   templateUrl: './course-manager.component.html',
-  styleUrls: ['./course-manager.component.css'],
+  styleUrls: ['./course-manager.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
 export class CourseManagerComponent implements OnInit {
@@ -25,18 +26,25 @@ export class CourseManagerComponent implements OnInit {
   submitted: boolean = false;
 
   courseForm: FormGroup<CourseForm>;
+  courseCurriculumSelectionForm: FormGroup;
+
   selectedCourse: CourseForm;
   courses: CourseItem[] = [];
+  curriculums: CurriculumItem[] = [];
+  isCourseCurriculumSelectionFormVisible: boolean;
 
   constructor(private fb: FormBuilder,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private courseService: CourseService) { }
+    private courseService: CourseService,
+    private curriculumService: CurriculumService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.getAllCourses();
+    this.getAllCurriculums();
+    this.initForm();
   }
-
 
   initForm() {
     this.courseForm = this.fb.group<CourseForm>({
@@ -45,13 +53,23 @@ export class CourseManagerComponent implements OnInit {
       description: new FormControl("", Validators.required),
       courseCode: new FormControl("", Validators.required),
     });
+    this.courseCurriculumSelectionForm = this.fb.group({
+      curriculumId: [Validators.required]
+    })
   }
 
   getAllCourses() {
     this.courseService.getCourses().subscribe(x => {
       if (x.data) {
         this.courses = x.data;
-        console.log(this.courses)
+      }
+    })
+  }
+
+  getAllCurriculums() {
+    this.curriculumService.getAllCurriculums().subscribe(x => {
+      if (x.data) {
+        this.curriculums = x.data;
       }
     })
   }
@@ -126,6 +144,27 @@ export class CourseManagerComponent implements OnInit {
   resetForm(e: MouseEvent): void {
     e.preventDefault();
     this.courseForm.reset();
+  }
+
+  onClickReviseBtn(courseId: number): void {
+    this.courseService.reviseCourseByCourseId(courseId).subscribe(x => {
+      if (x.data) {
+        this.router.navigate(['./edit', x.data.id], { relativeTo: this.activatedRoute });
+      }
+    })
+  }
+
+  onClickAddToCurriculumBtn(courseId: number): void {
+    this.showDialog();
+    // this.courseService.reviseCourseByCourseId(courseId).subscribe(x => {
+    //   if (x.data) {
+    //     this.router.navigate(['./edit', x.data.id], { relativeTo: this.activatedRoute });
+    //   }
+    // })
+  }
+
+  showDialog() {
+    this.isCourseCurriculumSelectionFormVisible = true;
   }
 
 }

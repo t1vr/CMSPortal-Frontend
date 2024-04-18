@@ -16,77 +16,53 @@
         [value]="courses"
         [scrollable]="true"
         scrollHeight="400px"
-        [resizableColumns]="true"
-        styleClass="p-datatable-gridlines"
         [tableStyle]="{ 'min-width': '50rem' }"
+        class="course-list"
     >
         <ng-template pTemplate="header">
             <tr>
-                <th pResizableColumn>Title</th>
-                <th pResizableColumn>Credit Hour</th>
-                <th pResizableColumn>Actions</th>
+                <th class="w-6">Title</th>
+                <th class="w-3">Credit Hour</th>
+                <th class="w-3">Actions</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-course>
             <tr>
-                <td>{{ course.title }}</td>
-                <td>{{ course.creditHour }}</td>
-                <td>
-                    <button
+                <td class="w-6">
+                    <a [routerLink]="[course.id]">{{ course.title }}</a>
+                </td>
+                <td class="w-3">{{ course.creditHour }}</td>
+                <td class="w-3">
+                    <span
                         pButton
                         pRipple
                         type="button"
                         icon="pi pi-pencil"
+                        label="Edit"
                         [routerLink]="['edit', course.id]"
-                        class="p-button-rounded p-button-text"
-                    ></button>
+                        class="p-button-text"
+                    ></span>
+                    <span
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-pencil"
+                        label="Revise"
+                        (click)="onClickReviseBtn(course.courseId)"
+                        class="p-button-text"
+                    ></span>
+                    <span
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-pencil"
+                        label="Revise"
+                        (click)="onClickAddToCurriculumBtn(course.courseId)"
+                        class="p-button-text"
+                    ></span>
                 </td>
             </tr>
         </ng-template>
     </p-table>
 </div>
-<p-dialog
-    [(visible)]="productDialog"
-    [style]="{ width: '80%', margin: 'auto' }"
-    header="Product Details"
-    [modal]="true"
-    styleClass="p-fluid"
->
-    <ng-template pTemplate="content">
-        <form [formGroup]="courseForm" class="w-full lg:w-8 m-auto">
-            <label for="title" class="block text-900 font-medium mb-2">Title</label>
-            <input
-                id="title"
-                type="text"
-                placeholder="Enter course title..."
-                pInputText
-                class="p-inputtext p-component p-element w-full mb-3"
-                formControlName="title"
-            />
-            <label for="creditHour" class="block text-900 font-medium mb-2">Credit hour</label>
-            <p-inputNumber inputId="integeronly" formControlName="creditHour"></p-inputNumber>
 
-            <label for="description" class="block text-900 font-medium mb-2">Description</label>
-            <p-editor formControlName="description" [style]="{ height: '320px' }"></p-editor>
-        </form>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <button
-            pButton
-            pRipple
-            label="Cancel"
-            icon="pi pi-times"
-            class="p-button-text"
-            (click)="hideDialog()"
-        ></button>
-        <button
-            pButton
-            pRipple
-            label="Save"
-            icon="pi pi-check"
-            class="p-button-text"
-            (click)="submitForm()"
-        ></button>
-    </ng-template>
-</p-dialog>

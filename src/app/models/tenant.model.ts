@@ -85,6 +85,7 @@ export interface CourseForm {
   creditHour: FormControl<number>;
   description: FormControl<string>;
   courseCode: FormControl<string>;
+  curriculumId?: FormControl<number>;
 }
 
 export interface CourseItem {
@@ -93,7 +94,8 @@ export interface CourseItem {
   title: string;
   creditHour: number;
   description: string;
-  courseRevisionId: number;
+  courseId: number;
+  curriculumId: number;
 }
 
 export interface CreateCourseRequest {

@@ -13,7 +13,7 @@ export class CourseService {
     return this.courseDataService.createCourse(addCourseRequest);
   }
 
-  updateCourseById(courseId: string, updateCourseRequest: UpdateCourseRequest): Observable<BaseResponse<CourseItem>> {
+  updateCourseById(courseId: number, updateCourseRequest: UpdateCourseRequest): Observable<BaseResponse<CourseItem>> {
     return this.courseDataService.updateCourseById(courseId, updateCourseRequest);
   }
 
@@ -21,7 +21,11 @@ export class CourseService {
     return this.courseDataService.getCourses();
   }
 
-  getCourseById(courseId: string): Observable<BaseResponse<CourseItem>> {
+  getCourseById(courseId: number): Observable<BaseResponse<CourseItem>> {
     return this.courseDataService.getCourseById(courseId);
+  }
+
+  reviseCourseByCourseId(courseId: number): Observable<BaseResponse<CourseItem>> {
+    return this.courseDataService.reviseCourseByCourseId(courseId);
   }
 }

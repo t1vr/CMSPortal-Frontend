@@ -16,7 +16,7 @@ export class AppMenuComponent implements OnInit {
 
   ngOnInit() {
     // this.initMenu('');
-    console.log('ass1-->');
+    // console.log('ass1-->');
     this.tenantService
       .getCurrentTenantIdentifier()
       .subscribe((tenantIdentifier: string) => {
@@ -24,7 +24,7 @@ export class AppMenuComponent implements OnInit {
         this.initMenu(tenantIdentifier);
       })
 
-    console.log('----->', this.model)
+    // console.log('----->', this.model)
   }
 
   initMenu(tenantIdentifier: string): void {
@@ -188,7 +188,5 @@ export class AppMenuComponent implements OnInit {
         ]
       }
     ];
-
-    console.log(this.model)
   }
 }

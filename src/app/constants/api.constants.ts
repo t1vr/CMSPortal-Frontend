@@ -31,6 +31,8 @@ export class CourseApiConstants {
   public static readonly DELETE_ENDPOINT = "";
   public static readonly GET_ALL_ENDPOINT = "";
   public static readonly GET_BY_ID_ENDPOINT = "";
+  public static readonly REVISE_ENDPOINT = "revise/";
+
 }
 
 export class CurriculumApiConstants {
