@@ -5,6 +5,7 @@ import { BaseDataService } from './base.data.service';
 import { Observable } from 'rxjs';
 import { CourseApiConstants } from 'src/app/constants/api.constants';
 import { BaseResponse, CourseItem, CreateCourseRequest, UpdateCourseRequest } from 'src/app/models/tenant.model';
+import { AddCourseToCurriculumRequest } from './course.service';
 
 @Injectable({ providedIn: "root" })
 export class CourseDataService extends BaseDataService {
@@ -46,5 +47,23 @@ export class CourseDataService extends BaseDataService {
       this.getHttpOptions(false, true, false));
   }
 
+  getCourseRevisionsByCourseId(courseId: number) {
+    return this.httpClient.get<BaseResponse<CourseItem[]>>(
+      this.getFullApiUrl(CourseApiConstants.COURSE_MODULE, CourseApiConstants.GET_ALL_COURSE_REVISIONS_BY_COURSE_ID_ENDPOINT + courseId),
+      this.getHttpOptions(false, true, false));
+  }
+
+  addCourseToCurriculum(courseId: number, request: AddCourseToCurriculumRequest) {
+    return this.httpClient.put<BaseResponse<CourseItem>>(
+      this.getFullApiUrl(CourseApiConstants.COURSE_MODULE, CourseApiConstants.ADD_TO_CURRICULUM_ENDPOINT + courseId),
+      request,
+      this.getHttpOptions(false, true, false));
+  }
+
+  deleteCourseById(courseId: number) {
+    return this.httpClient.delete<BaseResponse<boolean>>(
+      this.getFullApiUrl(CourseApiConstants.COURSE_MODULE, CourseApiConstants.DELETE_BY_ID_ENDPOINT + courseId),
+      this.getHttpOptions(false, true, false));
+  }
 
 }

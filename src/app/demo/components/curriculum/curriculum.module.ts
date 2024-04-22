@@ -11,9 +11,12 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PanelModule } from 'primeng/panel';
 import { CourseUpsertComponent } from '../course-manager/course-upsert/course-upsert.component';
+import { CalendarModule } from 'primeng/calendar';
+import { CurriculumDetailsComponent } from './curriculum-details/curriculum-details.component';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
+  { path: ":curriculumId", component: CurriculumDetailsComponent },
 ];
 
 @NgModule({
@@ -26,9 +29,11 @@ const routes: Routes = [
     DynamicDialogModule,
     MultiSelectModule,
     RouterModule.forChild(routes),
+    CalendarModule,
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,
-    CurriculumListComponent]
+    CurriculumListComponent,
+    CurriculumDetailsComponent]
 })
 export class CurriculumModule { }

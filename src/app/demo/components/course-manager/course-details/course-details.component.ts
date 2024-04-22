@@ -9,7 +9,7 @@ import { CourseItem } from 'src/app/models/tenant.model';
   styleUrls: ['./course-details.component.css']
 })
 export class CourseDetailsComponent implements OnInit {
-  courseId: number;
+  courseRevisionId: number;
   course: CourseItem;
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -18,13 +18,13 @@ export class CourseDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.courseId = this.activatedRoute.snapshot.paramMap.get('courseId') as unknown as number;
-    if (this.courseId)
-      this.getCourseById(this.courseId);
+    this.courseRevisionId = this.activatedRoute.snapshot.paramMap.get('courseRevisionId') as unknown as number;
+    if (this.courseRevisionId)
+      this.getCourseById(this.courseRevisionId);
   }
 
-  getCourseById(courseId: number) {
-    this.courseService.getCourseById(courseId).subscribe(x => {
+  getCourseById(courseRevisionId: number) {
+    this.courseService.getCourseById(courseRevisionId).subscribe(x => {
       if (x.data) {
         this.course = x.data;
       }
@@ -32,11 +32,11 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   onClickHistoryBtn() {
-    this.goToHistoryByCourseId(this.courseId);
+    this.goToHistoryBycourseRevisionId(this.course.courseId);
   }
 
-  goToHistoryByCourseId(courseId: number) {
-    this.router.navigate(['../history', courseId], { relativeTo: this.activatedRoute });
+  goToHistoryBycourseRevisionId(courseRevisionId: number) {
+    this.router.navigate(['../history', courseRevisionId], { relativeTo: this.activatedRoute });
   }
 
 }

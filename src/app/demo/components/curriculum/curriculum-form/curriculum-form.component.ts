@@ -11,6 +11,10 @@ import { BaseResponse, CurriculumForm, CreateCurriculumRequest, CurriculumItem, 
   styleUrls: ['./curriculum-form.component.css']
 })
 export class CurriculumFormComponent implements OnInit {
+  onSelectDuration() {
+    console.log(this.curriculumForm.value);
+  }
+  duration;
   programs: ProgramItem[] = [];
   curriculumForm: FormGroup<CurriculumForm>;
 
@@ -29,12 +33,17 @@ export class CurriculumFormComponent implements OnInit {
     this.curriculumForm = this.fb.group<CurriculumForm>({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
+      duration: new FormControl(null, Validators.required),
       programIds: new FormControl([], Validators.required),
     });
   }
 
   onSubmitCurriculumForm(): void {
-    this.curriculumService.createCurriculum(this.curriculumForm.value as CreateCurriculumRequest)
+    let request = this.curriculumForm.value as CreateCurriculumRequest;
+    request.effectiveFromYear = this.curriculumForm.value.duration.at(0);
+    request.effectiveTillYear = this.curriculumForm.value.duration.at(1);
+
+    this.curriculumService.createCurriculum(request)
       .subscribe((x: BaseResponse<CurriculumItem>) => {
         if (x.data) {
           this.messageService.add({ severity: 'info', summary: 'Program created successfully', life: 3000 });

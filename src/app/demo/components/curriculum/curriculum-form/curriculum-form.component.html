@@ -19,7 +19,16 @@
         pInputTextarea
         formControlName="description"
     ></textarea>
-
+    <label for="duration" class="block text-900 font-medium mb-2">Duration</label>
+    <p-calendar
+        formControlName="duration"
+        view="year"
+        dateFormat="yy"
+        inputId="yearpicker"
+        selectionMode="range"
+        [readonlyInput]="true"
+        (onSelect)="onSelectDuration()"
+    ></p-calendar>
     <label for="description" class="block text-900 font-medium mb-2">Programs</label>
     <p-multiSelect
         [options]="programs"

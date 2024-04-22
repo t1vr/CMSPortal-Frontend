@@ -10,6 +10,11 @@ export class CurriculumService {
 
   constructor(private curriculumDataService: CurriculumDataService) { }
 
+  getCurriculumById(curriculumId: number): Observable<BaseResponse<CurriculumItem>> {
+    return this.curriculumDataService.getCurriculumById(curriculumId);
+  }
+
+
   getAllCurriculums(): Observable<BaseResponse<CurriculumItem[]>> {
     return this.curriculumDataService.getAllCurriculums();
   }

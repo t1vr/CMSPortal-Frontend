@@ -14,4 +14,8 @@ export class CurriculumListComponent implements OnInit {
   ngOnInit() {
   }
 
+  goToCurriculumDetails(curriculum: CurriculumItem) {
+
+  }
+
 }

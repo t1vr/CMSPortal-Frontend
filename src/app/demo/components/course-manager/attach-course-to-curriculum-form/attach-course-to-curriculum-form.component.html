@@ -1,0 +1,25 @@
+<form
+    [formGroup]="courseCurriculumSelectionForm"
+    class="w-9 lg:w-8 m-auto justify-content-center"
+    (ngSubmit)="onSubmitAddCurriculumForm()"
+>
+    <label for="curriculums" class="block text-900 font-medium mb-2">Select a Curriculum:</label>
+    <p-dropdown
+        id="curriculums"
+        [options]="curriculums"
+        optionLabel="title"
+        optionValue="id"
+        formControlName="curriculumId"
+        placeholder="Select a Currculum"
+        class="p-component w-full mb-3"
+        [style]="{ width: '100%', 'margin-bottom': '.75rem' }"
+    ></p-dropdown>
+
+    <button
+        pButton
+        [disabled]="!courseCurriculumSelectionForm.valid"
+        pRipple
+        label="Submit"
+        class="w-full"
+    ></button>
+</form>

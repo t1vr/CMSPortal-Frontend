@@ -96,6 +96,7 @@ export interface CourseItem {
   description: string;
   courseId: number;
   curriculumId: number;
+  reasonForRevision: string;
 }
 
 export interface CreateCourseRequest {
@@ -118,16 +119,21 @@ export class CurriculumItem {
   title: string;
   description: string;
   programs: ProgramItem[];
+  EffectiveFromYear: Date;
+  EffectiveTillYear: Date;
 }
 
 export class CreateCurriculumRequest {
   title: string;
   description: string;
   programIds: number[];
+  effectiveFromYear: Date;
+  effectiveTillYear: Date;
 }
 
 export interface CurriculumForm {
   title: FormControl<string>;
   description: FormControl<string>;
-  programIds: FormControl<number[]>
+  programIds: FormControl<number[]>;
+  duration: FormControl<Date[]>;
 }

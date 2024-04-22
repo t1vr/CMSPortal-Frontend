@@ -28,4 +28,21 @@ export class CourseService {
   reviseCourseByCourseId(courseId: number): Observable<BaseResponse<CourseItem>> {
     return this.courseDataService.reviseCourseByCourseId(courseId);
   }
+
+  getCourseRevisionsByCourseId(courseId: number) {
+    return this.courseDataService.getCourseRevisionsByCourseId(courseId);
+  }
+
+  addCourseToCurriculum(courseId: number, request: AddCourseToCurriculumRequest) {
+    return this.courseDataService.addCourseToCurriculum(courseId, request);
+  }
+
+  deleteCourseById(courseId: number) {
+    return this.courseDataService.deleteCourseById(courseId);
+  }
+}
+
+
+export interface AddCourseToCurriculumRequest {
+  curriculumId: number;
 }

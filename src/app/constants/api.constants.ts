@@ -30,8 +30,11 @@ export class CourseApiConstants {
   public static readonly UPDATE_ENDPOINT = "";
   public static readonly DELETE_ENDPOINT = "";
   public static readonly GET_ALL_ENDPOINT = "";
+  public static readonly GET_ALL_COURSE_REVISIONS_BY_COURSE_ID_ENDPOINT = "revisions/";
   public static readonly GET_BY_ID_ENDPOINT = "";
   public static readonly REVISE_ENDPOINT = "revise/";
+  public static readonly ADD_TO_CURRICULUM_ENDPOINT = "add-to-curriculum/";
+  public static readonly DELETE_BY_ID_ENDPOINT = "";
 
 }
 
@@ -41,4 +44,5 @@ export class CurriculumApiConstants {
   public static readonly UPDATE_ENDPOINT = "";
   public static readonly DELETE_ENDPOINT = "";
   public static readonly GET_ALL_ENDPOINT = "";
+  public static readonly GET_BY_ID_ENDPOINT = "";
 }

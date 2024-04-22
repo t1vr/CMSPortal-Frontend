@@ -6,12 +6,14 @@ import { BaseResponse, CourseForm, CourseItem, CreateCourseRequest, CurriculumIt
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurriculumService } from '../../service/curriculum.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AttachCourseToCurriculumFormComponent } from './attach-course-to-curriculum-form/attach-course-to-curriculum-form.component';
 
 @Component({
   selector: 'app-course-manager',
   templateUrl: './course-manager.component.html',
   styleUrls: ['./course-manager.component.scss'],
-  providers: [MessageService, ConfirmationService]
+  providers: [MessageService, ConfirmationService, DialogService]
 })
 export class CourseManagerComponent implements OnInit {
 
@@ -32,9 +34,11 @@ export class CourseManagerComponent implements OnInit {
   courses: CourseItem[] = [];
   curriculums: CurriculumItem[] = [];
   isCourseCurriculumSelectionFormVisible: boolean;
+  ref: DynamicDialogRef | undefined;
 
   constructor(private fb: FormBuilder,
     private messageService: MessageService,
+    private dialogService: DialogService,
     private courseService: CourseService,
     private curriculumService: CurriculumService,
     private router: Router,
@@ -74,57 +78,13 @@ export class CourseManagerComponent implements OnInit {
     })
   }
 
-  openNew() {
-    this.product = {};
-    this.submitted = false;
-    this.productDialog = true;
-  }
 
   hideDialog() {
     this.productDialog = false;
     this.submitted = false;
   }
 
-  saveProduct() {
-    this.submitted = true;
 
-    if (this.product.name?.trim()) {
-      if (this.product.id) {
-        this.products[this.findIndexById(this.product.id)] = this.product;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-      } else {
-        this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
-        this.products.push(this.product);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-      }
-
-      this.products = [...this.products];
-      this.productDialog = false;
-      this.product = {};
-    }
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
-  }
-
-  createId(): string {
-    let id = '';
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
-  }
 
   submitForm(): void {
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
@@ -154,17 +114,35 @@ export class CourseManagerComponent implements OnInit {
     })
   }
 
-  onClickAddToCurriculumBtn(courseId: number): void {
-    this.showDialog();
-    // this.courseService.reviseCourseByCourseId(courseId).subscribe(x => {
-    //   if (x.data) {
-    //     this.router.navigate(['./edit', x.data.id], { relativeTo: this.activatedRoute });
-    //   }
-    // })
+  onClickAddToCurriculumBtn(course: CourseItem): void {
+    this.ref = this.dialogService.open(AttachCourseToCurriculumFormComponent, {
+      header: 'Add a Curriculum',
+      width: '70%',
+      height: '70%',
+      baseZIndex: 10000,
+      maximizable: true,
+      data: {
+        curriculums: this.curriculums,
+        selectedCourse: course
+      }
+    });
+
+    this.ref.onClose.subscribe((_) => {
+      this.messageService.add({ severity: 'info', summary: 'Product Selected' });
+    });
   }
 
   showDialog() {
     this.isCourseCurriculumSelectionFormVisible = true;
   }
+
+  onClickDeleteBtn(courseId: number): void {
+    this.courseService.deleteCourseById(courseId).subscribe(x => {
+      if (x.data) {
+        this.getAllCourses();
+      }
+    })
+  }
+
 
 }

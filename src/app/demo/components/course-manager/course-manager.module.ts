@@ -18,11 +18,12 @@ import { TimelineModule } from 'primeng/timeline';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ListboxModule } from 'primeng/listbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { AttachCourseToCurriculumFormComponent } from './attach-course-to-curriculum-form/attach-course-to-curriculum-form.component';
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
   { path: 'create', component: CourseUpsertComponent },
-  { path: ':courseId', component: CourseDetailsComponent },
+  { path: ':courseRevisionId', component: CourseDetailsComponent },
   { path: 'edit/:courseId', component: CourseUpsertComponent },
   { path: 'history/:courseId', component: CourseHistoryComponent },
 ];
@@ -47,6 +48,7 @@ const routes: Routes = [
   declarations: [CourseManagerComponent,
     CourseUpsertComponent,
     CourseDetailsComponent,
-    CourseHistoryComponent]
+    CourseHistoryComponent,
+    AttachCourseToCurriculumFormComponent]
 })
 export class CourseManagerModule { }
