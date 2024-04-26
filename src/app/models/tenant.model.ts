@@ -118,9 +118,10 @@ export class CurriculumItem {
   id: number;
   title: string;
   description: string;
-  programs: ProgramItem[];
+  programResponses: ProgramItem[];
   EffectiveFromYear: Date;
   EffectiveTillYear: Date;
+  courseResponses: CourseItem[];
 }
 
 export class CreateCurriculumRequest {

@@ -13,6 +13,10 @@ import { PanelModule } from 'primeng/panel';
 import { CourseUpsertComponent } from '../course-manager/course-upsert/course-upsert.component';
 import { CalendarModule } from 'primeng/calendar';
 import { CurriculumDetailsComponent } from './curriculum-details/curriculum-details.component';
+import { ChipModule } from 'primeng/chip';
+import { TagModule } from 'primeng/tag';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -30,6 +34,9 @@ const routes: Routes = [
     MultiSelectModule,
     RouterModule.forChild(routes),
     CalendarModule,
+    TagModule,
+    TableModule,
+    DialogModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,

@@ -44,5 +44,5 @@ export class CourseService {
 
 
 export interface AddCourseToCurriculumRequest {
-  curriculumId: number;
+  courseIds: number[];
 }

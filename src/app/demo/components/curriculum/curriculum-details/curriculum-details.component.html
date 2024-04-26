@@ -1,3 +1,182 @@
-<p>
-  curriculum-details works!
-</p>
+<p-card>
+    <div class="surface-section">
+        <div class="font-medium text-xl text-900 mb-3">Curriculum Information</div>
+        <ul class="list-none p-0 m-0">
+            <li class="flex align-items-center px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Title</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                    {{ curriculum?.title }}
+                </div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button
+                        pButton
+                        size="small"
+                        label="Edit"
+                        icon="pi pi-pencil"
+                        class="p-button-text"
+                    ></button>
+                </div>
+            </li>
+            <li class="flex align-items-center px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Programs</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                    <ng-container *ngFor="let program of curriculum?.programResponses">
+                        <p-tag [value]="program.name" severity="success" class="mr-2"></p-tag>
+                    </ng-container>
+                </div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button
+                        pButton
+                        size="small"
+                        label="Edit"
+                        icon="pi pi-pencil"
+                        class="p-button-text"
+                    ></button>
+                </div>
+            </li>
+            <li
+                class="flex align-items-center px-2 border-top-1 border-bottom-1 surface-border flex-wrap"
+            >
+                <div class="text-500 w-6 md:w-2 font-medium">Description</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
+                    {{ curriculum?.description }}
+                </div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button
+                        pButton
+                        size="small"
+                        label="Edit"
+                        icon="pi pi-pencil"
+                        class="p-button-text"
+                    ></button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</p-card>
+
+<p-card styleClass="mt-3">
+    <div class="surface-section">
+        <div class="font-medium text-xl text-900 mb-3">Course List</div>
+        <p-table
+            [value]="curriculum?.courseResponses"
+            selectionMode="single"
+            dataKey="code"
+            [tableStyle]="{ 'min-width': '50rem' }"
+        >
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button
+                        type="button"
+                        pButton
+                        pRipple
+                        icon="pi pi-file"
+                        class="mr-2"
+                        pTooltip="CSV"
+                        tooltipPosition="bottom"
+                        size="small"
+                    ></button>
+                    <button
+                        type="button"
+                        pButton
+                        pRipple
+                        icon="pi pi-file-excel"
+                        class="p-button-success mr-2"
+                        pTooltip="XLS"
+                        tooltipPosition="bottom"
+                        size="small"
+                    ></button>
+                    <button
+                        type="button"
+                        pButton
+                        pRipple
+                        icon="pi pi-file-pdf"
+                        class="p-button-warning mr-2"
+                        pTooltip="PDF"
+                        tooltipPosition="bottom"
+                        size="small"
+                    ></button>
+                    <button
+                        type="button"
+                        pButton
+                        pRipple
+                        icon="pi pi-filter"
+                        (click)="showDialog()"
+                        class="p-button-info ml-auto"
+                        pTooltip="Selection Only"
+                        tooltipPosition="bottom"
+                        size="small"
+                    ></button>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Title</th>
+                    <th>Credit Hours</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-course>
+                <tr [pSelectableRow]="product" (click)="goToCourseDetails(course.id)">
+                    <td class="text-900">{{ course.title }}</td>
+                    <td>{{ course.creditHour }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-card>
+
+<p-dialog
+    [resizable]="false"
+    [modal]="true"
+    [maximizable]="true"
+    appendTo="body"
+    [(visible)]="dialogVisible"
+    [style]="{ width: '75vw' }"
+    [contentStyle]="{ height: '300px' }"
+>
+    <p-table
+        [value]="availableCoursesToAttach"
+        [scrollable]="true"
+        scrollHeight="flex"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [(selection)]="selectedcourses"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem"></th>
+                <th>Name</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-course>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="course"></p-tableCheckbox>
+                </td>
+                <td>{{ course.title }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <ng-template pTemplate="footer">
+        <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-times"
+            (click)="dialogVisible = false"
+            label="Dismiss"
+            class="p-button-text"
+            size="small"
+        ></button>
+        <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-file-import"
+            (click)="addToCurriculum()"
+            label="Import"
+            class="p-button-text"
+            size="small"
+        ></button>
+    </ng-template>
+</p-dialog>

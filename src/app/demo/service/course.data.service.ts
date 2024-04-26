@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 
 import { BaseDataService } from './base.data.service';
 import { Observable } from 'rxjs';
-import { CourseApiConstants } from 'src/app/constants/api.constants';
+import { CourseApiConstants, CurriculumApiConstants } from 'src/app/constants/api.constants';
 import { BaseResponse, CourseItem, CreateCourseRequest, UpdateCourseRequest } from 'src/app/models/tenant.model';
 import { AddCourseToCurriculumRequest } from './course.service';
+import { CurriculumModule } from '../components/curriculum/curriculum.module';
 
 @Injectable({ providedIn: "root" })
 export class CourseDataService extends BaseDataService {
@@ -53,9 +54,9 @@ export class CourseDataService extends BaseDataService {
       this.getHttpOptions(false, true, false));
   }
 
-  addCourseToCurriculum(courseId: number, request: AddCourseToCurriculumRequest) {
+  addCourseToCurriculum(curriculumId: number, request: AddCourseToCurriculumRequest) {
     return this.httpClient.put<BaseResponse<CourseItem>>(
-      this.getFullApiUrl(CourseApiConstants.COURSE_MODULE, CourseApiConstants.ADD_TO_CURRICULUM_ENDPOINT + courseId),
+      this.getFullApiUrl(CurriculumApiConstants.CURRICULUM_MODULE, CourseApiConstants.ADD_TO_CURRICULUM_ENDPOINT + curriculumId),
       request,
       this.getHttpOptions(false, true, false));
   }

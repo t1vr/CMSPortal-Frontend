@@ -45,4 +45,6 @@ export class CurriculumApiConstants {
   public static readonly DELETE_ENDPOINT = "";
   public static readonly GET_ALL_ENDPOINT = "";
   public static readonly GET_BY_ID_ENDPOINT = "";
+  public static readonly ADD_TO_CURRICULUM_ENDPOINT = "add-to-curriculum/";
+
 }
