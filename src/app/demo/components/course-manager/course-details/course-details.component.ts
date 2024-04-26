@@ -9,6 +9,7 @@ import { CourseItem } from 'src/app/models/tenant.model';
   styleUrls: ['./course-details.component.css']
 })
 export class CourseDetailsComponent implements OnInit {
+
   courseRevisionId: number;
   course: CourseItem;
 
@@ -37,6 +38,11 @@ export class CourseDetailsComponent implements OnInit {
 
   goToHistoryBycourseRevisionId(courseRevisionId: number) {
     this.router.navigate(['../history', courseRevisionId], { relativeTo: this.activatedRoute });
+  }
+
+
+  goToEditCourse(courseRevisionId: number) {
+    this.router.navigate(['../edit', courseRevisionId], { relativeTo: this.activatedRoute });
   }
 
 }

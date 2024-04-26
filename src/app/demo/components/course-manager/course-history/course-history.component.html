@@ -2,7 +2,9 @@
     <p-timeline [value]="courseRevisions" styleClass="course-history-timeline">
         <ng-template pTemplate="content" let-courseRevision>
             <div class="content-container">
-                {{ courseRevision.reasonForRevision }}
+                <a [routerLink]="['../../', courseRevision.id]">
+                    {{ courseRevision.reasonForRevision }}
+                </a>
             </div>
         </ng-template>
     </p-timeline>
