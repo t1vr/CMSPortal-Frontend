@@ -29,20 +29,26 @@
         <ng-template pTemplate="body" let-course>
             <tr>
                 <td class="w-6">
-                    <a [routerLink]="[course.id]">{{ course.title }}</a>
+                    <p-button
+                        [label]="course.title"
+                        [text]="true"
+                        [link]="true"
+                        [plain]="true"
+                        [routerLink]="[course.id]"
+                    ></p-button>
                 </td>
                 <td class="w-3">{{ course.creditHour }}</td>
                 <td class="w-3">
-                    <span
-                        pButton
-                        pRipple
-                        type="button"
+                    <p-button
                         icon="pi pi-pencil"
                         label="Edit"
                         [routerLink]="['edit', course.id]"
-                        class="p-button-text"
-                    ></span>
-                    <span
+                        size="small"
+                        [text]="true"
+                        [plain]="true"
+                        severity="info"
+                    ></p-button>
+                    <!-- <span
                         pButton
                         pRipple
                         type="button"
@@ -50,16 +56,16 @@
                         label="Revise"
                         (click)="onClickAddToCurriculumBtn(course)"
                         class="p-button-text"
-                    ></span>
-                    <span
-                        pButton
-                        pRipple
-                        type="button"
-                        icon="pi pi-pencil"
+                    ></span> -->
+                    <p-button
+                        icon="pi pi-trash"
                         label="Delete"
                         (click)="onClickDeleteBtn(course.courseId)"
-                        class="p-button-text"
-                    ></span>
+                        size="small"
+                        [text]="true"
+                        [plain]="true"
+                        severity="warning"
+                    ></p-button>
                 </td>
             </tr>
         </ng-template>

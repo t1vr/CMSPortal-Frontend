@@ -100,10 +100,11 @@ export interface CourseItem {
 }
 
 export interface CreateCourseRequest {
+  title: string;
+  description: string;
   courseCode: string;
-  name: string;
   creditHour: number;
-  semester: string;
+  curriculumId: number;
 }
 
 export interface UpdateCourseRequest {

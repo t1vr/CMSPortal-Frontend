@@ -1,7 +1,13 @@
 <p-card>
     <div class="flex justify-content-between">
         <span class="font-bold text-xl">Curriculums</span>
-        <p-button label="Add" [text]="true" [raised]="true" (click)="onClickCreateBtn()"></p-button>
+        <p-button
+            label="Add"
+            [text]="true"
+            [plain]="true"
+            [outlined]="false"
+            (click)="onClickCreateBtn()"
+        ></p-button>
     </div>
     <!-- <ng-container *ngFor="let program of curriculums">
 

@@ -8,13 +8,15 @@
                     {{ curriculum?.title }}
                 </div>
                 <div class="w-6 md:w-2 flex justify-content-end">
-                    <button
-                        pButton
+                    <p-button
                         size="small"
                         label="Edit"
                         icon="pi pi-pencil"
                         class="p-button-text"
-                    ></button>
+                        [text]="true"
+                        [plain]="true"
+                        [outlined]="false"
+                    ></p-button>
                 </div>
             </li>
             <li class="flex align-items-center px-2 border-top-1 surface-border flex-wrap">
@@ -25,13 +27,15 @@
                     </ng-container>
                 </div>
                 <div class="w-6 md:w-2 flex justify-content-end">
-                    <button
-                        pButton
+                    <p-button
                         size="small"
                         label="Edit"
                         icon="pi pi-pencil"
                         class="p-button-text"
-                    ></button>
+                        [text]="true"
+                        [plain]="true"
+                        [outlined]="false"
+                    ></p-button>
                 </div>
             </li>
             <li
@@ -42,13 +46,15 @@
                     {{ curriculum?.description }}
                 </div>
                 <div class="w-6 md:w-2 flex justify-content-end">
-                    <button
-                        pButton
+                    <p-button
                         size="small"
                         label="Edit"
                         icon="pi pi-pencil"
                         class="p-button-text"
-                    ></button>
+                        [text]="true"
+                        [plain]="true"
+                        [outlined]="false"
+                    ></p-button>
                 </div>
             </li>
         </ul>
@@ -66,47 +72,37 @@
         >
             <ng-template pTemplate="caption">
                 <div class="flex">
-                    <button
-                        type="button"
-                        pButton
-                        pRipple
+                    <p-button
                         icon="pi pi-file"
                         class="mr-2"
                         pTooltip="CSV"
                         tooltipPosition="bottom"
                         size="small"
-                    ></button>
-                    <button
-                        type="button"
-                        pButton
-                        pRipple
-                        icon="pi pi-file-excel"
-                        class="p-button-success mr-2"
-                        pTooltip="XLS"
-                        tooltipPosition="bottom"
-                        size="small"
-                    ></button>
-                    <button
-                        type="button"
-                        pButton
-                        pRipple
-                        icon="pi pi-file-pdf"
-                        class="p-button-warning mr-2"
-                        pTooltip="PDF"
-                        tooltipPosition="bottom"
-                        size="small"
-                    ></button>
-                    <button
-                        type="button"
-                        pButton
-                        pRipple
-                        icon="pi pi-filter"
+                        [text]="true"
+                        [plain]="true"
+                        [outlined]="true"
+                    ></p-button>
+                    <p-button
+                        icon="pi pi-plus"
+                        label="Import"
                         (click)="showDialog()"
+                        severity="success"
                         class="p-button-info ml-auto"
                         pTooltip="Selection Only"
                         tooltipPosition="bottom"
                         size="small"
-                    ></button>
+                        [outlined]="true"
+                    ></p-button>
+                    <p-button
+                        icon="pi pi-plus"
+                        label="New"
+                        [routerLink]="['../../manage-courses/create', curriculumId]"
+                        severity="success"
+                        pTooltip="Selection Only"
+                        tooltipPosition="bottom"
+                        size="small"
+                        [outlined]="true"
+                    ></p-button>
                 </div>
             </ng-template>
 

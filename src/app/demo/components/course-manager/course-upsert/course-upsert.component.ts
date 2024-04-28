@@ -16,6 +16,7 @@ export class CourseUpsertComponent implements OnInit {
   courseForm: FormGroup<CourseForm>;
   course: CourseItem;
   courseId: number;
+  curriculumId: number;
   curriculums: CurriculumItem[] = [];
 
   constructor(private fb: FormBuilder,
@@ -30,6 +31,9 @@ export class CourseUpsertComponent implements OnInit {
     this.courseId = this.activatedRoute.snapshot.paramMap.get('courseId') as unknown as number;
     if (this.courseId)
       this.getCourseById(this.courseId);
+
+    this.curriculumId = parseInt(this.activatedRoute.snapshot.paramMap.get('curriculumId'));
+    console.log(this.curriculumId)
     this.getAllCurriculums();
   }
 
@@ -39,7 +43,7 @@ export class CourseUpsertComponent implements OnInit {
       creditHour: new FormControl(null, Validators.required),
       description: new FormControl("", Validators.required),
       courseCode: new FormControl(""),
-      curriculumId: new FormControl(null)
+      curriculumId: new FormControl(null, Validators.required)
     });
   }
 
@@ -69,10 +73,10 @@ export class CourseUpsertComponent implements OnInit {
   }
 
   saveCourse() {
-    this.courseService.createCourse(this.courseForm.value as CreateCourseRequest)
+    this.courseService.createCourse(this.courseForm.getRawValue() as CreateCourseRequest)
       .subscribe((x: BaseResponse<CourseItem>) => {
         if (x.data) {
-          this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+          this.router.navigate(['../../'], { relativeTo: this.activatedRoute });
         }
       });
   }
@@ -81,6 +85,9 @@ export class CourseUpsertComponent implements OnInit {
     this.curriculumService.getAllCurriculums().subscribe(x => {
       if (x.data) {
         this.curriculums = x.data;
+        console.log(this.courseForm.get('curriculumId'))
+        this.courseForm.get('curriculumId').disable();
+        this.courseForm.get('curriculumId').setValue(this.curriculumId);
       }
     })
   }

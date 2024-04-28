@@ -22,7 +22,7 @@ import { AttachCourseToCurriculumFormComponent } from './attach-course-to-curric
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
-  { path: 'create', component: CourseUpsertComponent },
+  { path: 'create/:curriculumId', component: CourseUpsertComponent },
   { path: ':courseRevisionId', component: CourseDetailsComponent },
   { path: 'edit/:courseId', component: CourseUpsertComponent },
   { path: 'history/:courseId', component: CourseHistoryComponent },
