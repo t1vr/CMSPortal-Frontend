@@ -12,7 +12,6 @@ import { BaseResponse, CurriculumForm, CreateCurriculumRequest, CurriculumItem, 
 })
 export class CurriculumFormComponent implements OnInit {
   onSelectDuration() {
-    console.log(this.curriculumForm.value);
   }
   duration;
   programs: ProgramItem[] = [];
@@ -26,7 +25,6 @@ export class CurriculumFormComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.programs = this.dialogConfig.data;
-    console.log(this.programs)
   }
 
   initForm(): void {

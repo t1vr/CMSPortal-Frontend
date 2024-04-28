@@ -15,16 +15,12 @@ export class AppMenuComponent implements OnInit {
     public tenantService: TenantService) { }
 
   ngOnInit() {
-    // this.initMenu('');
-    // console.log('ass1-->');
     this.tenantService
       .getCurrentTenantIdentifier()
       .subscribe((tenantIdentifier: string) => {
-        console.log('ass2-->', tenantIdentifier)
         this.initMenu(tenantIdentifier);
       })
 
-    // console.log('----->', this.model)
   }
 
   initMenu(tenantIdentifier: string): void {

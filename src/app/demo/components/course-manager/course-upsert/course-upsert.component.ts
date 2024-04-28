@@ -33,7 +33,6 @@ export class CourseUpsertComponent implements OnInit {
       this.getCourseById(this.courseId);
 
     this.curriculumId = parseInt(this.activatedRoute.snapshot.paramMap.get('curriculumId'));
-    console.log(this.curriculumId)
     this.getAllCurriculums();
   }
 
@@ -85,7 +84,6 @@ export class CourseUpsertComponent implements OnInit {
     this.curriculumService.getAllCurriculums().subscribe(x => {
       if (x.data) {
         this.curriculums = x.data;
-        console.log(this.courseForm.get('curriculumId'))
         this.courseForm.get('curriculumId').disable();
         this.courseForm.get('curriculumId').setValue(this.curriculumId);
       }

@@ -37,7 +37,6 @@ export class BaseDataService {
 
         let headers = this.getHttpHeaders(isMultiPart);
         headers = headers.set(TenantIdentifierKey, localStorage.getItem('tenantIdentifier') as string ?? 'public');
-        console.log(headers)
 
         if (isAuthorized) {
             headers = headers.set(TokenHeaderKey, TokenPrefix + localStorage.getItem(TokenKey) as string);

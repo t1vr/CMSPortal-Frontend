@@ -41,7 +41,6 @@ export class CurriculumDetailsComponent implements OnInit {
       if (x.data) {
         this.courses = x.data;
         this.availableCoursesToAttach = x.data.filter(course => !this.curriculum.courseResponses.some(y => y.courseId === course?.courseId));
-        console.log(this.availableCoursesToAttach)
       }
     })
   }

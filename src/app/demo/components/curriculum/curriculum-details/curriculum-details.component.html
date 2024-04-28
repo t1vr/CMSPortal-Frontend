@@ -113,8 +113,17 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-course>
-                <tr [pSelectableRow]="product" (click)="goToCourseDetails(course.id)">
-                    <td class="text-900">{{ course.title }}</td>
+                <tr>
+                    <td>
+                        <p-button
+                            [label]="course.title"
+                            [text]="true"
+                            [link]="true"
+                            [plain]="true"
+                            (click)="goToCourseDetails(course.id)"
+                        ></p-button>
+                    </td>
+
                     <td>{{ course.creditHour }}</td>
                 </tr>
             </ng-template>

@@ -61,7 +61,6 @@ export class AppConfigComponent {
   }
 
   set theme(val: string) {
-    console.log(val)
 
     this.layoutService.config.update((config) => ({
       ...config,
@@ -69,7 +68,6 @@ export class AppConfigComponent {
     }));
   }
   get theme(): string {
-    console.log(this.layoutService.config().theme)
     return this.layoutService.config().theme;
   }
 

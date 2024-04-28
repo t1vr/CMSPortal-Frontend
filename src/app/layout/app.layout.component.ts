@@ -121,7 +121,6 @@ export class AppLayoutComponent implements OnDestroy {
   ngOnInit() {
     this.acitvatedRoute.params.subscribe((params: Params) => {
       if (params["tenantIdentifier"]) {
-        console.log('layout-->',params["tenantIdentifier"])
         this.tenantService.sendCurrentTenantIdentifier(params["tenantIdentifier"])
         this.tenantService
           .getTenantByIdentifier(params["tenantIdentifier"])

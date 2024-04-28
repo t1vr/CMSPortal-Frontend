@@ -89,7 +89,6 @@ export class CourseManagerComponent implements OnInit {
   submitForm(): void {
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
 
-    console.log(this.courseForm.value)
     this.courseService.createCourse(this.courseForm.value as CreateCourseRequest)
       .subscribe((x: BaseResponse<CourseItem>) => {
         if (x.data) {

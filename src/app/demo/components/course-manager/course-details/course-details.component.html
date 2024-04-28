@@ -7,7 +7,7 @@
                 (click)="onClickHistoryBtn()"
                 icon="pi pi-history"
                 label="History"
-                severity="primary"
+                severity="secondary"
                 size="small"
                 [text]="true"
                 [outlined]="true"
@@ -19,13 +19,12 @@
                 (click)="goToEditCourse(courseRevisionId)"
                 icon="pi pi-pencil"
                 label="Edit"
-                severity="secondary"
+                severity="info"
                 size="small"
                 [text]="true"
                 [plain]="true"
                 [outlined]="true"
-            >
-            </p-button>
+            ></p-button>
         </div>
     </div>
     <span [innerHTML]="course?.description"></span>
