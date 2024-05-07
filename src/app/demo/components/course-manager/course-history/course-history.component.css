@@ -4,7 +4,7 @@
 }
 
 ::ng-deep .course-history-timeline .p-timeline-event-content {
-  padding: 0;
+    padding: 0;
 }
 
 .course-history-timeline {
@@ -16,6 +16,9 @@
     background: #ffffff;
     color: #4b5563;
     border-radius: 6px;
-    padding: 1rem;
     margin: 1rem;
+}
+
+:host {
+    height: 100%;
 }

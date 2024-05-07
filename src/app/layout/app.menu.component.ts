@@ -38,7 +38,19 @@ export class AppMenuComponent implements OnInit {
         label: 'Faculty View',
         items: [
           { label: 'Manage Programs', icon: 'pi pi-fw pi-home', routerLink: ['/', tenantIdentifier, 'manage-programs'] },
-          { label: 'Course Archive', icon: 'pi pi-fw pi-list', routerLink: ['/', tenantIdentifier, 'manage-courses'] },
+          {
+            label: 'Manage Courses', icon: 'pi pi-fw pi-list', items: [
+              {
+                label: 'Course Archives',
+                routerLink: ['/', tenantIdentifier, 'manage-courses']
+              },
+              {
+                label: 'Compare',
+                routerLink: ['/', tenantIdentifier, 'compare']
+              }
+            ]
+          },
+
           { label: 'Manage Curriculums', icon: 'pi pi-fw pi-list', routerLink: ['/', tenantIdentifier, 'manage-curriculums'] },
 
         ]

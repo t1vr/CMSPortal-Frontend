@@ -1,0 +1,45 @@
+<p-card>
+    <div>
+        <p-dropdown
+            [options]="sourceCourseRevisions"
+            [(ngModel)]="sourceCourseRevisionId"
+            optionLabel="reasonForRevision"
+            optionValue="id"
+            [showClear]="true"
+            placeholder="Select source course"
+        ></p-dropdown>
+        <p-dropdown
+            [options]="targetCourseRevisions"
+            [(ngModel)]="targetCourseRevisionId"
+            optionLabel="reasonForRevision"
+            optionValue="id"
+            [showClear]="true"
+            placeholder="Select target course"
+        ></p-dropdown>
+        <p-button
+            (click)="compare()"
+            label="Compare"
+            severity="info"
+            size="small"
+            [text]="true"
+            [plain]="true"
+            [outlined]="true"
+        ></p-button>
+    </div>
+</p-card>
+<p-card>
+    <div>
+        <h3>Original HTML</h3>
+        <pre [innerHTML]="originalHTML"></pre>
+    </div>
+
+    <div>
+        <h3>New HTML</h3>
+        <pre [innerHTML]="newHTML"></pre>
+    </div>
+
+    <div>
+        <h3>HTML Diff Output</h3>
+        <pre [innerHTML]="diffOutput"></pre>
+    </div>
+</p-card>

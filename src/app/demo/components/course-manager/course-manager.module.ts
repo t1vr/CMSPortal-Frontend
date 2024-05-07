@@ -6,7 +6,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TableModule } from 'primeng/table';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CourseUpsertComponent } from './course-upsert/course-upsert.component';
@@ -16,16 +16,19 @@ import { CardModule } from 'primeng/card';
 import { CourseHistoryComponent } from './course-history/course-history.component';
 import { TimelineModule } from 'primeng/timeline';
 import { FieldsetModule } from 'primeng/fieldset';
-import { ListboxModule } from 'primeng/listbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { AttachCourseToCurriculumFormComponent } from './attach-course-to-curriculum-form/attach-course-to-curriculum-form.component';
+import { CompareCourseComponent } from './compare-course/compare-course.component';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
+  { path: 'compare', component: CompareCourseComponent },
   { path: 'create/:curriculumId', component: CourseUpsertComponent },
-  { path: ':courseRevisionId', component: CourseDetailsComponent },
   { path: 'edit/:courseId', component: CourseUpsertComponent },
   { path: 'history/:courseId', component: CourseHistoryComponent },
+  { path: ':courseRevisionId', component: CourseDetailsComponent },
+
 ];
 
 @NgModule({
@@ -37,18 +40,21 @@ const routes: Routes = [
     TableModule,
     EditorModule,
     ReactiveFormsModule,
+    FormsModule,
     InputNumberModule,
     RouterModule.forChild(routes),
     MessagesModule,
     CardModule,
     TimelineModule,
     FieldsetModule,
-    DropdownModule
+    DropdownModule,
+    SplitButtonModule
   ],
   declarations: [CourseManagerComponent,
     CourseUpsertComponent,
     CourseDetailsComponent,
     CourseHistoryComponent,
-    AttachCourseToCurriculumFormComponent]
+    AttachCourseToCurriculumFormComponent,
+    CompareCourseComponent]
 })
 export class CourseManagerModule { }
