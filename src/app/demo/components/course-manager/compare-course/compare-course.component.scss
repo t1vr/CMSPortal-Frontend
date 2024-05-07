@@ -1,30 +1,30 @@
-p-card {
+::ng-deep p-card {
     font: normal 14px/1.4 sans-serif;
     background: #f1f1f1;
 }
 
-p {
+::ng-deep p {
     margin: 0 0 1rem;
 }
 
-ins {
+::ng-deep ins {
     background: lightgreen;
     text-decoration: none;
 }
 
-del {
+::ng-deep del {
     background: pink;
 }
 
-table {
+::ng-deep table {
     border-collapse: collapse;
     width: 100%;
 }
-table td {
+::ng-deep table td {
     border: 1px solid #ccc;
 }
 
-.card {
+::ng-deep .card {
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -32,18 +32,18 @@ table td {
     padding: 1rem;
 }
 
-.card .card {
+::ng-deep .card .card {
     margin: 0;
     flex: 1 0 0;
 }
 
-.row {
+::ng-deep .row {
     display: flex;
     justify-content: space-between;
     margin-right: -8px;
 }
 
-.col {
+::ng-deep  .col {
     display: flex;
     flex: 1 0 0;
     flex-direction: column;

@@ -6,67 +6,85 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class HtmlDiffService {
+
+  Match: any;
+
   constructor() { }
 
-  htmlToTokens(html: string): string[] {
-    let mode = "char";
-    let currentWord = "";
-    const words: string[] = [];
+  is_end_of_tag(char) {
+    return char === ">";
+  }
+  is_start_of_tag(char) {
+    return char === "<";
+  }
+  is_whitespace(char) {
+    return /^\s+$/.test(char);
+  }
+  is_tag(token) {
+    return /^\s*<[^>]+>\s*$/.test(token);
+  }
+  isnt_tag(token) {
+    return !(/^\s*<[^>]+>\s*$/.test(token));
+  }
 
-    for (let i = 0; i < html.length; i++) {
-      const char = html[i];
-
+  html_to_tokens(html) {
+    var char, current_word, i, len, mode, words;
+    mode = "char";
+    current_word = "";
+    words = [];
+    for (i = 0, len = html.length; i < len; i++) {
+      char = html[i];
       switch (mode) {
         case "tag":
-          if (char === ">") {
-            currentWord += ">";
-            words.push(currentWord);
-            currentWord = "";
-            if (this.isWhitespace(char)) {
+          if (this.is_end_of_tag(char)) {
+            current_word += ">";
+            words.push(current_word);
+            current_word = "";
+            if (this.is_whitespace(char)) {
               mode = "whitespace";
             } else {
               mode = "char";
             }
           } else {
-            currentWord += char;
+            current_word += char;
           }
           break;
         case "char":
-          if (char === "<") {
-            if (currentWord) {
-              words.push(currentWord);
+          if (this.is_start_of_tag(char)) {
+            if (current_word) {
+              words.push(current_word);
             }
-            currentWord = "<";
+            current_word = "<";
             mode = "tag";
           } else if (/\s/.test(char)) {
-            if (currentWord) {
-              words.push(currentWord);
+            if (current_word) {
+              words.push(current_word);
             }
-            currentWord = char;
+            current_word = char;
             mode = "whitespace";
           } else if (/[\w\#@]+/i.test(char)) {
-            currentWord += char;
+            current_word += char;
           } else {
-            if (currentWord) {
-              words.push(currentWord);
+            if (current_word) {
+              words.push(current_word);
             }
-            currentWord = char;
+            current_word = char;
           }
           break;
         case "whitespace":
-          if (char === "<") {
-            if (currentWord) {
-              words.push(currentWord);
+          if (this.is_start_of_tag(char)) {
+            if (current_word) {
+              words.push(current_word);
             }
-            currentWord = "<";
+            current_word = "<";
             mode = "tag";
-          } else if (this.isWhitespace(char)) {
-            currentWord += char;
+          } else if (this.is_whitespace(char)) {
+            current_word += char;
           } else {
-            if (currentWord) {
-              words.push(currentWord);
+            if (current_word) {
+              words.push(current_word);
             }
-            currentWord = char;
+            current_word = char;
             mode = "char";
           }
           break;
@@ -74,61 +92,50 @@ export class HtmlDiffService {
           throw new Error(`Unknown mode ${mode}`);
       }
     }
-
-    if (currentWord) {
-      words.push(currentWord);
+    if (current_word) {
+      words.push(current_word);
     }
-
     return words;
   }
-
-  isEndOfTag(char: string): boolean {
-    return char === ">";
-  }
-
-  isStartOfTag(char: string): boolean {
-    return char === "<";
-  }
-
-  isWhitespace(char: string): boolean {
-    return /^\s+$/.test(char);
-  }
-
-  isTag(token: string): boolean {
-    return /^\s*<[^>]+>\s*$/.test(token);
-  }
-
-  isntTag(token: string): boolean {
-    return !(/^\s*<[^>]+>\s*$/.test(token));
-  }
-
-  findMatchingBlocks(beforeTokens: string[], afterTokens: string[]): Match[] {
-    const index_of_before_locations_in_after_tokens = this.createIndex({ find_these: beforeTokens, in_these: afterTokens });
-    const matching_blocks: Match[] = [];
-    this.recursivelyFindMatchingBlocks(beforeTokens, afterTokens, index_of_before_locations_in_after_tokens, 0, beforeTokens.length, 0, afterTokens.length, matching_blocks);
-    return matching_blocks;
-  }
-
-  findMatch(
-    beforeTokens: string[],
-    afterTokens: string[],
-    index_of_before_locations_in_after_tokens: Record<string, number[]>,
-    start_in_before: number,
-    end_in_before: number,
-    start_in_after: number,
-    end_in_after: number
-  ): Match {
-    let best_match_in_before = start_in_before;
-    let best_match_in_after = start_in_after;
-    let best_match_length = 0;
-    const match_length_at: Record<number, number> = {};
-
-    for (let index_in_before = start_in_before; index_in_before < end_in_before; index_in_before++) {
-      const new_match_length_at: Record<number, number> = {};
-      const looking_for = beforeTokens[index_in_before];
-      const locations_in_after = index_of_before_locations_in_after_tokens[looking_for];
-
-      for (const index_in_after of locations_in_after) {
+  find_match(
+    before_tokens,
+    after_tokens,
+    index_of_before_locations_in_after_tokens,
+    start_in_before,
+    end_in_before,
+    start_in_after,
+    end_in_after
+  ) {
+    var best_match_in_after,
+      best_match_in_before,
+      best_match_length,
+      i,
+      index_in_after,
+      index_in_before,
+      j,
+      len,
+      locations_in_after,
+      looking_for,
+      match,
+      match_length_at,
+      new_match_length,
+      new_match_length_at,
+      ref,
+      ref1;
+    best_match_in_before = start_in_before;
+    best_match_in_after = start_in_after;
+    best_match_length = 0;
+    match_length_at = {};
+    for (
+      index_in_before = i = ref = start_in_before, ref1 = end_in_before;
+      ref <= ref1 ? i < ref1 : i > ref1;
+      index_in_before = ref <= ref1 ? ++i : --i
+    ) {
+      new_match_length_at = {};
+      looking_for = before_tokens[index_in_before];
+      locations_in_after = index_of_before_locations_in_after_tokens[looking_for];
+      for (j = 0, len = locations_in_after.length; j < len; j++) {
+        index_in_after = locations_in_after[j];
         if (index_in_after < start_in_after) {
           continue;
         }
@@ -138,91 +145,169 @@ export class HtmlDiffService {
         if (match_length_at[index_in_after - 1] == null) {
           match_length_at[index_in_after - 1] = 0;
         }
-        const new_match_length = match_length_at[index_in_after - 1] + 1;
+        new_match_length = match_length_at[index_in_after - 1] + 1;
         new_match_length_at[index_in_after] = new_match_length;
-
         if (new_match_length > best_match_length) {
           best_match_in_before = index_in_before - new_match_length + 1;
           best_match_in_after = index_in_after - new_match_length + 1;
           best_match_length = new_match_length;
         }
       }
-      Object.assign(match_length_at, new_match_length_at);
+      match_length_at = new_match_length_at;
     }
-
     if (best_match_length !== 0) {
-      return new Match(best_match_in_before, best_match_in_after, best_match_length);
+      match = new Match(best_match_in_before, best_match_in_after, best_match_length);
     }
-    return null;
+    return match;
   }
-
-  recursivelyFindMatchingBlocks(
-    beforeTokens: string[],
-    afterTokens: string[],
-    index_of_before_locations_in_after_tokens: Record<string, number[]>,
-    start_in_before: number,
-    end_in_before: number,
-    start_in_after: number,
-    end_in_after: number,
-    matching_blocks: Match[]
-  ): Match[] {
-    const match = this.findMatch(beforeTokens, afterTokens, index_of_before_locations_in_after_tokens, start_in_before, end_in_before, start_in_after, end_in_after);
-    if (match !== null) {
+  recursively_find_matching_blocks(
+    before_tokens,
+    after_tokens,
+    index_of_before_locations_in_after_tokens,
+    start_in_before,
+    end_in_before,
+    start_in_after,
+    end_in_after,
+    matching_blocks
+  ) {
+    var match;
+    match = this.find_match(
+      before_tokens,
+      after_tokens,
+      index_of_before_locations_in_after_tokens,
+      start_in_before,
+      end_in_before,
+      start_in_after,
+      end_in_after
+    );
+    if (match != null) {
       if (start_in_before < match.start_in_before && start_in_after < match.start_in_after) {
-        this.recursivelyFindMatchingBlocks(beforeTokens, afterTokens, index_of_before_locations_in_after_tokens, start_in_before, match.start_in_before, start_in_after, match.start_in_after, matching_blocks);
+        this.recursively_find_matching_blocks(
+          before_tokens,
+          after_tokens,
+          index_of_before_locations_in_after_tokens,
+          start_in_before,
+          match.start_in_before,
+          start_in_after,
+          match.start_in_after,
+          matching_blocks
+        );
       }
       matching_blocks.push(match);
       if (match.end_in_before <= end_in_before && match.end_in_after <= end_in_after) {
-        this.recursivelyFindMatchingBlocks(beforeTokens, afterTokens, index_of_before_locations_in_after_tokens, match.end_in_before + 1, end_in_before, match.end_in_after + 1, end_in_after, matching_blocks);
+        this.recursively_find_matching_blocks(
+          before_tokens,
+          after_tokens,
+          index_of_before_locations_in_after_tokens,
+          match.end_in_before + 1,
+          end_in_before,
+          match.end_in_after + 1,
+          end_in_after,
+          matching_blocks
+        );
       }
     }
     return matching_blocks;
   }
-
-  createIndex(p: { find_these: string[]; in_these: string[] }): Record<string, number[]> {
-    if (!p.find_these) {
+  create_index(p) {
+    var i, idx, index, len, ref, token;
+    if (p.find_these == null) {
       throw new Error("params must have find_these key");
     }
-    if (!p.in_these) {
+    if (p.in_these == null) {
       throw new Error("params must have in_these key");
     }
-    const index: Record<string, number[]> = {};
-    p.find_these.forEach(token => {
+    index = {};
+    ref = p.find_these;
+    for (i = 0, len = ref.length; i < len; i++) {
+      token = ref[i];
       index[token] = [];
-      let idx = p.in_these.indexOf(token);
+      idx = p.in_these.indexOf(token);
       while (idx !== -1) {
         index[token].push(idx);
         idx = p.in_these.indexOf(token, idx + 1);
       }
-    });
+    }
     return index;
   }
-
-  calculateOperations(beforeTokens: string[], afterTokens: string[]): any[] {
-    let position_in_before = 0;
-    let position_in_after = 0;
-    const operations: any[] = [];
-    const action_map = {
+  find_matching_blocks(before_tokens, after_tokens) {
+    var index_of_before_locations_in_after_tokens, matching_blocks;
+    matching_blocks = [];
+    index_of_before_locations_in_after_tokens = this.create_index({
+      find_these: before_tokens,
+      in_these: after_tokens,
+    });
+    return this.recursively_find_matching_blocks(
+      before_tokens,
+      after_tokens,
+      index_of_before_locations_in_after_tokens,
+      0,
+      before_tokens.length,
+      0,
+      after_tokens.length,
+      matching_blocks
+    );
+  }
+  calculate_operations(before_tokens, after_tokens) {
+    var action_map,
+      action_up_to_match_positions,
+      i,
+      index,
+      is_single_whitespace,
+      j,
+      last_op,
+      len,
+      len1,
+      match,
+      match_starts_at_current_position_in_after,
+      match_starts_at_current_position_in_before,
+      matches,
+      op,
+      operations,
+      position_in_after,
+      position_in_before,
+      post_processed;
+    if (before_tokens == null) {
+      throw new Error("before_tokens?");
+    }
+    if (after_tokens == null) {
+      throw new Error("after_tokens?");
+    }
+    position_in_before = position_in_after = 0;
+    operations = [];
+    action_map = {
       "false,false": "replace",
       "true,false": "insert",
       "false,true": "delete",
       "true,true": "none",
     };
-    const matches = this.findMatchingBlocks(beforeTokens, afterTokens);
-    matches.push(new Match(beforeTokens.length, afterTokens.length, 0));
-
-    for (let index = 0; index < matches.length; index++) {
-      const match = matches[index];
-      const match_starts_at_current_position_in_before = position_in_before === match.start_in_before;
-      const match_starts_at_current_position_in_after = position_in_after === match.start_in_after;
-      const action_up_to_match_positions = action_map[[match_starts_at_current_position_in_before, match_starts_at_current_position_in_after].toString()];
+    matches = this.find_matching_blocks(before_tokens, after_tokens);
+    matches.push(new Match(before_tokens.length, after_tokens.length, 0));
+    for (index = i = 0, len = matches.length; i < len; index = ++i) {
+      match = matches[index];
+      match_starts_at_current_position_in_before =
+        position_in_before === match.start_in_before;
+      match_starts_at_current_position_in_after = position_in_after === match.start_in_after;
+      action_up_to_match_positions =
+        action_map[
+        [
+          match_starts_at_current_position_in_before,
+          match_starts_at_current_position_in_after,
+        ].toString()
+        ];
       if (action_up_to_match_positions !== "none") {
         operations.push({
           action: action_up_to_match_positions,
           start_in_before: position_in_before,
-          end_in_before: action_up_to_match_positions !== "insert" ? match.start_in_before - 1 : undefined,
+          end_in_before:
+            action_up_to_match_positions !== "insert"
+              ? match.start_in_before - 1
+              : void 0,
           start_in_after: position_in_after,
-          end_in_after: action_up_to_match_positions !== "delete" ? match.start_in_after - 1 : undefined,
+          end_in_after:
+            action_up_to_match_positions !== "delete"
+              ? match.start_in_after - 1
+              : void 0,
         });
       }
       if (match.length !== 0) {
@@ -237,25 +322,23 @@ export class HtmlDiffService {
       position_in_before = match.end_in_before + 1;
       position_in_after = match.end_in_after + 1;
     }
-
-    const post_processed: any[] = [];
-    let last_op = {
+    post_processed = [];
+    last_op = {
       action: "none",
-      end_in_before: 0,
-      end_in_after: 0
     };
-
-    const is_single_whitespace = (op: any) => {
+    is_single_whitespace = function (op) {
       if (op.action !== "equal") {
         return false;
       }
       if (op.end_in_before - op.start_in_before !== 0) {
         return false;
       }
-      return /^\s$/.test(beforeTokens.slice(op.start_in_before, op.end_in_before + 1).join(""));
+      return /^\s$/.test(
+        before_tokens.slice(op.start_in_before, +op.end_in_before + 1 || 9e9)
+      );
     };
-
-    for (const op of operations) {
+    for (j = 0, len1 = operations.length; j < len1; j++) {
+      op = operations[j];
       if (
         (is_single_whitespace(op) && last_op.action === "replace") ||
         (op.action === "replace" && last_op.action === "replace")
@@ -267,16 +350,15 @@ export class HtmlDiffService {
         last_op = op;
       }
     }
-
     return post_processed;
   }
-
-  consecutiveWhere<T>(start: number, content: T[], predicate: (item: T) => boolean): T[] {
-    const contentSlice = content.slice(start);
-    let last_matching_index;
-    for (let index = 0; index < contentSlice.length; index++) {
-      const item = contentSlice[index];
-      const answer = predicate(item);
+  consecutive_where(start, content, predicate) {
+    var answer, i, index, last_matching_index, len, token;
+    content = content.slice(start, +content.length + 1 || 9e9);
+    last_matching_index = void 0;
+    for (index = i = 0, len = content.length; i < len; index = ++i) {
+      token = content[index];
+      answer = predicate(token);
       if (answer === true) {
         last_matching_index = index;
       }
@@ -284,21 +366,21 @@ export class HtmlDiffService {
         break;
       }
     }
-    if (last_matching_index !== undefined) {
-      return contentSlice.slice(0, last_matching_index + 1);
+    if (last_matching_index != null) {
+      return content.slice(0, +last_matching_index + 1 || 9e9);
     }
     return [];
   }
-
-  wrap(tag: string, content: string[]): string {
-    let rendering = "";
-    let position = 0;
-    const length = content.length;
+  wrap(tag, content) {
+    var length, non_tags, position, rendering, tags;
+    rendering = "";
+    position = 0;
+    length = content.length;
     while (true) {
       if (position >= length) {
         break;
       }
-      const non_tags = this.consecutiveWhere(position, content, this.isntTag);
+      non_tags = this.consecutive_where(position, content, this.isnt_tag);
       position += non_tags.length;
       if (non_tags.length !== 0) {
         rendering += `<${tag}>${non_tags.join("")}</${tag}>`;
@@ -306,47 +388,78 @@ export class HtmlDiffService {
       if (position >= length) {
         break;
       }
-      const tags = this.consecutiveWhere(position, content, this.isTag);
+      tags = this.consecutive_where(position, content, this.is_tag);
       position += tags.length;
       rendering += tags.join("");
     }
     return rendering;
   }
+  // op_map = {
+  //   equal: function (op, before_tokens, after_tokens) {
+  //     return before_tokens.slice(op.start_in_before, +op.end_in_before + 1 || 9e9).join("");
+  //   },
+  //   insert: (op, before_tokens, after_tokens) => {
+  //     var val;
+  //     val = after_tokens.slice(op.start_in_after, +op.end_in_after + 1 || 9e9);
+  //     return this.wrap("ins", val);
+  //   },
+  //   delete: (op, before_tokens, after_tokens) => {
+  //     var val;
+  //     val = before_tokens.slice(op.start_in_before, +op.end_in_before + 1 || 9e9);
+  //     return this.wrap("del", val);
+  //   }
+  // };
+  // // op_map.replace = function (op, before_tokens, after_tokens) {
+  // //     return (
+  // //         op_map.delete(op, before_tokens, after_tokens) +
+  // //         op_map.insert(op, before_tokens, after_tokens)
+  // //     );
+  // // };
 
-  renderOperations(beforeTokens: string[], afterTokens: string[], operations: any[]): string {
-    let rendering = "";
-    for (const op of operations) {
-      rendering += this.opMap[op.action](op, beforeTokens, afterTokens);
+  op_map = {
+    equal: function (op, before_tokens, after_tokens) {
+      return before_tokens.slice(op.start_in_before, +op.end_in_before + 1 || 9e9).join("");
+    },
+    insert: (op, before_tokens, after_tokens) => {
+      var val;
+      val = after_tokens.slice(op.start_in_after, +op.end_in_after + 1 || 9e9);
+      return this.wrap("ins", val);
+    },
+    delete: (op, before_tokens, after_tokens) => {
+      var val;
+      val = before_tokens.slice(op.start_in_before, +op.end_in_before + 1 || 9e9);
+      return this.wrap("del", val);
+    },
+    replace: (op, before_tokens, after_tokens) => {
+      return (
+        this.op_map.delete(op, before_tokens, after_tokens) +
+        this.op_map.insert(op, before_tokens, after_tokens)
+      );
+    }
+  };
+
+  render_operations(before_tokens, after_tokens, operations) {
+    var i, len, op, rendering;
+    rendering = "";
+    for (i = 0, len = operations.length; i < len; i++) {
+      op = operations[i];
+      rendering += this.op_map[op.action](op, before_tokens, after_tokens);
     }
     return rendering;
   }
-
-  diff(before: string, after: string): string {
+  diff(before, after) {
+    var ops;
     if (before === after) {
       return before;
     }
-    const beforeTokens = this.htmlToTokens(before);
-    const afterTokens = this.htmlToTokens(after);
-    const ops = this.calculateOperations(beforeTokens, afterTokens);
-    return this.renderOperations(beforeTokens, afterTokens, ops);
-  }
 
-  private opMap = {
-    equal: (op: any, beforeTokens: string[], afterTokens: string[]) => {
-      return beforeTokens.slice(op.start_in_before, op.end_in_before + 1).join("");
-    },
-    insert: (op: any, beforeTokens: string[], afterTokens: string[]) => {
-      const val = afterTokens.slice(op.start_in_after, op.end_in_after + 1);
-      return this.wrap("ins", val);
-    },
-    delete: (op: any, beforeTokens: string[], afterTokens: string[]) => {
-      const val = beforeTokens.slice(op.start_in_before, op.end_in_before + 1);
-      return this.wrap("del", val);
-    },
-    replace: (op: any, beforeTokens: string[], afterTokens: string[]) => {
-      return this.opMap.delete(op, beforeTokens, afterTokens) + this.opMap.insert(op, beforeTokens, afterTokens);
-    },
-  };
+
+
+    before = this.html_to_tokens(before);
+    after = this.html_to_tokens(after);
+    ops = this.calculate_operations(before, after);
+    return this.render_operations(before, after, ops);
+  }
 }
 
 class Match {
@@ -364,3 +477,4 @@ class Match {
     this.end_in_after = this.start_in_after + this.length - 1;
   }
 }
+

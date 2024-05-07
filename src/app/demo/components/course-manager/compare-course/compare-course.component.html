@@ -27,19 +27,34 @@
         ></p-button>
     </div>
 </p-card>
-<p-card>
-    <div>
-        <h3>Original HTML</h3>
-        <pre [innerHTML]="originalHTML"></pre>
-    </div>
+<p-card styleClass="mt-3">
+    <ng-container *ngIf="sourceCourseRevision">
+        <h3>{{ sourceCourseRevision.reasonForRevision }}</h3>
+        <div [innerHTML]="sourceCourseRevision.description" class="w-full"></div>
+        <!-- <p-editor
+            [ngModel]="sourceCourseRevision.description"
+            [readonly]="true"
+            [style]="{ width: '100%' }"
+        ></p-editor> -->
+    </ng-container>
+</p-card>
 
-    <div>
-        <h3>New HTML</h3>
-        <pre [innerHTML]="newHTML"></pre>
-    </div>
+<p-card styleClass="mt-3">
+    <ng-container *ngIf="targetCourseRevision">
+        <h3>{{ targetCourseRevision.reasonForRevision }}</h3>
+        <div [innerHTML]="targetCourseRevision.description"></div>
+        <!-- <p-editor
+            [ngModel]="targetCourseRevision.description"
+            [readonly]="true"
+            [style]="{ width: '100%' }"
+        ></p-editor> -->
+    </ng-container>
+</p-card>
 
+<p-card styleClass="mt-3">
     <div>
         <h3>HTML Diff Output</h3>
-        <pre [innerHTML]="diffOutput"></pre>
+        <div [innerHTML]="diffOutput"></div>
+        <!-- <p-editor [ngModel]="diffOutput" [readonly]="true" [style]="{ width: '100%' }"></p-editor> -->
     </div>
 </p-card>
