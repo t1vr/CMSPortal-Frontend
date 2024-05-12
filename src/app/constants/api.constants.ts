@@ -35,7 +35,7 @@ export class CourseApiConstants {
   public static readonly REVISE_ENDPOINT = "revise/";
   public static readonly ADD_TO_CURRICULUM_ENDPOINT = "add-to-curriculum/";
   public static readonly DELETE_BY_ID_ENDPOINT = "";
-
+  public static readonly ASSIGN_AUTHOR_ENDPOINT = "assign-author/";
 }
 
 export class CurriculumApiConstants {
@@ -46,5 +46,15 @@ export class CurriculumApiConstants {
   public static readonly GET_ALL_ENDPOINT = "";
   public static readonly GET_BY_ID_ENDPOINT = "";
   public static readonly ADD_TO_CURRICULUM_ENDPOINT = "add-to-curriculum/";
+
+}
+
+export class UserApiConstants {
+  public static readonly USER_MODULE = "user"
+  public static readonly CREATE_ENDPOINT = "";
+  public static readonly UPDATE_ENDPOINT = "";
+  public static readonly DELETE_ENDPOINT = "";
+  public static readonly GET_ALL_ENDPOINT = "";
+  public static readonly GET_BY_ID_ENDPOINT = "";
 
 }

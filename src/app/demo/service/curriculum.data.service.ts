@@ -8,7 +8,6 @@ import { BaseDataService } from "./base.data.service";
 @Injectable({ providedIn: "root" })
 export class CurriculumDataService extends BaseDataService {
 
-
   constructor(private httpClient: HttpClient) {
     super();
   }

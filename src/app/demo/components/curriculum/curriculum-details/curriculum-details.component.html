@@ -110,6 +110,7 @@
                 <tr>
                     <th>Title</th>
                     <th>Credit Hours</th>
+                    <th>Author</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-course>
@@ -125,6 +126,26 @@
                     </td>
 
                     <td>{{ course.creditHour }}</td>
+                    <td [pEditableColumn]="course.authorId" pEditableColumnField="authorId">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown
+                                    [options]="faculties"
+                                    optionLabel="firstName"
+                                    optionValue="id"
+                                    appendTo="body"
+                                    [(ngModel)]="course.authorId"
+                                    (onChange)="onChangeAuthor(course, $event)"
+                                    [style]="{ width: '100%' }"
+                                />
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <p-tag
+                                    [value]="course.authorName ?? 'Not Assigned'"
+                                />
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>

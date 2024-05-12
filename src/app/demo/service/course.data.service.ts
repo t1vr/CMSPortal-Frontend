@@ -5,11 +5,17 @@ import { BaseDataService } from './base.data.service';
 import { Observable } from 'rxjs';
 import { CourseApiConstants, CurriculumApiConstants } from 'src/app/constants/api.constants';
 import { BaseResponse, CourseItem, CreateCourseRequest, UpdateCourseRequest } from 'src/app/models/tenant.model';
-import { AddCourseToCurriculumRequest } from './course.service';
+import { AddCourseToCurriculumRequest, AssignAuthorsToCourseRevisionRequest } from './course.service';
 import { CurriculumModule } from '../components/curriculum/curriculum.module';
 
 @Injectable({ providedIn: "root" })
 export class CourseDataService extends BaseDataService {
+  assignAuthorsToCourse(courseRevisionId: number, request: AssignAuthorsToCourseRevisionRequest) {
+    return this.httpClient.put<BaseResponse<CourseItem>>(
+      this.getFullApiUrl(CourseApiConstants.COURSE_MODULE, CourseApiConstants.ASSIGN_AUTHOR_ENDPOINT + courseRevisionId),
+      request,
+      this.getHttpOptions(false, true, false));
+  }
 
   constructor(private httpClient: HttpClient) {
     super();

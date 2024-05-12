@@ -4,7 +4,7 @@ import { CurriculumComponent } from './curriculum.component';
 import { CurriculumFormComponent } from './curriculum-form/curriculum-form.component';
 import { CurriculumListComponent } from './curriculum-list/curriculum-list.component';
 import { RouterModule, Routes } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
@@ -17,6 +17,7 @@ import { ChipModule } from 'primeng/chip';
 import { TagModule } from 'primeng/tag';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     ButtonModule,
     CardModule,
     PanelModule,
@@ -36,7 +38,8 @@ const routes: Routes = [
     CalendarModule,
     TagModule,
     TableModule,
-    DialogModule
+    DialogModule,
+    DropdownModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,

@@ -1,4 +1,5 @@
 import { FormControl } from "@angular/forms";
+import { UserItem } from '../demo/service/user.service';
 
 //Tenant
 export class SignUpTenantRequestModel {
@@ -97,6 +98,10 @@ export interface CourseItem {
   courseId: number;
   curriculumId: number;
   reasonForRevision: string;
+  authorId: string;
+  authorName: string;
+  author: UserItem;
+
 }
 
 export interface CreateCourseRequest {
@@ -138,4 +143,11 @@ export interface CurriculumForm {
   description: FormControl<string>;
   programIds: FormControl<number[]>;
   duration: FormControl<Date[]>;
+}
+
+
+export interface FacultyForm {
+  firstName: FormControl<string>;
+  lastName: FormControl<string>;
+  email: FormControl<string>;
 }

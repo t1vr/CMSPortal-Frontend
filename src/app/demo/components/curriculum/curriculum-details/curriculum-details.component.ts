@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AddCourseToCurriculumRequest, CourseService } from 'src/app/demo/service/course.service';
+import { AddCourseToCurriculumRequest, AssignAuthorsToCourseRevisionRequest, CourseService } from 'src/app/demo/service/course.service';
 import { CurriculumService } from 'src/app/demo/service/curriculum.service';
+import { UserItem, UserService } from 'src/app/demo/service/user.service';
 import { CourseItem, CurriculumItem } from 'src/app/models/tenant.model';
 
 @Component({
@@ -16,8 +17,11 @@ export class CurriculumDetailsComponent implements OnInit {
   availableCoursesToAttach: CourseItem[] = [];
   dialogVisible: boolean = false;
   selectedcourses: CourseItem[] = [];
+  selectedFaculty: UserItem;
+  faculties: UserItem[];
 
   constructor(private curriculumService: CurriculumService,
+    private userService: UserService,
     private courseService: CourseService,
     private router: Router,
     private activatedRoute: ActivatedRoute) { }
@@ -25,6 +29,7 @@ export class CurriculumDetailsComponent implements OnInit {
   ngOnInit() {
     this.curriculumId = this.activatedRoute.snapshot.paramMap.get('curriculumId') as unknown as number;
     this.getCurriculumById(this.curriculumId);
+    this.getAllFaculties();
   }
 
   getCurriculumById(curriculumId: number) {
@@ -40,7 +45,8 @@ export class CurriculumDetailsComponent implements OnInit {
     this.courseService.getCourses().subscribe(x => {
       if (x.data) {
         this.courses = x.data;
-        this.availableCoursesToAttach = x.data.filter(course => !this.curriculum.courseResponses.some(y => y.courseId === course?.courseId));
+        this.availableCoursesToAttach = x.data
+          .filter(course => !this.curriculum.courseResponses.some(y => y.courseId === course?.courseId));
       }
     })
   }
@@ -67,5 +73,31 @@ export class CurriculumDetailsComponent implements OnInit {
       }
     })
     this.closeDialog();
+  }
+
+  onChangeAuthor(courseRevision: CourseItem) {
+    this.selectedFaculty = this.faculties.find(x => x.id === courseRevision.authorId);
+    this.curriculum.courseResponses = this.curriculum.courseResponses.map(x => {
+      if (x.id === courseRevision.id)
+        x.authorName = this.selectedFaculty?.firstName
+      return x;
+    })
+
+    let request = { authorId: courseRevision.authorId } as AssignAuthorsToCourseRevisionRequest;
+
+    this.courseService.assignAuthorsToCourse(courseRevision.id, request).subscribe(x => {
+      if (x.data) {
+
+      }
+    })
+
+  }
+
+  getAllFaculties() {
+    this.userService.getAllUsers().subscribe(x => {
+      if (x.data) {
+        this.faculties = x.data;
+      }
+    })
   }
 }
