@@ -52,7 +52,15 @@ export class AppMenuComponent implements OnInit {
           },
 
           { label: 'Manage Curriculums', icon: 'pi pi-fw pi-list', routerLink: ['/', tenantIdentifier, 'manage-curriculums'] },
+          {
+            label: 'Manage Faculties', icon: 'pi pi-fw pi-list', items: [
+              {
+                label: 'Faculty List',
+                routerLink: ['/', tenantIdentifier, 'manage-faculties']
+              }
 
+            ]
+          },
         ]
       },
       {

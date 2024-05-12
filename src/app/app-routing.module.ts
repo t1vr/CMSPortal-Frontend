@@ -25,11 +25,10 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
           { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'programs', loadChildren: () => import('./demo/components/programs/programs.module').then(m => m.ProgramsModule) },
           { path: 'curriculums', loadChildren: () => import('./demo/components/curriculum/curriculum.module').then(m => m.CurriculumModule) },
-          { path: 'faculties', loadChildren: () => import('./demo/components/faculty/faculty.module').then(m => m.FacultyModule) },
           { path: 'manage-programs', loadChildren: () => import('./demo/components/program-manager/program-manager.module').then(m => m.ProgramManagerModule) },
           { path: 'manage-courses', loadChildren: () => import('./demo/components/course-manager/course-manager.module').then(m => m.CourseManagerModule) },
           { path: 'manage-curriculums', loadChildren: () => import('./demo/components/curriculum/curriculum.module').then(m => m.CurriculumModule) },
-
+          { path: 'manage-faculties', loadChildren: () => import('./demo/components/faculty-manager/faculty-manager.module').then(m => m.FacultyManagerModule) },
         ]
       },
       { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
