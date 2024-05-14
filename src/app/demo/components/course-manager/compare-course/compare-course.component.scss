@@ -43,9 +43,22 @@
     margin-right: -8px;
 }
 
-::ng-deep  .col {
+::ng-deep .col {
     display: flex;
     flex: 1 0 0;
     flex-direction: column;
     margin-right: 8px;
+}
+
+.course-compare-header {
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    border-width: 1px 0 0px 0;
+    padding: 1rem 1rem;
+    font-weight: 700;
+}
+
+.course-container{
+  padding: 1rem 1rem;
+  margin-top: 3rem;
 }

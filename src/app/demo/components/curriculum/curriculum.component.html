@@ -1,14 +1,15 @@
-<p-card>
+<div class="surface-section curriculum-list-header">
     <div class="flex justify-content-between">
         <span class="font-bold text-xl">Curriculums</span>
         <p-button
-            label="Add"
+            icon="pi pi-plus"
+            severity="primary"
+            label="Create"
             [text]="true"
-            [plain]="true"
-            [outlined]="false"
             (click)="onClickCreateBtn()"
         ></p-button>
     </div>
+
     <!-- <ng-container *ngFor="let program of curriculums">
 
     <p-panel [toggleable]="true">
@@ -28,5 +29,7 @@
       </p>
     </p-panel>
   </ng-container> -->
+</div>
+<div>
     <app-curriculum-list [curriculums]="curriculums"></app-curriculum-list>
-</p-card>
+</div>

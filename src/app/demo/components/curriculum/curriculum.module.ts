@@ -18,6 +18,7 @@ import { TagModule } from 'primeng/tag';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { DataViewModule } from 'primeng/dataview';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -39,7 +40,8 @@ const routes: Routes = [
     TagModule,
     TableModule,
     DialogModule,
-    DropdownModule
+    DropdownModule,
+    DataViewModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,

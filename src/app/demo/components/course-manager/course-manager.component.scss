@@ -1,3 +1,15 @@
-// .course-list .p-button {
-//     padding: 0 1rem 0 0;
-// }
+.course-list-header {
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    border-width: 1px 0 0px 0;
+    padding: 1rem 1rem;
+    font-weight: 700;
+}
+
+.course-list td {
+  padding: 0.3rem 1rem;
+}
+
+.course-list th {
+  background: white;
+}

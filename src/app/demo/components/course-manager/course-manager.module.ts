@@ -20,6 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AttachCourseToCurriculumFormComponent } from './attach-course-to-curriculum-form/attach-course-to-curriculum-form.component';
 import { CompareCourseComponent } from './compare-course/compare-course.component';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { DividerModule } from 'primeng/divider';
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
@@ -48,7 +49,8 @@ const routes: Routes = [
     TimelineModule,
     FieldsetModule,
     DropdownModule,
-    SplitButtonModule
+    SplitButtonModule,
+    DividerModule
   ],
   declarations: [CourseManagerComponent,
     CourseUpsertComponent,

@@ -9,7 +9,8 @@ import { ProgramService } from '../../service/program.service';
 @Component({
   selector: 'app-curriculum',
   templateUrl: './curriculum.component.html',
-  providers: [DialogService, MessageService]
+  providers: [DialogService, MessageService],
+  styleUrls:['./curriculum.component.css']
 })
 export class CurriculumComponent implements OnInit {
   curriculums: CurriculumItem[] = [];
