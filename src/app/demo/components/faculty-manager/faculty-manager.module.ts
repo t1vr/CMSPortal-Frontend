@@ -4,7 +4,6 @@ import { FacultyManagerComponent } from './faculty-manager.component';
 import { FacultyListComponent } from './faculty-list/faculty-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CurriculumDetailsComponent } from '../curriculum/curriculum-details/curriculum-details.component';
-import { CurriculumComponent } from '../curriculum/curriculum.component';
 import { DataViewModule } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
@@ -14,6 +13,7 @@ import { FacultyUpsertComponent } from './faculty-upsert/faculty-upsert.componen
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FacultyDetailsComponent } from './faculty-details/faculty-details.component';
 
 const routes: Routes = [
   { path: "", component: FacultyManagerComponent },
@@ -35,7 +35,8 @@ const routes: Routes = [
   ],
   declarations: [FacultyManagerComponent,
     FacultyListComponent,
-    FacultyUpsertComponent
+    FacultyUpsertComponent,
+    FacultyDetailsComponent
   ]
 })
 export class FacultyManagerModule { }
