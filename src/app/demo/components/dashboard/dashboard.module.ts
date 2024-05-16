@@ -11,22 +11,27 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
 import { CardModule } from 'primeng/card';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ChartModule,
-        MenuModule,
-        TableModule,
-        StyleClassModule,
-        PanelMenuModule,
-        ButtonModule,
-        DashboardsRoutingModule,
-        CardModule,
-        FontAwesomeModule
-    ],
-    declarations: [DashboardComponent]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ChartModule,
+    MenuModule,
+    TableModule,
+    StyleClassModule,
+    PanelMenuModule,
+    ButtonModule,
+    DashboardsRoutingModule,
+    CardModule,
+    FontAwesomeModule,
+    // NgxPermissionsModule.forChild({
+    //   permissionsIsolate: true,
+    //   rolesIsolate: true
+    // })
+  ],
+  declarations: [DashboardComponent]
 })
 export class DashboardModule {
 }

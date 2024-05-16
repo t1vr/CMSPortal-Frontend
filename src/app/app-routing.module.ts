@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
+import { NgxPermissionsGuard, ngxPermissionsGuard } from 'ngx-permissions';
 
 @NgModule({
   imports: [
@@ -22,7 +23,17 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
       {
         path: ':tenantIdentifier', component: AppLayoutComponent,
         children: [
-          { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          {
+            path: '',
+            loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule),
+            data: {
+              permissions: {
+                only: 'Admin',
+                redirectTo: '/auth/login'
+              }
+            },
+            canLoad: [ngxPermissionsGuard],
+          },
           { path: 'programs', loadChildren: () => import('./demo/components/programs/programs.module').then(m => m.ProgramsModule) },
           { path: 'curriculums', loadChildren: () => import('./demo/components/curriculum/curriculum.module').then(m => m.CurriculumModule) },
           { path: 'manage-programs', loadChildren: () => import('./demo/components/program-manager/program-manager.module').then(m => m.ProgramManagerModule) },
