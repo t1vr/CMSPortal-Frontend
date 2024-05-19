@@ -1,9 +1,7 @@
-import { ProgramsModule } from './demo/components/programs/programs.module';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
-import { NgxPermissionsGuard, ngxPermissionsGuard } from 'ngx-permissions';
 
 @NgModule({
   imports: [
@@ -25,14 +23,7 @@ import { NgxPermissionsGuard, ngxPermissionsGuard } from 'ngx-permissions';
         children: [
           {
             path: '',
-            loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule),
-            data: {
-              permissions: {
-                only: 'Admin',
-                redirectTo: '/auth/login'
-              }
-            },
-            canLoad: [ngxPermissionsGuard],
+            loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule)
           },
           { path: 'programs', loadChildren: () => import('./demo/components/programs/programs.module').then(m => m.ProgramsModule) },
           { path: 'curriculums', loadChildren: () => import('./demo/components/curriculum/curriculum.module').then(m => m.CurriculumModule) },

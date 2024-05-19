@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode'
-import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +9,13 @@ export class JWTTokenService {
   jwtToken: string;
   decodedToken: { [key: string]: string };
 
-  constructor(private rolesService: NgxRolesService,
-    private permissionsService: NgxPermissionsService) {
+  constructor() {
   }
 
   setToken(token: string) {
     if (token) {
       this.jwtToken = token;
       this.decodeToken();
-      this.loadRole();
     }
   }
 
@@ -59,10 +56,5 @@ export class JWTTokenService {
     } else {
       return false;
     }
-  }
-
-  loadRole() {
-    let role = this.getRole();
-    this.rolesService.addRole(role, [role])
   }
 }

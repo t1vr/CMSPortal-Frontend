@@ -11,7 +11,6 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
 import { CardModule } from 'primeng/card';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   imports: [
@@ -26,10 +25,6 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     DashboardsRoutingModule,
     CardModule,
     FontAwesomeModule,
-    // NgxPermissionsModule.forChild({
-    //   permissionsIsolate: true,
-    //   rolesIsolate: true
-    // })
   ],
   declarations: [DashboardComponent]
 })

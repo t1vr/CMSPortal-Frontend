@@ -11,23 +11,21 @@ import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent
-    ],
-    imports: [
-        AppRoutingModule,
-        NgxPermissionsModule.forRoot(),
-        AppLayoutModule,
-        FontAwesomeModule
-    ],
-    providers: [
-        // { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent, NotfoundComponent
+  ],
+  imports: [
+    AppRoutingModule,
+    AppLayoutModule,
+    FontAwesomeModule
+  ],
+  providers: [
+    // { provide: LocationStrategy, useClass: HashLocationStrategy },
+    CountryService, CustomerService, EventService, IconService, NodeService,
+    PhotoService, ProductService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
