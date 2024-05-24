@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode'
+import { LocalStorageService } from './local.storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,9 @@ export class JWTTokenService {
   jwtToken: string;
   decodedToken: { [key: string]: string };
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
+    this.jwtToken = this.localStorageService.getUserToken();
+    this.decodeToken();
   }
 
   setToken(token: string) {
@@ -42,6 +45,10 @@ export class JWTTokenService {
   getRole() {
     this.decodeToken();
     return this.decodedToken ? this.decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
+  }
+
+  getUserTenant() {
+    return this.decodedToken ? this.decodedToken['tenant'] : null;
   }
 
   getExpiryTime() {

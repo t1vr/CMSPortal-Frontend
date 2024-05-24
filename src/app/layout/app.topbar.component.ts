@@ -1,20 +1,52 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
+import { CurrentUserService } from '../demo/service/current.user.service';
 
 @Component({
-    selector: 'app-topbar',
-    templateUrl: './app.topbar.component.html'
+  selector: 'app-topbar',
+  templateUrl: './app.topbar.component.html'
 })
-export class AppTopBarComponent {
+export class AppTopBarComponent implements OnInit {
 
-    items!: MenuItem[];
+  items!: MenuItem[];
+  profileMenuItems: MenuItem[];
+  @ViewChild('menubutton') menuButton!: ElementRef;
 
-    @ViewChild('menubutton') menuButton!: ElementRef;
+  @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
 
-    @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
+  @ViewChild('topbarmenu') menu!: ElementRef;
 
-    @ViewChild('topbarmenu') menu!: ElementRef;
+  constructor(public layoutService: LayoutService,
+    private currentUserService: CurrentUserService) { }
 
-    constructor(public layoutService: LayoutService) { }
+  ngOnInit(): void {
+    this.profileMenuItems = [
+      {
+        label: 'Profiles',
+        items: [
+          {
+            label: 'Log out',
+            command: () => {
+              this.logOut();
+            }
+          },
+          {
+            label: 'Manage Profiles',
+            command: () => {
+              this.goToManageProfile();
+            }
+          }
+        ]
+      }
+    ];
+  }
+  goToManageProfile() {
+    throw new Error('Method not implemented.');
+  }
+  logOut() {
+    this.currentUserService.logOut();
+  }
+
+
 }

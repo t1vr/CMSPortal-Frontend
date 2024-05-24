@@ -1,5 +1,5 @@
 import { FormControl } from "@angular/forms";
-import { UserItem } from '../demo/service/user.service';
+import { CourseRevisionStatus } from "../demo/components/course-manager/course-details/course-details.component";
 
 //Tenant
 export class SignUpTenantRequestModel {
@@ -101,7 +101,7 @@ export interface CourseItem {
   authorId: string;
   authorName: string;
   author: UserItem;
-
+  courseRevisionStatus: CourseRevisionStatus
 }
 
 export interface CreateCourseRequest {
@@ -150,4 +150,86 @@ export interface FacultyForm {
   firstName: FormControl<string>;
   lastName: FormControl<string>;
   email: FormControl<string>;
+  designation: FormControl<string>;
+  phoneNumber: FormControl<string>;
+  roles: FormControl<string[]>;
+}
+
+
+
+export class Role {
+  static Admin = 'Admin';
+  static Faculty = 'Faculty';
+}
+
+export var rolesData = [
+  {
+    name: Role.Admin,
+    value: Role.Admin,
+  },
+  {
+    name: Role.Faculty,
+    value: Role.Faculty,
+  },
+]
+
+export class Designation {
+  static Professor = 'Professor';
+  static AssociateProfessor = 'Associate Professor';
+  static AssistantProfessor = 'Assistant Professor';
+  static Lecturer = 'Lecturer';
+}
+
+
+export var designationsData = [
+  {
+    name: Designation.Professor,
+    value: Designation.Professor,
+  },
+  {
+    name: Designation.AssociateProfessor,
+    value: Designation.AssociateProfessor,
+  },
+  {
+    name: Designation.AssistantProfessor,
+    value: Designation.AssistantProfessor,
+  },
+  {
+    name: Designation.Lecturer,
+    value: Designation.Lecturer,
+  }
+]
+
+
+
+export interface UserItem {
+  id: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  email: string;
+  isActive: boolean;
+  tenantId: string;
+  imageUrl: string;
+  designation: string;
+  phoneNumber: string;
+  roles: string[];
+}
+
+export interface CreateUserRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  designation: string;
+  phoneNumber: string;
+  roles: string[];
+}
+
+export interface UpdateUserRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  designation: string;
+  phoneNumber: string;
+  roles: string[];
 }

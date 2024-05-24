@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { CreateCourseRequest, BaseResponse, CourseItem, UpdateCourseRequest } from 'src/app/models/tenant.model';
 import { CourseDataService } from './course.data.service';
-import { UserItem } from './user.service';
-
+import { UpdateCourseRevisionStatusRequest } from '../components/course-manager/course-details/course-details.component';
 @Injectable({ providedIn: 'root' })
 export class CourseService {
+  updateCourseRevisionStatus(courseRevisionId: number, request: UpdateCourseRevisionStatusRequest) {
+    return this.courseDataService.updateCourseRevisionStatus(courseRevisionId, request);
+  }
 
   constructor(private courseDataService: CourseDataService) {
   }
