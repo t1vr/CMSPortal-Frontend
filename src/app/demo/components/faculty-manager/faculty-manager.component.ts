@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FacultyUpsertComponent } from './faculty-upsert/faculty-upsert.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MenuItem, MessageService } from 'primeng/api';
-import { UserItem, UserService } from '../../service/user.service';
+import { UserService } from '../../service/user.service';
+import { UserItem } from 'src/app/models/tenant.model';
 
 @Component({
   selector: 'app-faculty-manager',
@@ -32,7 +32,4 @@ export class FacultyManagerComponent implements OnInit {
   onActiveItemChange(event: MenuItem) {
     this.activeItem = event;
   }
-
-
-
 }

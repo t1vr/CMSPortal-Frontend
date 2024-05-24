@@ -10,7 +10,7 @@
         ></p-button>
     </div>
 </div>
-<p-dataView #dv [value]="faculties" [layout]="'list'">
+<!-- <p-dataView #dv [value]="faculties" [layout]="'list'">
     <ng-template pTemplate="list" let-faculties>
         <div class="grid grid-nogutter">
             <div class="col-12" *ngFor="let item of faculties; let first = first" class="col-12">
@@ -102,4 +102,53 @@
             </div>
         </div>
     </ng-template>
-</p-dataView>
+</p-dataView> -->
+
+<p-table
+    [value]="faculties"
+    [scrollable]="true"
+    scrollHeight="400px"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    class="course-list"
+>
+    <ng-template pTemplate="header">
+        <tr class="surface-section course-list-header">
+            <th class="w-6">Name</th>
+            <th class="w-3">Title</th>
+            <th class="w-3">Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-faculty>
+        <tr>
+            <td class="w-6 text-md font-bold font-medium">
+                <p-button
+                    [label]="faculty.fullName"
+                    [text]="true"
+                    [link]="true"
+                    [plain]="true"
+                ></p-button>
+            </td>
+            <td class="w-3">{{ faculty.designation }}</td>
+            <td class="w-3">
+                <p-button
+                    icon="pi pi-pencil"
+                    label="Edit"
+                    (click)="onClickEditFaculty(faculty)"
+                    size="small"
+                    [text]="true"
+                    [plain]="true"
+                    severity="info"
+                ></p-button>
+                <p-button
+                    icon="pi pi-trash"
+                    label="Delete"
+                    (click)="onClickDeleteBtn(faculty.id)"
+                    size="small"
+                    [text]="true"
+                    [plain]="true"
+                    severity="warning"
+                ></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

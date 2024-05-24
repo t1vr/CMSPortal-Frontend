@@ -14,6 +14,9 @@ import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FacultyDetailsComponent } from './faculty-details/faculty-details.component';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 const routes: Routes = [
   { path: "", component: FacultyManagerComponent },
@@ -31,7 +34,10 @@ const routes: Routes = [
     TabMenuModule,
     DialogModule,
     DynamicDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TableModule,
+    DropdownModule,
+    MultiSelectModule
   ],
   declarations: [FacultyManagerComponent,
     FacultyListComponent,
