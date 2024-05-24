@@ -19,7 +19,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [
     AppRoutingModule,
     AppLayoutModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   providers: [
     // { provide: LocationStrategy, useClass: HashLocationStrategy },

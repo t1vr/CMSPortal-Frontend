@@ -19,7 +19,13 @@ export class AuthService {
     return this.authDataService.login(loginRequestModel).pipe(tap(x => {
       this.jwtTokenService.setToken(x.token);
       this.localStorageService.setUserToken(x.token);
+      this.localStorageService.setUser(x.userResponse);
     }));
+  }
+
+  isLoggedIn() {
+    let x = !this.jwtTokenService.isTokenExpired();
+    return x;
   }
 
 }
