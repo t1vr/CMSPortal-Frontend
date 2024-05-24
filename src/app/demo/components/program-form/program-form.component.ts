@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { BaseResponse, CreateProgramRequest, ProgramItem } from 'src/app/models/tenant.model';
 import { ProgramService } from '../../service/program.service';
 import { MessageService } from 'primeng/api';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-program-form',
@@ -14,7 +15,8 @@ export class ProgramFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private programService: ProgramService,
-    public messageService: MessageService) { }
+    public messageService: MessageService,
+    private ref: DynamicDialogRef) { }
 
   ngOnInit() {
     this.initForm();
@@ -37,6 +39,9 @@ export class ProgramFormComponent implements OnInit {
       })
   }
 
+  closeModal(){
+    this.ref.close();
+  }
 }
 
 
