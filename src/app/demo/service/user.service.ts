@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { BaseResponse, CurriculumItem, CreateCurriculumRequest } from 'src/app/models/tenant.model';
+import { Observable, tap } from 'rxjs';
+import { BaseResponse, CreateUserRequest, UpdateUserRequest, UserItem } from 'src/app/models/tenant.model';
 import { UserDataService } from './user.data.service';
 
 @Injectable({
@@ -14,31 +14,26 @@ export class UserService {
     return this.userDataService.getUserById(userId);
   }
 
-
   getAllUsers(): Observable<BaseResponse<UserItem[]>> {
-    return this.userDataService.getAllUsers();
+    return this.userDataService.getAllUsers().pipe(tap(x =>
+      x.data?.map(user => {
+        user.fullName = user.firstName + ' ' + user.lastName
+        return user;
+      })));
   }
 
   createUser(createUserRequest: CreateUserRequest): Observable<BaseResponse<UserItem>> {
     return this.userDataService.createUser(createUserRequest);
   }
 
+  updateUserById(userId: string, request: UpdateUserRequest): Observable<BaseResponse<UserItem>> {
+    return this.userDataService.updateUserById(userId, request);
+  }
+
+  deleteUserById(userId: any) {
+    return this.userDataService.deleteUserById(userId);
+  }
+
 }
 
-
-export interface UserItem {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  isActive: boolean;
-  tenantId: string;
-  imageUrl: string;
-}
-
-export interface CreateUserRequest {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
 

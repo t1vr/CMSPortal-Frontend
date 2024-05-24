@@ -1,38 +1,93 @@
-<form [formGroup]="facultyForm" class="w-full lg:w-8 m-auto" (ngSubmit)="onSubmitUserForm()">
-    <div class="formgroup-inline w-full flex justify-content-between">
-        <div class="w-6">
-            <label htmlFor="firstName" class="block text-900 font-medium mb-2">Firstname</label>
-            <input
-                formControlName="firstName"
-                pInputText
-                id="firstName"
-                type="text"
-                placeholder="Firstname"
-                class="p-inputtext p-component p-element w-full mb-3"
-            />
-        </div>
-        <div class="w-6">
-            <label htmlFor="lastName" class="block text-900 font-medium mb-2">Lastname</label>
-            <input
-                formControlName="lastName"
-                pInputText
-                id="lastName"
-                type="text"
-                placeholder="Lastname"
-                class="p-inputtext p-component p-element w-full mb-3"
-            />
-        </div>
-    </div>
-    <div class="field">
-        <label htmlFor="email" class="block text-900 font-medium mb-2">Email</label>
-        <input
-            formControlName="email"
-            pInputText
-            id="email"
-            type="text"
-            placeholder="Email"
-            class="p-inputtext p-component p-element w-full mb-3"
+<div class="lg:w-8 m-auto">
+    <div class="surface-section mb-4">
+        <p-tabMenu
+            [model]="items"
+            [activeItem]="activeItem"
+            (activeItemChange)="onActiveItemChange($event)"
         />
     </div>
-    <button pButton [disabled]="!facultyForm.valid" pRipple label="Submit" class="w-full"></button>
-</form>
+
+    <form [formGroup]="facultyForm" class="w-full" (ngSubmit)="onSubmitUserForm()">
+        <div class="formgroup-inline w-full flex justify-content-between">
+            <div class="w-6">
+                <label htmlFor="firstName" class="block text-900 font-medium mb-2">Firstname</label>
+                <input
+                    formControlName="firstName"
+                    pInputText
+                    id="firstName"
+                    type="text"
+                    placeholder="Firstname"
+                    class="p-inputtext p-component p-element w-full mb-3"
+                />
+            </div>
+            <div class="w-6">
+                <label htmlFor="lastName" class="block text-900 font-medium mb-2">Lastname</label>
+                <input
+                    formControlName="lastName"
+                    pInputText
+                    id="lastName"
+                    type="text"
+                    placeholder="Lastname"
+                    class="p-inputtext p-component p-element w-full mb-3"
+                />
+            </div>
+        </div>
+        <div class="field">
+            <label htmlFor="email" class="block text-900 font-medium mb-2">Email</label>
+            <input
+                formControlName="email"
+                pInputText
+                id="email"
+                type="text"
+                placeholder="Email"
+                class="p-inputtext p-component p-element w-full mb-3"
+            />
+        </div>
+
+        <div class="formgroup-inline w-full flex justify-content-between">
+            <div class="w-6">
+                <label htmlFor="phoneNumber" class="block text-900 font-medium mb-2">Phone</label>
+                <input
+                    formControlName="phoneNumber"
+                    pInputText
+                    id="phoneNumber"
+                    type="text"
+                    placeholder="Phone number"
+                    class="p-inputtext p-component p-element w-full mb-3"
+                />
+            </div>
+            <div class="w-6">
+                <label htmlFor="role" class="block text-900 font-medium mb-2">Role</label>
+                <p-multiSelect
+                    [options]="roles"
+                    formControlName="roles"
+                    optionLabel="name"
+                    optionValue="value"
+                    [showClear]="false"
+                    [filter]="false"
+                    placeholder="Select source course"
+                ></p-multiSelect>
+            </div>
+        </div>
+        <div class="field">
+            <label htmlFor="designation" class="block text-900 font-medium mb-2">Designation</label>
+            <p-dropdown
+                [options]="designations"
+                formControlName="designation"
+                optionLabel="name"
+                optionValue="value"
+                placeholder="Select source course"
+            ></p-dropdown>
+        </div>
+        <div class="flex justify-content-end">
+            <button
+                pButton
+                [disabled]="!facultyForm.valid"
+                pRipple
+                label="Submit"
+                class="w-3"
+                [loading]="isLoading"
+            ></button>
+        </div>
+    </form>
+</div>
