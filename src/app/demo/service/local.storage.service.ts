@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TokenHeaderKey, TokenKey } from 'src/app/constants/constants';
+import { CurrentUserKey, TokenKey } from 'src/app/constants/constants';
+import { AppUser } from 'src/app/models/tenant.model';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
@@ -17,7 +18,21 @@ export class LocalStorageService {
   }
 
   getUserToken(): string {
-    return localStorage.getItem(TokenHeaderKey) as string;
+    return localStorage.getItem(TokenKey) as string;
+  }
+
+  setUser(user: AppUser) {
+    localStorage.setItem(CurrentUserKey, JSON.stringify(user));
+  }
+
+  getUser(): AppUser {
+    return JSON.parse(localStorage.getItem(CurrentUserKey));
+  }
+
+  clearProfile(){
+    localStorage.removeItem('tenantIdentifier')
+    localStorage.removeItem(TokenKey)
+    localStorage.removeItem(CurrentUserKey)
   }
 
 }
