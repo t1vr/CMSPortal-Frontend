@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AddCourseToCurriculumRequest, AssignAuthorsToCourseRevisionRequest, CourseService } from 'src/app/demo/service/course.service';
 import { CurriculumService } from 'src/app/demo/service/curriculum.service';
-import { UserItem, UserService } from 'src/app/demo/service/user.service';
-import { CourseItem, CurriculumItem } from 'src/app/models/tenant.model';
+import {  UserService } from 'src/app/demo/service/user.service';
+import { CourseItem, CurriculumItem, UserItem } from 'src/app/models/tenant.model';
 
 @Component({
   selector: 'app-curriculum-details',

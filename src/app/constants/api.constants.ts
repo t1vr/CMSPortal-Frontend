@@ -36,6 +36,7 @@ export class CourseApiConstants {
   public static readonly ADD_TO_CURRICULUM_ENDPOINT = "add-to-curriculum/";
   public static readonly DELETE_BY_ID_ENDPOINT = "";
   public static readonly ASSIGN_AUTHOR_ENDPOINT = "assign-author/";
+  public static readonly UPDATE_COURSE_STATUS = "update-status/";
 }
 
 export class CurriculumApiConstants {

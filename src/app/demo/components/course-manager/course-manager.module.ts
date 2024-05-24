@@ -21,12 +21,15 @@ import { AttachCourseToCurriculumFormComponent } from './attach-course-to-curric
 import { CompareCourseComponent } from './compare-course/compare-course.component';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { DividerModule } from 'primeng/divider';
+import { HasPermissionDirective, IsAuthorizedToEditResolverService } from 'src/app/guards/canLoad.guard';
+import { ToastModule } from 'primeng/toast';
+import { RippleModule } from 'primeng/ripple';
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
   { path: 'compare', component: CompareCourseComponent },
   { path: 'create/:curriculumId', component: CourseUpsertComponent },
-  { path: 'edit/:courseId', component: CourseUpsertComponent },
+  { path: 'edit/:courseId', component: CourseUpsertComponent, resolve: { IsAuthorizedToEditResolverService } },
   { path: 'history/:courseId', component: CourseHistoryComponent },
   { path: ':courseRevisionId', component: CourseDetailsComponent },
 
@@ -50,13 +53,17 @@ const routes: Routes = [
     FieldsetModule,
     DropdownModule,
     SplitButtonModule,
-    DividerModule
+    DividerModule,
+    ToastModule,
+    RippleModule
   ],
   declarations: [CourseManagerComponent,
     CourseUpsertComponent,
     CourseDetailsComponent,
     CourseHistoryComponent,
     AttachCourseToCurriculumFormComponent,
-    CompareCourseComponent]
+    CompareCourseComponent,
+    HasPermissionDirective
+  ]
 })
 export class CourseManagerModule { }

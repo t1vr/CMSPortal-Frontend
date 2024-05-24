@@ -1,21 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { CourseService } from 'src/app/demo/service/course.service';
 import { CourseItem } from 'src/app/models/tenant.model';
 
 @Component({
   selector: 'app-course-details',
   templateUrl: './course-details.component.html',
-  styleUrls: ['./course-details.component.css']
+  styleUrls: ['./course-details.component.css'],
+  providers: [MessageService]
 })
 export class CourseDetailsComponent implements OnInit {
 
   courseRevisionId: number;
   course: CourseItem;
+  CourseRevisionStatus = CourseRevisionStatus;
 
   constructor(private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -45,4 +49,26 @@ export class CourseDetailsComponent implements OnInit {
     this.router.navigate(['../edit', courseRevisionId], { relativeTo: this.activatedRoute });
   }
 
+  onClickApproveBtn() {
+    let request: UpdateCourseRevisionStatusRequest = {
+      courseRevisionStatus: CourseRevisionStatus.Approved,
+    }
+    this.courseService.updateCourseRevisionStatus(this.courseRevisionId, request).subscribe((x) => {
+      if (x.data) {
+        this.course = x.data;
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+      }
+    })
+  }
+}
+
+export enum CourseRevisionStatus {
+  Assigned,
+  InProgress,
+  InReview,
+  Approved
+}
+
+export interface UpdateCourseRevisionStatusRequest {
+  courseRevisionStatus: CourseRevisionStatus;
 }
