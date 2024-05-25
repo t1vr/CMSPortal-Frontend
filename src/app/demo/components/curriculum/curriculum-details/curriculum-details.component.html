@@ -1,156 +1,82 @@
-<p-card>
-    <div class="surface-section">
-        <div class="font-medium text-xl text-900 mb-3">Curriculum Information</div>
-        <ul class="list-none p-0 m-0">
-            <li class="flex align-items-center px-2 border-top-1 surface-border flex-wrap">
-                <div class="text-500 w-6 md:w-2 font-medium">Title</div>
-                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-                    {{ curriculum?.title }}
-                </div>
-                <div class="w-6 md:w-2 flex justify-content-end">
-                    <p-button
-                        size="small"
-                        label="Edit"
-                        icon="pi pi-pencil"
-                        class="p-button-text"
-                        [text]="true"
-                        [plain]="true"
-                        [outlined]="false"
-                    ></p-button>
-                </div>
-            </li>
-            <li class="flex align-items-center px-2 border-top-1 surface-border flex-wrap">
-                <div class="text-500 w-6 md:w-2 font-medium">Programs</div>
-                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-                    <ng-container *ngFor="let program of curriculum?.programResponses">
-                        <p-tag [value]="program.name" severity="success" class="mr-2"></p-tag>
-                    </ng-container>
-                </div>
-                <div class="w-6 md:w-2 flex justify-content-end">
-                    <p-button
-                        size="small"
-                        label="Edit"
-                        icon="pi pi-pencil"
-                        class="p-button-text"
-                        [text]="true"
-                        [plain]="true"
-                        [outlined]="false"
-                    ></p-button>
-                </div>
-            </li>
-            <li
-                class="flex align-items-center px-2 border-top-1 border-bottom-1 surface-border flex-wrap"
-            >
-                <div class="text-500 w-6 md:w-2 font-medium">Description</div>
-                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
-                    {{ curriculum?.description }}
-                </div>
-                <div class="w-6 md:w-2 flex justify-content-end">
-                    <p-button
-                        size="small"
-                        label="Edit"
-                        icon="pi pi-pencil"
-                        class="p-button-text"
-                        [text]="true"
-                        [plain]="true"
-                        [outlined]="false"
-                    ></p-button>
-                </div>
-            </li>
-        </ul>
-    </div>
-</p-card>
-
-<p-card styleClass="mt-3">
-    <div class="surface-section">
-        <div class="font-medium text-xl text-900 mb-3">Course List</div>
-        <p-table
-            [value]="curriculum?.courseResponses"
-            selectionMode="single"
-            dataKey="code"
-            [tableStyle]="{ 'min-width': '50rem' }"
-        >
-            <ng-template pTemplate="caption">
-                <div class="flex">
-                    <p-button
-                        icon="pi pi-file"
-                        class="mr-2"
-                        pTooltip="CSV"
-                        tooltipPosition="bottom"
-                        size="small"
-                        [text]="true"
-                        [plain]="true"
-                        [outlined]="true"
-                    ></p-button>
+<div class="surface-section">
+    <p-table
+        [value]="curriculum?.courseResponses"
+        selectionMode="single"
+        dataKey="code"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        class="curriculum-course-table"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <div class="pr-1">
                     <p-button
                         icon="pi pi-plus"
                         label="Import"
                         (click)="showDialog()"
                         severity="success"
-                        class="p-button-info ml-auto"
-                        pTooltip="Selection Only"
-                        tooltipPosition="bottom"
-                        size="small"
-                        [outlined]="true"
-                    ></p-button>
-                    <p-button
-                        icon="pi pi-plus"
-                        label="New"
-                        [routerLink]="['../../manage-courses/create', curriculumId]"
-                        severity="success"
                         pTooltip="Selection Only"
                         tooltipPosition="bottom"
                         size="small"
                         [outlined]="true"
                     ></p-button>
                 </div>
-            </ng-template>
+                <div>
+                    <p-button
+                        icon="pi pi-plus"
+                        label="New"
+                        [routerLink]="['../../../manage-courses/create', curriculumId]"
+                        severity="info"
+                        pTooltip="Selection Only"
+                        tooltipPosition="bottom"
+                        size="small"
+                        [outlined]="false"
+                    ></p-button>
+                </div>
+            </div>
+        </ng-template>
 
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Title</th>
-                    <th>Credit Hours</th>
-                    <th>Author</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-course>
-                <tr>
-                    <td>
-                        <p-button
-                            [label]="course.title"
-                            [text]="true"
-                            [link]="true"
-                            [plain]="true"
-                            (click)="goToCourseDetails(course.id)"
-                        ></p-button>
-                    </td>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Title</th>
+                <th>Credit Hours</th>
+                <th>Author</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-course>
+            <tr>
+                <td>
+                    <p-button
+                        [label]="course.title"
+                        [text]="true"
+                        [link]="true"
+                        [plain]="true"
+                        (click)="goToCourseDetails(course.id)"
+                    ></p-button>
+                </td>
 
-                    <td>{{ course.creditHour }}</td>
-                    <td [pEditableColumn]="course.authorId" pEditableColumnField="authorId">
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-dropdown
-                                    [options]="faculties"
-                                    optionLabel="firstName"
-                                    optionValue="id"
-                                    appendTo="body"
-                                    [(ngModel)]="course.authorId"
-                                    (onChange)="onChangeAuthor(course, $event)"
-                                    [style]="{ width: '100%' }"
-                                />
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <p-tag
-                                    [value]="course.authorName ?? 'Not Assigned'"
-                                />
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
-</p-card>
+                <td>{{ course.creditHour }}</td>
+                <td [pEditableColumn]="course.authorId" pEditableColumnField="authorId">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown
+                                [options]="faculties"
+                                optionLabel="firstName"
+                                optionValue="id"
+                                appendTo="body"
+                                [(ngModel)]="course.authorId"
+                                (onChange)="onChangeAuthor(course, $event)"
+                                [style]="{ width: '100%' }"
+                            />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <p-tag [value]="course.authorName ?? 'Not Assigned'" />
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
 
 <p-dialog
     [resizable]="false"

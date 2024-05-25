@@ -9,26 +9,6 @@
             (click)="onClickCreateBtn()"
         ></p-button>
     </div>
-
-    <!-- <ng-container *ngFor="let program of curriculums">
-
-    <p-panel [toggleable]="true">
-      <ng-template pTemplate="header">
-        <div class="flex align-items-center gap-2">
-          <span class="font-bold">{{program.name}}</span>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="icons">
-        <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event)">
-          <span class="pi pi-cog"></span>
-        </button>
-        <p-menu #menu id="config_menu" [model]="items" [popup]="true" />
-      </ng-template>
-      <p class="m-0">
-        {{program.description}}
-      </p>
-    </p-panel>
-  </ng-container> -->
 </div>
 <div>
     <app-curriculum-list [curriculums]="curriculums"></app-curriculum-list>

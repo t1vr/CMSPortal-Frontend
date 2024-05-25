@@ -1,0 +1,15 @@
+<p-menu [model]="items" styleClass="w-full md:w-15rem border-none">
+    <ng-template pTemplate="submenuheader" let-item>
+        <span class="text-primary font-bold">{{ item.label }}</span>
+    </ng-template>
+    <ng-template pTemplate="item" let-item>
+        <a
+            pRipple
+            [routerLink]="item.route"
+            class="flex align-items-center p-menuitem-link text-500"
+        >
+            <span [class]="item.icon"></span>
+            <span class="ml-2">{{ item.label }}</span>
+        </a>
+    </ng-template>
+</p-menu>

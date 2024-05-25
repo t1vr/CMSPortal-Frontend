@@ -10,19 +10,27 @@ import { CardModule } from 'primeng/card';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PanelModule } from 'primeng/panel';
-import { CourseUpsertComponent } from '../course-manager/course-upsert/course-upsert.component';
 import { CalendarModule } from 'primeng/calendar';
 import { CurriculumDetailsComponent } from './curriculum-details/curriculum-details.component';
-import { ChipModule } from 'primeng/chip';
 import { TagModule } from 'primeng/tag';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DataViewModule } from 'primeng/dataview';
+import { CurriculumDetailsParentComponent } from './curriculum-details-parent/curriculum-details-parent.component';
+import { CurriculumSideMenuComponent } from './curriculum-side-menu/curriculum-side-menu.component';
+import { MenuModule } from 'primeng/menu';
+import { CurriculumSummaryComponent } from './curriculum-summary/curriculum-summary.component';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
-  { path: ":curriculumId", component: CurriculumDetailsComponent },
+  {
+    path: ":curriculumId", component: CurriculumDetailsParentComponent,
+    children: [
+      { path: '', component: CurriculumSummaryComponent },
+      { path: 'list', component: CurriculumDetailsComponent }
+    ]
+  },
 ];
 
 @NgModule({
@@ -41,11 +49,15 @@ const routes: Routes = [
     TableModule,
     DialogModule,
     DropdownModule,
-    DataViewModule
+    DataViewModule,
+    MenuModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,
     CurriculumListComponent,
-    CurriculumDetailsComponent]
+    CurriculumDetailsComponent,
+    CurriculumDetailsParentComponent,
+    CurriculumSideMenuComponent,
+    CurriculumSummaryComponent]
 })
 export class CurriculumModule { }

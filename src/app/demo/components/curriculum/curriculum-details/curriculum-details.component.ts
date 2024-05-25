@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AddCourseToCurriculumRequest, AssignAuthorsToCourseRevisionRequest, CourseService } from 'src/app/demo/service/course.service';
 import { CurriculumService } from 'src/app/demo/service/curriculum.service';
-import {  UserService } from 'src/app/demo/service/user.service';
+import { UiMessageService } from 'src/app/demo/service/ui-message.service';
+import { UserService } from 'src/app/demo/service/user.service';
 import { CourseItem, CurriculumItem, UserItem } from 'src/app/models/tenant.model';
 
 @Component({
@@ -24,11 +25,15 @@ export class CurriculumDetailsComponent implements OnInit {
     private userService: UserService,
     private courseService: CourseService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private uiMessageService: UiMessageService) { }
 
   ngOnInit() {
-    this.curriculumId = this.activatedRoute.snapshot.paramMap.get('curriculumId') as unknown as number;
-    this.getCurriculumById(this.curriculumId);
+    this.uiMessageService.getCurrentCurriculumId().subscribe(x => {
+      this.curriculumId = x;
+      this.getCurriculumById(this.curriculumId);
+
+    })
     this.getAllFaculties();
   }
 
@@ -52,7 +57,7 @@ export class CurriculumDetailsComponent implements OnInit {
   }
 
   goToCourseDetails(courseRevisionId: number) {
-    this.router.navigate(['../../manage-courses', courseRevisionId], { relativeTo: this.activatedRoute });
+    this.router.navigate(['../../../manage-courses', courseRevisionId], { relativeTo: this.activatedRoute });
   }
 
   showDialog() {
