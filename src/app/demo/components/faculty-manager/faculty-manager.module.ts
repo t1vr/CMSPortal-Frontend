@@ -17,6 +17,7 @@ import { FacultyDetailsComponent } from './faculty-details/faculty-details.compo
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ToastModule } from 'primeng/toast';
 
 const routes: Routes = [
   { path: "", component: FacultyManagerComponent },
@@ -37,7 +38,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     TableModule,
     DropdownModule,
-    MultiSelectModule
+    MultiSelectModule,
+    ToastModule,
   ],
   declarations: [FacultyManagerComponent,
     FacultyListComponent,
