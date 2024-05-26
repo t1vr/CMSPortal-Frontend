@@ -6,6 +6,8 @@
         <a
             pRipple
             [routerLink]="item.route"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
             class="flex align-items-center p-menuitem-link text-500"
         >
             <span [class]="item.icon"></span>

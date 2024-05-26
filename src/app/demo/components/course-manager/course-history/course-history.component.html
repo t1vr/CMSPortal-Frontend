@@ -16,7 +16,13 @@
                     <p-button label="Author: Tanvir Ahmed" [text]="true" size="small"></p-button>
                 </div>
 
-                <p-button label="See Changes" [text]="true" [link]="true" size="small" (click)="goToComparePage(courseRevision.id)"></p-button>
+                <p-button
+                    label="See Changes"
+                    [text]="true"
+                    [link]="true"
+                    size="small"
+                    (click)="goToComparePage(courseRevision.id)"
+                ></p-button>
             </div>
         </ng-template>
     </p-timeline>

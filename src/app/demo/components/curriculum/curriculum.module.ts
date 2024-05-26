@@ -21,6 +21,14 @@ import { CurriculumDetailsParentComponent } from './curriculum-details-parent/cu
 import { CurriculumSideMenuComponent } from './curriculum-side-menu/curriculum-side-menu.component';
 import { MenuModule } from 'primeng/menu';
 import { CurriculumSummaryComponent } from './curriculum-summary/curriculum-summary.component';
+import { BadgeModule } from 'primeng/badge';
+import { InputTextModule } from 'primeng/inputtext';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { ChipsModule } from 'primeng/chips';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DividerModule } from 'primeng/divider';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -50,7 +58,15 @@ const routes: Routes = [
     DialogModule,
     DropdownModule,
     DataViewModule,
-    MenuModule
+    MenuModule,
+    BadgeModule,
+    InputTextModule,
+    OverlayPanelModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    ChipsModule,
+    CheckboxModule,
+    DividerModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,

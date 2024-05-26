@@ -1,35 +1,51 @@
 <div class="surface-section">
     <p-table
-        [value]="curriculum?.courseResponses"
+        #dt1
+        [value]="filteredCourses"
         selectionMode="single"
         dataKey="code"
         [tableStyle]="{ 'min-width': '50rem' }"
         class="curriculum-course-table"
+        [globalFilterFields]="['title']"
     >
         <ng-template pTemplate="caption">
-            <div class="flex">
-                <div class="pr-1">
+            <div class="flex justify-content-between">
+                <div>
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input
+                            pInputText
+                            type="text"
+                            (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                            placeholder="Search keyword"
+                        />
+                    </span>
+                </div>
+
+                <div class="flex justify-content-between">
                     <p-button
-                        icon="pi pi-plus"
+                        icon="pi pi-file-import"
                         label="Import"
                         (click)="showDialog()"
-                        severity="success"
-                        pTooltip="Selection Only"
-                        tooltipPosition="bottom"
                         size="small"
-                        [outlined]="true"
+                        [text]="true"
+                        styleClass="table-header-btn"
                     ></p-button>
-                </div>
-                <div>
                     <p-button
                         icon="pi pi-plus"
                         label="New"
                         [routerLink]="['../../../manage-courses/create', curriculumId]"
-                        severity="info"
-                        pTooltip="Selection Only"
-                        tooltipPosition="bottom"
                         size="small"
-                        [outlined]="false"
+                        [text]="true"
+                        styleClass="table-header-btn"
+                    ></p-button>
+                    <p-button
+                        icon="pi pi-filter-fill"
+                        label="Filters"
+                        (click)="op.toggle($event)"
+                        size="small"
+                        [text]="true"
+                        styleClass="table-header-btn"
                     ></p-button>
                 </div>
             </div>
@@ -118,7 +134,6 @@
             (click)="dialogVisible = false"
             label="Dismiss"
             class="p-button-text"
-            size="small"
         ></button>
         <button
             type="button"
@@ -128,7 +143,63 @@
             (click)="addToCurriculum()"
             label="Import"
             class="p-button-text"
-            size="small"
         ></button>
     </ng-template>
 </p-dialog>
+
+<p-overlayPanel #op>
+    <div class="flex flex-column gap-3 w-25rem course-filter-panel-menu">
+        <div>
+            <span class="text-sm font-bold text-900 block mb-2">FILTERS</span>
+            <div class="flex align-items-center">
+                <p-checkbox
+                    [(ngModel)]="appliedFilters.mine.isSelected"
+                    label="Assigned to me"
+                    [binary]="true"
+                    (onChange)="onClickAssignedToMe()"
+                />
+            </div>
+            <p-divider />
+            <div class="w-full">
+                <span class="text-sm font-bold text-900 block mb-2">ASSIGNEE</span>
+                <p-multiSelect
+                    [options]="faculties"
+                    placeholder="Select authors"
+                    optionLabel="fullName"
+                    optionValue="fullName"
+                    [(ngModel)]="appliedFilters.assignee.selectedAuthors"
+                    [selectedItemsLabel]="'{0} authors selected'"
+                    (onChange)="onSelectAuthors()"
+                />
+            </div>
+        </div>
+        <!-- <div>
+            <span class="font-medium text-900 block mb-2">Invite Member</span>
+            <div class="flex">
+                <p-chips disabled />
+                <p-button label="Invite" icon="pi pi-users" />
+            </div>
+        </div>
+        <div>
+            <span class="font-medium text-900 block mb-2">Team Members</span>
+            <ul class="list-none p-0 m-0 flex flex-column gap-3">
+                <li *ngFor="let member of members" class="flex align-items-center gap-2">
+                    <img
+                        [src]="
+                            'https://primefaces.org/cdn/primeng/images/demo/avatar/' + member.image
+                        "
+                        style="width: 32px"
+                    />
+                    <div>
+                        <span class="font-medium">{{ member.name }}</span>
+                        <div class="text-sm text-color-secondary">{{ member.email }}</div>
+                    </div>
+                    <div class="flex align-items-center gap-2 text-color-secondary ml-auto text-sm">
+                        <span>{{ member.role }}</span>
+                        <i class="pi pi-angle-down"></i>
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+    </div>
+</p-overlayPanel>

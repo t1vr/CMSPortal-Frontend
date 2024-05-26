@@ -19,7 +19,9 @@ export class CurrentUserService {
   ) { }
 
   getCurrentUser(): AppUser {
-    return this.localStorageService.getUser();
+    let appUser = this.localStorageService.getUser();
+    appUser.fullName = appUser.firstName + ' ' + appUser.lastName
+    return appUser;
   }
 
   getRoles(): string[] {
