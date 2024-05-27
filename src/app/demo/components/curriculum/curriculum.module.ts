@@ -29,6 +29,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ChipsModule } from 'primeng/chips';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DividerModule } from 'primeng/divider';
+import { SplitterModule } from 'primeng/splitter';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -66,7 +67,8 @@ const routes: Routes = [
     InputGroupAddonModule,
     ChipsModule,
     CheckboxModule,
-    DividerModule
+    DividerModule,
+    SplitterModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,
