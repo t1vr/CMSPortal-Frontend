@@ -76,7 +76,7 @@ export class IsAuthorizedToEditResolverService implements Resolve<boolean> {
     return this.courseService.getCourseById(route.params['courseId']).pipe(
       map(x => {
         if (x.data) {
-          if (x.data.author.id === currentUser.id)
+          if (x.data.author?.id === currentUser.id)
             return true;
           else {
             this.router.navigate(['/auth/access']);
