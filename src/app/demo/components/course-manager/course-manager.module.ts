@@ -24,6 +24,11 @@ import { DividerModule } from 'primeng/divider';
 import { HasPermissionDirective, IsAuthorizedToEditResolverService } from 'src/app/guards/canLoad.guard';
 import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
+import { TooltipModule } from 'primeng/tooltip';
+import { AvatarModule } from 'primeng/avatar';
+import { PanelModule } from 'primeng/panel';
+import { InplaceModule } from 'primeng/inplace';
+import { InputTextModule } from 'primeng/inputtext';
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
@@ -55,7 +60,12 @@ const routes: Routes = [
     SplitButtonModule,
     DividerModule,
     ToastModule,
-    RippleModule
+    RippleModule,
+    AvatarModule,
+    TooltipModule,
+    PanelModule,
+    InplaceModule,
+    InputTextModule
   ],
   declarations: [CourseManagerComponent,
     CourseUpsertComponent,

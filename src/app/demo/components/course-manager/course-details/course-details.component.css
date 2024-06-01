@@ -1,3 +1,38 @@
 .course-content button {
-  cursor: pointer;
+    cursor: pointer;
+}
+.summary-input-container {
+  min-height: 2.2rem;
+}
+
+
+::ng-deep .course-details-header .p-button {
+    font-weight: 500;
+    color: #374151;
+    height: 2.28571em;
+    padding: 0px 10px;
+    font-size: 14px;
+    background-color: rgba(9, 30, 66, 0.08);
+}
+
+::ng-deep .course-content-footer .p-button {
+    font-weight: 500;
+    color: #374151;
+    height: 2.28571em;
+    padding: 0px 10px;
+    font-size: 14px;
+    background-color: rgba(9, 30, 66, 0.08);
+}
+
+::ng-deep .course-summary-form .p-inputtext {
+    min-width: 160px;
+    max-width: 160px;
+    padding: 0.5rem 0.5rem;
+    max-height: 2.2rem;
+    margin-right: 5px;
+}
+
+
+::ng-deep .course-summary-form .p-dropdown .p-dropdown-trigger {
+    display: none;
 }

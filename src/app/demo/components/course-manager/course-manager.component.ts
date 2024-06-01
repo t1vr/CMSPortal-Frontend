@@ -53,9 +53,12 @@ export class CourseManagerComponent implements OnInit {
   initForm() {
     this.courseForm = this.fb.group<CourseForm>({
       title: new FormControl("", Validators.required),
-      creditHour: new FormControl(null, Validators.required),
-      description: new FormControl("", Validators.required),
-      courseCode: new FormControl("", Validators.required),
+      creditHour: new FormControl(null),
+      description: new FormControl(""),
+      courseCode: new FormControl(""),
+      curriculumId: new FormControl(null, Validators.required),
+      authorId: new FormControl(null),
+      semesterOffered: new FormControl(null),
     });
     this.courseCurriculumSelectionForm = this.fb.group({
       curriculumId: [Validators.required]
