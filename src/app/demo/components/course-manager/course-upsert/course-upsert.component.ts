@@ -39,10 +39,12 @@ export class CourseUpsertComponent implements OnInit {
   initForm() {
     this.courseForm = this.fb.group<CourseForm>({
       title: new FormControl("", Validators.required),
-      creditHour: new FormControl(null, Validators.required),
-      description: new FormControl("", Validators.required),
+      creditHour: new FormControl(null),
+      description: new FormControl(""),
       courseCode: new FormControl(""),
-      curriculumId: new FormControl(null, Validators.required)
+      curriculumId: new FormControl(null, Validators.required),
+      authorId: new FormControl(null),
+      semesterOffered: new FormControl(null),
     });
   }
 
