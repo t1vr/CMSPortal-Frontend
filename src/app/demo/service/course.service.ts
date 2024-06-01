@@ -30,8 +30,14 @@ export class CourseService {
   }
 
   getCourseById(courseId: number): Observable<BaseResponse<CourseItem>> {
-    return this.courseDataService.getCourseById(courseId);
+    return this.courseDataService.getCourseById(courseId).pipe(tap(x =>
+      x.data.authorName = x.data.author?.firstName + ' ' + x.data.author?.lastName
+    ));
   }
+
+  // .pipe(tap(x =>
+  //   x.data.authorName = x.data.author.firstName + ' ' + x.data.author.lastName
+  // ))
 
   reviseCourseByCourseId(courseId: number): Observable<BaseResponse<CourseItem>> {
     return this.courseDataService.reviseCourseByCourseId(courseId);

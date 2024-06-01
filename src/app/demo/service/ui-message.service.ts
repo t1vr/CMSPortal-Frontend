@@ -13,10 +13,7 @@ export class UiMessageService {
   }
 
   getCurrentCurriculumId(): Observable<number> {
-     this.currentCurriculumId.asObservable().subscribe(x=>{
-      console.log(x)
-     });
-     return this.currentCurriculumId.asObservable();
+    return this.currentCurriculumId.asObservable();
   }
 
 }

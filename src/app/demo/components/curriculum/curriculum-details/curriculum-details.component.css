@@ -23,16 +23,12 @@
 }
 
 ::ng-deep .curriculum-course-table .p-button:hover {
-    font-weight: 500;
-    text-align: center;
     color: #374151;
 
     background-color: rgba(9, 30, 66, 0.08);
 }
 
 ::ng-deep .curriculum-course-table .p-button:hover {
-    font-weight: 500;
-    text-align: center;
     color: #1f6dda !important;
     /* background-color: rgba(179, 212, 255, 0.6); */
     background: #c2cedf;

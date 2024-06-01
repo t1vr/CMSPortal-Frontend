@@ -34,7 +34,7 @@ export interface AppUser {
   id: string;
   firstName: string;
   lastName: string;
-  fullName:string;
+  fullName: string;
   email: string;
   imageUrl: string;
   isActive: string;
@@ -58,7 +58,7 @@ export interface BaseAuditableResponse {
   lastModifiedAt: Date;
 }
 
-export interface Tenant extends BaseAuditableResponse {
+export interface Tenant {
   id: string;
   identifier: string;
   name: string;
@@ -88,9 +88,11 @@ export interface CourseForm {
   description: FormControl<string>;
   courseCode: FormControl<string>;
   curriculumId?: FormControl<number>;
+  authorId: FormControl<string>;
+  semesterOffered: FormControl<number>;
 }
 
-export interface CourseItem {
+export interface CourseItem extends BaseAuditableResponse {
   id: number;
   courseCode: string;
   title: string;
@@ -102,24 +104,28 @@ export interface CourseItem {
   authorId: string;
   authorName: string;
   author: UserItem;
-  courseRevisionStatus: CourseRevisionStatus
+  courseRevisionStatus: CourseRevisionStatus;
+  semesterOffered: number;
 }
 
 export interface CreateCourseRequest {
   title: string;
-  description: string;
   courseCode: string;
   creditHour: number;
+  semesterOffered: number;
+  authorId: string;
+  description: string;
   curriculumId: number;
 }
 
 export interface UpdateCourseRequest {
-  courseCode: string;
   title: string;
+  courseCode: string;
   creditHour: number;
-  semester: string;
+  semesterOffered: number;
+  authorId: string;
+  description: string;
 }
-
 
 export class CurriculumItem {
   id: number;
@@ -145,7 +151,6 @@ export interface CurriculumForm {
   programIds: FormControl<number[]>;
   duration: FormControl<Date[]>;
 }
-
 
 export interface FacultyForm {
   firstName: FormControl<string>;

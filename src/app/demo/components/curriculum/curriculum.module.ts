@@ -30,6 +30,7 @@ import { ChipsModule } from 'primeng/chips';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DividerModule } from 'primeng/divider';
 import { SplitterModule } from 'primeng/splitter';
+import { InplaceModule } from 'primeng/inplace';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -68,7 +69,8 @@ const routes: Routes = [
     ChipsModule,
     CheckboxModule,
     DividerModule,
-    SplitterModule
+    SplitterModule,
+    InplaceModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,
