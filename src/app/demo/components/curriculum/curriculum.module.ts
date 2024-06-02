@@ -31,6 +31,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DividerModule } from 'primeng/divider';
 import { SplitterModule } from 'primeng/splitter';
 import { InplaceModule } from 'primeng/inplace';
+import { CurriculumSettingsComponent } from './curriculum-settings/curriculum-settings.component';
+import { InterdisciplinaryCoursesComponent } from './interdisciplinary-courses/interdisciplinary-courses.component';
+import { CourseReviewRequestComponent } from './course-review-request/course-review-request.component';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -38,7 +41,10 @@ const routes: Routes = [
     path: ":curriculumId", component: CurriculumDetailsParentComponent,
     children: [
       { path: '', component: CurriculumSummaryComponent },
-      { path: 'list', component: CurriculumDetailsComponent }
+      { path: 'list', component: CurriculumDetailsComponent },
+      { path: 'review-request', component: CourseReviewRequestComponent },
+      { path: 'interdisciplinary-courses', component: InterdisciplinaryCoursesComponent },
+      { path: 'settings', component: CurriculumSettingsComponent }
     ]
   },
 ];
@@ -70,7 +76,8 @@ const routes: Routes = [
     CheckboxModule,
     DividerModule,
     SplitterModule,
-    InplaceModule
+    InplaceModule,
+    InputGroupModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,
@@ -78,6 +85,9 @@ const routes: Routes = [
     CurriculumDetailsComponent,
     CurriculumDetailsParentComponent,
     CurriculumSideMenuComponent,
-    CurriculumSummaryComponent]
+    CurriculumSummaryComponent,
+    CurriculumSettingsComponent,
+    CourseReviewRequestComponent,
+    InterdisciplinaryCoursesComponent]
 })
 export class CurriculumModule { }

@@ -31,6 +31,15 @@ export class ProgramApiConstants {
   public static readonly GET_BY_ID_ENDPOINT = "";
 }
 
+export class CourseDisciplineApiConstants {
+  public static readonly COURSE_DISCIPLINE_MODULE = "coursedisciplines"
+  public static readonly CREATE_ENDPOINT = "";
+  public static readonly UPDATE_ENDPOINT = "";
+  public static readonly DELETE_ENDPOINT = "";
+  public static readonly GET_ALL_ENDPOINT = "";
+  public static readonly GET_BY_ID_ENDPOINT = "";
+}
+
 export class CourseApiConstants {
   public static readonly COURSE_MODULE = "course"
   public static readonly CREATE_ENDPOINT = "";

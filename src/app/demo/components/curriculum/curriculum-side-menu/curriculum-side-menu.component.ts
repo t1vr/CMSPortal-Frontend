@@ -2,7 +2,7 @@ import {
   Component,
   OnInit,
 } from "@angular/core";
-import { MenuItem } from "primeng/api";
+import { MenuItem, PrimeIcons } from "primeng/api";
 
 @Component({
   selector: "app-curriculum-side-menu",
@@ -31,6 +31,21 @@ export class CurriculumSideMenuComponent implements OnInit {
         label: "Courses",
         icon: "pi pi-list",
         route: ["./list"]
+      },
+      {
+        label: "Review Request",
+        icon: PrimeIcons.PENCIL,
+        route: ["./review-request"]
+      },
+      {
+        label: "Interdisciplinary Courses",
+        icon: PrimeIcons.SITEMAP,
+        route: ["./interdisciplinary-courses"]
+      },
+      {
+        label: "Settings",
+        icon: "pi pi-cog",
+        route: ["./settings"]
       }
     ];
   }
