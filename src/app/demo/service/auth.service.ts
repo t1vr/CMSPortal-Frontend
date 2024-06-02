@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AuthDataService } from './auth.data.service';
-import { LoginRequestModel, LoginResponseModel, SignUpTenantRequestModel, SignUpTenantResponseModel } from 'src/app/models/tenant.model';
+import { LoginRequestModel, LoginResponseModel } from 'src/app/models/tenant.model';
 import { LocalStorageService } from './local.storage.service';
 import { JWTTokenService } from './jwt.token.service';
+import { ResetPasswordRequest } from '../components/auth/reset-password/reset-password.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  resetPassword(request: ResetPasswordRequest) {
+    return this.authDataService.resetPassword(request)
+  }
+
 
   constructor(private authDataService: AuthDataService,
     private localStorageService: LocalStorageService,
@@ -22,6 +27,14 @@ export class AuthService {
       this.localStorageService.setUser(x.userResponse);
     }));
   }
+
+  getPasswordResetToken(userId: string, email: string, tenantKey: string) {
+    return this.authDataService.getPasswordResetToken(userId, email, tenantKey);
+  }
+  confirmEmail(userId: string, code: string, tenantKey: string) {
+    return this.authDataService.confirmEmail(userId, code, tenantKey);
+  }
+
 
   isLoggedIn() {
     let x = !this.jwtTokenService.isTokenExpired();
