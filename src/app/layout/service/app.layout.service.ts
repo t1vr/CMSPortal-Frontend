@@ -28,7 +28,7 @@ export class LayoutService {
         inputStyle: 'outlined',
         menuMode: 'overlay',
         colorScheme: 'light',
-        theme: 'lara-light-indigo',
+        theme: 'mdc-light-indigo',
         scale: 14,
     };
 
