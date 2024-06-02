@@ -9,10 +9,17 @@ export class TenantApiConstants {
   public static readonly GET_BY_ID_ENDPOINT = "";
 }
 
-export class AuthApiConstants {
-  public static readonly AUTH_MODULE = "token"
+export class TokenApiConstants {
+  public static readonly Token_MODULE = "token"
   public static readonly LOGIN = "login";
   public static readonly SIGNUP = "";
+}
+
+export class AuthApiConstants {
+  public static readonly AUTH_MODULE = "auth"
+  public static readonly CONFIRM_EMAIL = "confirm-email";
+  public static readonly GET_RESET_PASSWORD_TOKEN = "reset-password-token";
+  public static readonly RESET_PASSWORD = "reset-password";
   public static readonly GET_BY_ID_ENDPOINT = "";
 }
 
