@@ -1,11 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { DropdownItem } from 'primeng/dropdown';
+import { CourseDisciplineService } from 'src/app/demo/service/course-discipline.service';
 import { CourseService } from 'src/app/demo/service/course.service';
 import { UserService } from 'src/app/demo/service/user.service';
 import { BaseResponse, CourseForm, CourseItem, UpdateCourseRequest, UserItem } from 'src/app/models/tenant.model';
+import { CourseDisciplineItem } from '../../curriculum/interdisciplinary-courses/interdisciplinary-courses.component';
 
 @Component({
   selector: 'app-course-details',
@@ -38,7 +39,7 @@ export class CourseDetailsComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     private fb: FormBuilder,
-    private changeDetectorRef: ChangeDetectorRef
+    private courseDisciplineService: CourseDisciplineService
   ) { }
 
   ngOnInit() {
@@ -88,7 +89,17 @@ export class CourseDetailsComponent implements OnInit {
       if (x.data) {
         this.course = x.data;
         this.semesterName = this.semesters.find(semester => semester.value === x.data.semesterOffered)?.label
-        this.courseForm.patchValue({ ...x.data, authorId: x.data.author.id })
+        this.courseForm.patchValue({ ...x.data, authorId: x.data.author.id });
+        this.getAllCourseDisciplines(x.data.curriculumId);
+      }
+    })
+  }
+
+  courseDisciplines: CourseDisciplineItem[] = [];
+  getAllCourseDisciplines(curriculumId: number) {
+    this.courseDisciplineService.getAllCourseDisciplines(curriculumId).subscribe(x => {
+      if (x.succeeded && x.data) {
+        this.courseDisciplines = x.data;
       }
     })
   }

@@ -120,6 +120,26 @@
                         </p-inplace>
                     </div>
                 </div>
+
+                <div class="flex justify-content-between summary-input-container">
+                    <div>Discipline</div>
+                    <div>
+                        <p-inplace>
+                            <ng-template pTemplate="display">
+                                <span>{{ semesterName ?? "Not selected yet" }}</span>
+                            </ng-template>
+                            <ng-template pTemplate="content">
+                                <p-dropdown
+                                    [options]="courseDisciplines"
+                                    formControlName="semesterOffered"
+                                    optionLabel="title"
+                                    optionValue="id"
+                                />
+                            </ng-template>
+                        </p-inplace>
+                    </div>
+                </div>
+
                 <!-- <div class="flex justify-content-between summary-input-container">
                     <small>Created on {{ course.createdAt | date : "MMMM d, y, h:mm:ss a" }}</small>
                 </div> -->
