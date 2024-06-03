@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CourseDisciplineDataService } from './course-discipline.data.service';
 import { Observable } from 'rxjs';
-import { BaseResponse } from 'src/app/models/tenant.model';
-import { CourseDisciplineItem, CreateCourseDisciplineRequest, UpdateCourseDisciplineRequest } from '../components/curriculum/interdisciplinary-courses/interdisciplinary-courses.component';
+import { BaseResponse, CourseDisciplineItem, CreateCourseDisciplineRequest, UpdateCourseDisciplineRequest } from 'src/app/models/tenant.model';
 
 @Injectable({
   providedIn: 'root'

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CourseDisciplineService } from 'src/app/demo/service/course-discipline.service';
 import { UiMessageService } from '../../../service/ui-message.service';
+import { CourseDisciplineItem, CreateCourseDisciplineRequest } from 'src/app/models/tenant.model';
 
 @Component({
   selector: 'app-interdisciplinary-courses',
@@ -57,16 +58,3 @@ export class InterdisciplinaryCoursesComponent implements OnInit {
 }
 
 
-export interface CourseDisciplineItem {
-  id: number;
-  title: string;
-}
-
-export interface CreateCourseDisciplineRequest {
-  title: string;
-  curriculumId: number | null;
-}
-
-export interface UpdateCourseDisciplineRequest {
-  title: string;
-}
