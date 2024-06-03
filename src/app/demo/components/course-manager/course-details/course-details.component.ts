@@ -5,8 +5,7 @@ import { MessageService } from 'primeng/api';
 import { CourseDisciplineService } from 'src/app/demo/service/course-discipline.service';
 import { CourseService } from 'src/app/demo/service/course.service';
 import { UserService } from 'src/app/demo/service/user.service';
-import { BaseResponse, CourseForm, CourseItem, UpdateCourseRequest, UserItem } from 'src/app/models/tenant.model';
-import { CourseDisciplineItem } from '../../curriculum/interdisciplinary-courses/interdisciplinary-courses.component';
+import { BaseResponse, CourseDisciplineItem, CourseForm, CourseItem, UpdateCourseRequest, UserItem } from 'src/app/models/tenant.model';
 
 @Component({
   selector: 'app-course-details',
@@ -15,12 +14,17 @@ import { CourseDisciplineItem } from '../../curriculum/interdisciplinary-courses
   providers: [MessageService]
 })
 export class CourseDetailsComponent implements OnInit {
+  onClickSaveBtn() {
+    this.updateCourse(this.course.title);
+  }
 
   courseForm: FormGroup<CourseForm>;
   courseRevisionId: number;
   course: CourseItem;
   CourseRevisionStatus = CourseRevisionStatus;
   faculties: UserItem[];
+  isLoading = false;
+  isTitleInputActive = false;
 
   semesters: any[] = [
     { label: '1st Year 1st Semester', value: 1 },
@@ -50,6 +54,7 @@ export class CourseDetailsComponent implements OnInit {
     this.initForm();
     this.getAllFaculties();
   }
+
   initForm() {
     this.courseForm = this.fb.group<CourseForm>({
       title: new FormControl("", Validators.required),
@@ -59,6 +64,8 @@ export class CourseDetailsComponent implements OnInit {
       curriculumId: new FormControl(null, Validators.required),
       semesterOffered: new FormControl(null),
       authorId: new FormControl(null),
+      courseDisciplineId: new FormControl(null),
+      courseCategory: new FormControl(null),
     });
   }
 
@@ -74,10 +81,16 @@ export class CourseDetailsComponent implements OnInit {
     this.updateCourse();
   }
 
-  updateCourse() {
+  updateCourse(title?: string) {
+    let request = this.courseForm.value as UpdateCourseRequest;
+    request.title = title ?? request.title;
+    this.isLoading = true;
+
     this.courseService.updateCourseById(this.courseRevisionId, this.courseForm.value as UpdateCourseRequest)
       .subscribe((x: BaseResponse<CourseItem>) => {
         if (x.data) {
+          this.isLoading = false;
+          this.isTitleInputActive = false;
           this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Saved as draft', life: 3000 });
         }
       });
@@ -89,7 +102,7 @@ export class CourseDetailsComponent implements OnInit {
       if (x.data) {
         this.course = x.data;
         this.semesterName = this.semesters.find(semester => semester.value === x.data.semesterOffered)?.label
-        this.courseForm.patchValue({ ...x.data, authorId: x.data.author.id });
+        this.courseForm.patchValue({ ...x.data, authorId: x.data.author.id, courseDisciplineId: x.data.courseDisciplineResponse?.id });
         this.getAllCourseDisciplines(x.data.curriculumId);
       }
     })

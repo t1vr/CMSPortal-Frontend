@@ -81,6 +81,10 @@ export class CreateProgramRequest {
   description: string;
 }
 
+export enum CourseCategory {
+  InternDisciplinary,
+  Core
+}
 
 export interface CourseForm {
   title: FormControl<string>;
@@ -90,6 +94,8 @@ export interface CourseForm {
   curriculumId?: FormControl<number>;
   authorId: FormControl<string>;
   semesterOffered: FormControl<number>;
+  courseDisciplineId: FormControl<number>;
+  courseCategory: FormControl<CourseCategory>;
 }
 
 export interface CourseItem extends BaseAuditableResponse {
@@ -106,6 +112,8 @@ export interface CourseItem extends BaseAuditableResponse {
   author: UserItem;
   courseRevisionStatus: CourseRevisionStatus;
   semesterOffered: number;
+  courseCategory: CourseCategory;
+  courseDisciplineResponse: CourseDisciplineItem;
 }
 
 export interface CreateCourseRequest {
@@ -125,6 +133,8 @@ export interface UpdateCourseRequest {
   semesterOffered: number;
   authorId: string;
   description: string;
+  courseDisciplineId: number;
+  courseCategory: CourseCategory;
 }
 
 export class CurriculumItem {
@@ -238,4 +248,19 @@ export interface UpdateUserRequest {
   designation: string;
   phoneNumber: string;
   roles: string[];
+}
+
+
+export interface CourseDisciplineItem {
+  id: number;
+  title: string;
+}
+
+export interface CreateCourseDisciplineRequest {
+  title: string;
+  curriculumId: number | null;
+}
+
+export interface UpdateCourseDisciplineRequest {
+  title: string;
 }

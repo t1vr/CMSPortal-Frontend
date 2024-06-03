@@ -1,3 +1,24 @@
+<div class="surface-section course-list-header">
+    <p-inplace [active]="isTitleInputActive">
+        <ng-template pTemplate="display">
+            <div class="font-medium text-3xl text-900">{{ course?.title }}</div>
+        </ng-template>
+        <ng-template pTemplate="content">
+            <p-inputGroup styleClass="my-4">
+                <input type="text" pInputText [(ngModel)]="course.title" />
+                <button
+                    type="button"
+                    pButton
+                    [loading]="isLoading"
+                    label="Save"
+                    class="p-button-primary"
+                    (click)="onClickSaveBtn()"
+                ></button>
+            </p-inputGroup>
+        </ng-template>
+    </p-inplace>
+</div>
+
 <div class="flex justify-content-end flex-column-reverse md:flex-row align-items-center">
     <div
         class="flex flex-wrap justify-content-center md:justify-content-start gap-3 course-details-menu mb-4 course-details-header"
@@ -32,32 +53,7 @@
         ></p-button>
     </div>
 </div>
-<!-- <div class="flex justify-content-between">
-  <p-button
-      icon="pi pi-file-import"
-      label="Import"
-      (click)="onClickApproveBtn()"
-      size="small"
-      [text]="true"
-      styleClass="table-header-btn"
-  ></p-button>
-  <p-button
-      icon="pi pi-plus"
-      label="New"
-      [routerLink]="['../../../manage-courses/create', curriculumId]"
-      size="small"
-      [text]="true"
-      styleClass="table-header-btn"
-  ></p-button>
-  <p-button
-      icon="pi pi-filter-fill"
-      label="Filters"
-      (click)="op.toggle($event)"
-      size="small"
-      [text]="true"
-      styleClass="table-header-btn"
-  ></p-button>
-</div> -->
+
 <div class="p-4" style="border: 1px solid #dfdfdf">
     <span [innerHTML]="course?.description"></span>
 </div>
@@ -126,12 +122,17 @@
                     <div>
                         <p-inplace>
                             <ng-template pTemplate="display">
-                                <span>{{ semesterName ?? "Not selected yet" }}</span>
+                                <span>
+                                    {{
+                                        course?.courseDisciplineResponse?.title ??
+                                            "Select disciplines"
+                                    }}
+                                </span>
                             </ng-template>
                             <ng-template pTemplate="content">
                                 <p-dropdown
                                     [options]="courseDisciplines"
-                                    formControlName="semesterOffered"
+                                    formControlName="courseDisciplineId"
                                     optionLabel="title"
                                     optionValue="id"
                                 />

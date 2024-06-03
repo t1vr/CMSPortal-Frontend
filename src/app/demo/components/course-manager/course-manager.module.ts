@@ -29,6 +29,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { PanelModule } from 'primeng/panel';
 import { InplaceModule } from 'primeng/inplace';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputGroupModule } from 'primeng/inputgroup';
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
@@ -65,7 +66,8 @@ const routes: Routes = [
     TooltipModule,
     PanelModule,
     InplaceModule,
-    InputTextModule
+    InputTextModule,
+    InputGroupModule
   ],
   declarations: [CourseManagerComponent,
     CourseUpsertComponent,
