@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { CourseDisciplineService } from 'src/app/demo/service/course-discipline.service';
 import { CourseService } from 'src/app/demo/service/course.service';
 import { UserService } from 'src/app/demo/service/user.service';
-import { BaseResponse, CourseDisciplineItem, CourseForm, CourseItem, UpdateCourseRequest, UserItem } from 'src/app/models/tenant.model';
+import { BaseResponse, CourseDisciplineItem, CourseForm, CourseItem, CourseType, UpdateCourseRequest, UserItem } from 'src/app/models/tenant.model';
 
 @Component({
   selector: 'app-course-details',
@@ -22,6 +22,8 @@ export class CourseDetailsComponent implements OnInit {
   courseRevisionId: number;
   course: CourseItem;
   CourseRevisionStatus = CourseRevisionStatus;
+  courseTypes = CourseType;
+
   faculties: UserItem[];
   isLoading = false;
   isTitleInputActive = false;
@@ -66,6 +68,7 @@ export class CourseDetailsComponent implements OnInit {
       authorId: new FormControl(null),
       courseDisciplineId: new FormControl(null),
       courseCategory: new FormControl(null),
+      courseType: new FormControl(null),
     });
   }
 

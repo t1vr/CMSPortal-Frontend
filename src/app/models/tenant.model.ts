@@ -96,6 +96,7 @@ export interface CourseForm {
   semesterOffered: FormControl<number>;
   courseDisciplineId: FormControl<number>;
   courseCategory: FormControl<CourseCategory>;
+  courseType: FormControl<CourseType>;
 }
 
 export interface CourseItem extends BaseAuditableResponse {
@@ -110,11 +111,24 @@ export interface CourseItem extends BaseAuditableResponse {
   authorId: string;
   authorName: string;
   author: UserItem;
+  reviewerId: string;
+  reviewerName: string;
+  review: UserItem;
   courseRevisionStatus: CourseRevisionStatus;
   semesterOffered: number;
   courseCategory: CourseCategory;
   courseDisciplineResponse: CourseDisciplineItem;
+  courseType: CourseType
 }
+
+export enum CourseType {
+  Theory,
+  Lab,
+  Viva,
+  Thesis,
+  Project
+}
+
 
 export interface CreateCourseRequest {
   title: string;
@@ -135,6 +149,7 @@ export interface UpdateCourseRequest {
   description: string;
   courseDisciplineId: number;
   courseCategory: CourseCategory;
+  courseType: CourseType;
 }
 
 export class CurriculumItem {

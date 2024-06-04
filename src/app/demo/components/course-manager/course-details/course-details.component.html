@@ -85,6 +85,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="flex justify-content-between summary-input-container">
                     <div>Course Code</div>
                     <div>
@@ -117,6 +118,24 @@
                     </div>
                 </div>
 
+                <div class="flex justify-content-between summary-input-container">
+                    <div>Course Type</div>
+                    <div>
+                        <p-inplace>
+                            <ng-template pTemplate="display">
+                                <span>{{ course?.courseType ?? "Not selected yet" }}</span>
+                            </ng-template>
+                            <ng-template pTemplate="content">
+                                <p-dropdown
+                                    [options]="courseTypes | keyvalue"
+                                    optionLabel="value"
+                                    optionValue="key"
+                                    formControlName="courseType"
+                                />
+                            </ng-template>
+                        </p-inplace>
+                    </div>
+                </div>
                 <div class="flex justify-content-between summary-input-container">
                     <div>Discipline</div>
                     <div>

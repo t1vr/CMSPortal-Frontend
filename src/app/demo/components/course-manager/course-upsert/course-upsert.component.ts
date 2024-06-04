@@ -47,6 +47,7 @@ export class CourseUpsertComponent implements OnInit {
       semesterOffered: new FormControl(null),
       courseDisciplineId: new FormControl(null),
       courseCategory: new FormControl(null),
+      courseType: new FormControl(null),
     });
   }
 
