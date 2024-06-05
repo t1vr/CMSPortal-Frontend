@@ -19,21 +19,193 @@
     </p-inplace>
 </div>
 
-<div class="flex justify-content-end flex-column-reverse md:flex-row align-items-center">
-    <div
-        class="flex flex-wrap justify-content-center md:justify-content-start gap-3 course-details-menu mb-4 course-details-header"
-    >
-        <ng-container *hasPermission="['Admin']">
+<div class="w-10 m-auto">
+    <div class="flex justify-content-end flex-column-reverse md:flex-row align-items-center">
+        <div
+            class="flex flex-wrap justify-content-center md:justify-content-start gap-3 course-details-menu mb-4 course-details-header"
+        >
+            <ng-container *hasPermission="['Admin']">
+                <p-button
+                    (click)="onClickApproveBtn()"
+                    icon="pi pi-history"
+                    label="Approve"
+                    severity="secondary"
+                    size="small"
+                    [text]="true"
+                    *ngIf="course?.courseRevisionStatus !== CourseRevisionStatus.Approved"
+                ></p-button>
+            </ng-container>
             <p-button
-                (click)="onClickApproveBtn()"
+                (click)="onClickHistoryBtn()"
                 icon="pi pi-history"
-                label="Approve"
+                label="History"
                 severity="secondary"
+                size="small"
+                [text]="true"
+            ></p-button>
+            <p-button
+                (click)="goToEditCourse(courseRevisionId)"
+                icon="pi pi-pencil"
+                label="Edit"
+                severity="info"
                 size="small"
                 [text]="true"
                 *ngIf="course?.courseRevisionStatus !== CourseRevisionStatus.Approved"
             ></p-button>
-        </ng-container>
+        </div>
+    </div>
+
+    <div class="my-3">
+        <p-panel header="Summary" [toggleable]="true" [collapsed]="true">
+            <form [formGroup]="courseForm" class="course-summary-form" (ngSubmit)="submitForm()">
+                <div class="ui-g ui-fluid">
+                    <div>
+                        <div class="flex justify-content-between summary-input-container">
+                            <div>Assignee</div>
+                            <div>
+                                <p-inplace>
+                                    <ng-template pTemplate="display">
+                                        <span>{{ course?.authorName ?? "Unassigned" }}</span>
+                                    </ng-template>
+                                    <ng-template pTemplate="content">
+                                        <p-dropdown
+                                            styleClass="min-w-110 "
+                                            [options]="faculties"
+                                            formControlName="authorId"
+                                            optionLabel="fullName"
+                                            optionValue="id"
+                                        />
+                                    </ng-template>
+                                </p-inplace>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-content-between summary-input-container">
+                        <div>Course Code</div>
+                        <div>
+                            <p-inplace>
+                                <ng-template pTemplate="display">
+                                    <span>{{ course?.courseCode ?? "Not selected" }}</span>
+                                </ng-template>
+                                <ng-template pTemplate="content">
+                                    <input type="text" formControlName="courseCode" pInputText />
+                                </ng-template>
+                            </p-inplace>
+                        </div>
+                    </div>
+                    <div class="flex justify-content-between summary-input-container">
+                        <div>Semester</div>
+                        <div>
+                            <p-inplace>
+                                <ng-template pTemplate="display">
+                                    <span>{{ semesterName ?? "Not selected yet" }}</span>
+                                </ng-template>
+                                <ng-template pTemplate="content">
+                                    <p-dropdown
+                                        [options]="semesters"
+                                        formControlName="semesterOffered"
+                                        optionLabel="label"
+                                        optionValue="value"
+                                    />
+                                </ng-template>
+                            </p-inplace>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-content-between summary-input-container">
+                        <div>Course Type</div>
+                        <div>
+                            <p-inplace>
+                                <ng-template pTemplate="display">
+                                    <span>{{ courseType ?? "Not selected yet" }}</span>
+                                </ng-template>
+                                <ng-template pTemplate="content">
+                                    <p-dropdown
+                                        [options]="courseTypes"
+                                        optionLabel="label"
+                                        optionValue="value"
+                                        formControlName="courseType"
+                                    />
+                                </ng-template>
+                            </p-inplace>
+                        </div>
+                    </div>
+                    <div class="flex justify-content-between summary-input-container">
+                        <div>Discipline</div>
+                        <div>
+                            <p-inplace>
+                                <ng-template pTemplate="display">
+                                    <span>
+                                        {{
+                                            course?.courseDisciplineResponse?.title ??
+                                                "Select disciplines"
+                                        }}
+                                    </span>
+                                </ng-template>
+                                <ng-template pTemplate="content">
+                                    <p-dropdown
+                                        [options]="courseDisciplines"
+                                        formControlName="courseDisciplineId"
+                                        optionLabel="title"
+                                        optionValue="id"
+                                    />
+                                </ng-template>
+                            </p-inplace>
+                        </div>
+                    </div>
+
+                    <!-- <div class="flex justify-content-between summary-input-container">
+                  <small>Created on {{ course.createdAt | date : "MMMM d, y, h:mm:ss a" }}</small>
+              </div> -->
+                    <div class="flex justify-content-between summary-input-container">
+                        <div>Created on {{ course?.createdAt | date : "medium" }}</div>
+                    </div>
+                    <div class="flex justify-content-between summary-input-container">
+                        <div>Updated on {{ course?.lastModifiedAt | date : "medium" }}</div>
+                    </div>
+                    <div class="ui-g-12">
+                        <button pButton type="submit" label="Save"></button>
+                    </div>
+                </div>
+            </form>
+        </p-panel>
+    </div>
+
+    <div class="my-3">
+        <p-panel header="Description" [toggleable]="true" [collapsed]="false">
+            <div class="p-4">
+                <span [innerHTML]="course?.description"></span>
+            </div>
+        </p-panel>
+    </div>
+
+    <div class="my-3">
+        <p-panel header="Reviewer" [toggleable]="true" [collapsed]="false">
+            <div class="flex justify-content-between summary-input-container">
+                <div>Reviewer</div>
+                <div>
+                    <p-inplace>
+                        <ng-template pTemplate="display">
+                            <span>{{ course?.reviewerName ?? "Unassigned" }}</span>
+                        </ng-template>
+                        <ng-template pTemplate="content">
+                            <p-dropdown
+                                styleClass="min-w-110 "
+                                [options]="faculties"
+                                (onChange)="onChangeReviewerName($event)"
+                                optionLabel="fullName"
+                                optionValue="id"
+                            />
+                        </ng-template>
+                    </p-inplace>
+                </div>
+            </div>
+        </p-panel>
+    </div>
+    <div
+        class="flex flex-wrap justify-content-start md:justify-content-start gap-3 course-content-footer"
+    >
         <p-button
             (click)="onClickHistoryBtn()"
             icon="pi pi-history"
@@ -54,146 +226,5 @@
     </div>
 </div>
 
-<div class="p-4" style="border: 1px solid #dfdfdf">
-    <span [innerHTML]="course?.description"></span>
-</div>
-<div>
-    <p-panel header="To Do" [toggleable]="true">
-        <form [formGroup]="courseForm" class="course-summary-form" (ngSubmit)="submitForm()">
-            <div class="ui-g ui-fluid">
-                <div class="ui-g-12">
-                    <h3>Details</h3>
-                </div>
-                <div>
-                    <div class="flex justify-content-between summary-input-container">
-                        <div>Assignee</div>
-                        <div>
-                            <p-inplace>
-                                <ng-template pTemplate="display">
-                                    <span>{{ course?.authorName ?? "Unassigned" }}</span>
-                                </ng-template>
-                                <ng-template pTemplate="content">
-                                    <p-dropdown
-                                        styleClass="min-w-110 "
-                                        [options]="faculties"
-                                        formControlName="authorId"
-                                        optionLabel="fullName"
-                                        optionValue="id"
-                                    />
-                                </ng-template>
-                            </p-inplace>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="flex justify-content-between summary-input-container">
-                    <div>Course Code</div>
-                    <div>
-                        <p-inplace>
-                            <ng-template pTemplate="display">
-                                <span>{{ course?.courseCode ?? "Not selected" }}</span>
-                            </ng-template>
-                            <ng-template pTemplate="content">
-                                <input type="text" formControlName="courseCode" pInputText />
-                            </ng-template>
-                        </p-inplace>
-                    </div>
-                </div>
-                <div class="flex justify-content-between summary-input-container">
-                    <div>Semester</div>
-                    <div>
-                        <p-inplace>
-                            <ng-template pTemplate="display">
-                                <span>{{ semesterName ?? "Not selected yet" }}</span>
-                            </ng-template>
-                            <ng-template pTemplate="content">
-                                <p-dropdown
-                                    [options]="semesters"
-                                    formControlName="semesterOffered"
-                                    optionLabel="label"
-                                    optionValue="value"
-                                />
-                            </ng-template>
-                        </p-inplace>
-                    </div>
-                </div>
-
-                <div class="flex justify-content-between summary-input-container">
-                    <div>Course Type</div>
-                    <div>
-                        <p-inplace>
-                            <ng-template pTemplate="display">
-                                <span>{{ course?.courseType ?? "Not selected yet" }}</span>
-                            </ng-template>
-                            <ng-template pTemplate="content">
-                                <p-dropdown
-                                    [options]="courseTypes | keyvalue"
-                                    optionLabel="value"
-                                    optionValue="key"
-                                    formControlName="courseType"
-                                />
-                            </ng-template>
-                        </p-inplace>
-                    </div>
-                </div>
-                <div class="flex justify-content-between summary-input-container">
-                    <div>Discipline</div>
-                    <div>
-                        <p-inplace>
-                            <ng-template pTemplate="display">
-                                <span>
-                                    {{
-                                        course?.courseDisciplineResponse?.title ??
-                                            "Select disciplines"
-                                    }}
-                                </span>
-                            </ng-template>
-                            <ng-template pTemplate="content">
-                                <p-dropdown
-                                    [options]="courseDisciplines"
-                                    formControlName="courseDisciplineId"
-                                    optionLabel="title"
-                                    optionValue="id"
-                                />
-                            </ng-template>
-                        </p-inplace>
-                    </div>
-                </div>
-
-                <!-- <div class="flex justify-content-between summary-input-container">
-                    <small>Created on {{ course.createdAt | date : "MMMM d, y, h:mm:ss a" }}</small>
-                </div> -->
-                <div class="flex justify-content-between summary-input-container">
-                    <div>Created on {{ course?.createdAt | date : "medium" }}</div>
-                </div>
-                <div class="flex justify-content-between summary-input-container">
-                    <div>Updated on {{ course?.lastModifiedAt | date : "medium" }}</div>
-                </div>
-                <div class="ui-g-12">
-                    <button pButton type="submit" label="Save"></button>
-                </div>
-            </div>
-        </form>
-    </p-panel>
-</div>
-<div
-    class="flex flex-wrap justify-content-start md:justify-content-start gap-3 course-content-footer"
->
-    <p-button
-        (click)="onClickHistoryBtn()"
-        icon="pi pi-history"
-        label="History"
-        severity="secondary"
-        size="small"
-        [text]="true"
-    ></p-button>
-    <p-button
-        (click)="goToEditCourse(courseRevisionId)"
-        icon="pi pi-pencil"
-        label="Edit"
-        severity="info"
-        size="small"
-        [text]="true"
-        *ngIf="course?.courseRevisionStatus !== CourseRevisionStatus.Approved"
-    ></p-button>
-</div>
+<p-toast></p-toast>

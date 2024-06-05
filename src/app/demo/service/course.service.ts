@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { CreateCourseRequest, BaseResponse, CourseItem, UpdateCourseRequest } from 'src/app/models/tenant.model';
 import { CourseDataService } from './course.data.service';
-import { UpdateCourseRevisionStatusRequest } from '../components/course-manager/course-details/course-details.component';
+import { AssignReviewersForCourseRevisionRequest, UpdateCourseRevisionStatusRequest } from '../components/course-manager/course-details/course-details.component';
 @Injectable({ providedIn: 'root' })
 export class CourseService {
   updateCourseRevisionStatus(courseRevisionId: number, request: UpdateCourseRevisionStatusRequest) {
@@ -31,8 +31,12 @@ export class CourseService {
 
   getCourseById(courseId: number): Observable<BaseResponse<CourseItem>> {
     return this.courseDataService.getCourseById(courseId).pipe(tap(x => {
-      x.data.authorName = x.data.author?.firstName + ' ' + x.data.author?.lastName;
-      x.data.reviewerName = x.data.review?.firstName + ' ' + x.data.review?.lastName;
+      if (x.data?.author) {
+        x.data.authorName = x.data.author?.firstName + ' ' + x.data.author?.lastName;
+      }
+      if (x.data?.reviewer) {
+        x.data.reviewerName = x.data.reviewer?.firstName + ' ' + x.data.reviewer?.lastName;
+      }
       return x;
     }
     ));
@@ -56,6 +60,10 @@ export class CourseService {
 
   assignAuthorsToCourse(courseRevisionId: number, request: AssignAuthorsToCourseRevisionRequest) {
     return this.courseDataService.assignAuthorsToCourse(courseRevisionId, request);
+  }
+
+  assignReviewersToCourse(courseRevisionId: number, request: AssignReviewersForCourseRevisionRequest) {
+    return this.courseDataService.assignReviwersToCourse(courseRevisionId, request);
   }
 
   deleteCourseById(courseId: number) {

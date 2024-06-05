@@ -7,10 +7,16 @@ import { CourseApiConstants, CurriculumApiConstants } from 'src/app/constants/ap
 import { BaseResponse, CourseItem, CreateCourseRequest, UpdateCourseRequest } from 'src/app/models/tenant.model';
 import { AddCourseToCurriculumRequest, AssignAuthorsToCourseRevisionRequest } from './course.service';
 import { CurriculumModule } from '../components/curriculum/curriculum.module';
-import { UpdateCourseRevisionStatusRequest } from '../components/course-manager/course-details/course-details.component';
+import { AssignReviewersForCourseRevisionRequest, UpdateCourseRevisionStatusRequest } from '../components/course-manager/course-details/course-details.component';
 
 @Injectable({ providedIn: "root" })
 export class CourseDataService extends BaseDataService {
+  assignReviwersToCourse(courseRevisionId: number, request: AssignReviewersForCourseRevisionRequest) {
+    return this.httpClient.put<BaseResponse<boolean>>(
+      this.getFullApiUrl(CourseApiConstants.COURSE_MODULE, CourseApiConstants.ASSIGN_REVIWER_ENDPOINT + courseRevisionId),
+      request,
+      this.getHttpOptions(false, true, false));
+  }
 
   assignAuthorsToCourse(courseRevisionId: number, request: AssignAuthorsToCourseRevisionRequest) {
     return this.httpClient.put<BaseResponse<CourseItem>>(

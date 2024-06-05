@@ -22,7 +22,7 @@ export class CourseDetailsComponent implements OnInit {
   courseRevisionId: number;
   course: CourseItem;
   CourseRevisionStatus = CourseRevisionStatus;
-  courseTypes = CourseType;
+  courseTypes = [];
 
   faculties: UserItem[];
   isLoading = false;
@@ -38,7 +38,7 @@ export class CourseDetailsComponent implements OnInit {
     { label: '4th Year 1st Semester', value: 7 },
     { label: '4th Year 2nd Semester', value: 8 }
   ]
-
+  courseType: string;
   constructor(private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
     private userService: UserService,
@@ -55,6 +55,9 @@ export class CourseDetailsComponent implements OnInit {
 
     this.initForm();
     this.getAllFaculties();
+
+    this.courseTypes = Object.keys(CourseType).map(key => ({ label: CourseType[key], value: key }));
+
   }
 
   initForm() {
@@ -87,6 +90,8 @@ export class CourseDetailsComponent implements OnInit {
   updateCourse(title?: string) {
     let request = this.courseForm.value as UpdateCourseRequest;
     request.title = title ?? request.title;
+    request.courseType = Number(this.courseForm.value.courseType) as CourseType
+    console.log(request.courseType)
     this.isLoading = true;
 
     this.courseService.updateCourseById(this.courseRevisionId, this.courseForm.value as UpdateCourseRequest)
@@ -94,7 +99,7 @@ export class CourseDetailsComponent implements OnInit {
         if (x.data) {
           this.isLoading = false;
           this.isTitleInputActive = false;
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Saved as draft', life: 3000 });
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Save change information', life: 3000 });
         }
       });
   }
@@ -104,7 +109,8 @@ export class CourseDetailsComponent implements OnInit {
     this.courseService.getCourseById(courseRevisionId).subscribe(x => {
       if (x.data) {
         this.course = x.data;
-        this.semesterName = this.semesters.find(semester => semester.value === x.data.semesterOffered)?.label
+        this.semesterName = this.semesters.find(semester => semester.value === x.data.semesterOffered)?.label;
+        this.courseType = CourseType[x.data.courseType];
         this.courseForm.patchValue({ ...x.data, authorId: x.data.author.id, courseDisciplineId: x.data.courseDisciplineResponse?.id });
         this.getAllCourseDisciplines(x.data.curriculumId);
       }
@@ -144,6 +150,18 @@ export class CourseDetailsComponent implements OnInit {
       }
     })
   }
+
+  onChangeReviewerName(event) {
+    let reviewerId = event.value;
+    let request: AssignReviewersForCourseRevisionRequest = {
+      reviewerIds: [reviewerId]
+    }
+    this.courseService.assignReviewersToCourse(this.courseRevisionId, request).subscribe(x => {
+      if (x.succeeded) {
+
+      }
+    })
+  }
 }
 
 export enum CourseRevisionStatus {
@@ -155,4 +173,8 @@ export enum CourseRevisionStatus {
 
 export interface UpdateCourseRevisionStatusRequest {
   courseRevisionStatus: CourseRevisionStatus;
+}
+
+export interface AssignReviewersForCourseRevisionRequest {
+  reviewerIds: string[];
 }

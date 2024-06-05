@@ -113,7 +113,7 @@ export interface CourseItem extends BaseAuditableResponse {
   author: UserItem;
   reviewerId: string;
   reviewerName: string;
-  review: UserItem;
+  reviewer: UserItem;
   courseRevisionStatus: CourseRevisionStatus;
   semesterOffered: number;
   courseCategory: CourseCategory;
