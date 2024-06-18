@@ -50,7 +50,6 @@ export class ResetPasswordComponent implements OnInit {
       email: this.email,
       password: this.resetPasswordForm.get('password').value,
       token: this.code,
-      tenantId: this.tenantKey
     }
     this.isLoading = true;
     this.authService.resetPassword(request).subscribe(x => {
@@ -85,5 +84,4 @@ export interface ResetPasswordRequest {
   email: string;
   password: string;
   token: string;
-  tenantId: string;
 }

@@ -16,14 +16,14 @@ export class CurriculumDataService extends BaseDataService {
   getCurriculumById(curriculumId: number) {
     return this.httpClient.get<BaseResponse<CurriculumItem>>(
       this.getFullApiUrl(CurriculumApiConstants.CURRICULUM_MODULE, CurriculumApiConstants.GET_BY_ID_ENDPOINT + curriculumId),
-      this.getHttpOptions(false, false, false)
+      this.getHttpOptions(false, true, false)
     );
   }
 
   getAllCurriculums(): Observable<BaseResponse<CurriculumItem[]>> {
     return this.httpClient.get<BaseResponse<CurriculumItem[]>>(
       this.getFullApiUrl(CurriculumApiConstants.CURRICULUM_MODULE, CurriculumApiConstants.GET_ALL_ENDPOINT),
-      this.getHttpOptions(false, false, false)
+      this.getHttpOptions(false, true, false)
     );
   }
 

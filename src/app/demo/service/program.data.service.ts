@@ -16,7 +16,7 @@ export class ProgramDataService extends BaseDataService {
   getAllPrograms(): Observable<BaseResponse<ProgramItem[]>> {
     return this.httpClient.get<BaseResponse<ProgramItem[]>>(
       this.getFullApiUrl(ProgramApiConstants.PROGRAM_MODULE, ProgramApiConstants.GET_ALL_ENDPOINT),
-      this.getHttpOptions(false, false, false)
+      this.getHttpOptions(false, true, false)
     );
   }
 

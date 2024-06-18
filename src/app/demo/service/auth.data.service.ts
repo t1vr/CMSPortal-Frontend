@@ -28,11 +28,11 @@ export class AuthDataService extends BaseDataService {
       .set('code', code)
       .set('tenantKey', tenantKey);
 
-    return this.httpClient.get<BaseResponse<string>>(this.getFullApiUrl(AuthApiConstants.AUTH_MODULE, AuthApiConstants.CONFIRM_EMAIL), { params })
+    return this.httpClient.get<BaseResponse<string>>(this.getFullApiUrl(AuthApiConstants.AUTH_MODULE, AuthApiConstants.CONFIRM_EMAIL), this.getHttpOptions(false, false, false, params))
   }
 
   resetPassword(request: ResetPasswordRequest): Observable<BaseResponse<string>> {
-    return this.httpClient.put<BaseResponse<string>>(
+    return this.httpClient.post<BaseResponse<string>>(
       this.getFullApiUrl(AuthApiConstants.AUTH_MODULE, AuthApiConstants.RESET_PASSWORD),
       request,
       this.getHttpOptions(false, false, false));
@@ -44,7 +44,8 @@ export class AuthDataService extends BaseDataService {
       .set('email', 'tanvir')
       .set('tenantId', tenantKey);
 
-    return this.httpClient.get<BaseResponse<string>>(this.getFullApiUrl(AuthApiConstants.AUTH_MODULE, AuthApiConstants.GET_RESET_PASSWORD_TOKEN), { params })
+    return this.httpClient.get<BaseResponse<string>>(
+      this.getFullApiUrl(AuthApiConstants.AUTH_MODULE, AuthApiConstants.GET_RESET_PASSWORD_TOKEN), this.getHttpOptions(false, false, false, params))
   }
 }
 

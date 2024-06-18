@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/demo/service/auth.service';
+import { LocalStorageService } from 'src/app/demo/service/local.storage.service';
 import { TenantService } from 'src/app/demo/service/tenant.service';
 
 @Component({
@@ -19,13 +20,14 @@ export class ConfirmEmailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
     private tenantService: TenantService,
+    private localStorageService: LocalStorageService,
     private router: Router) {
   }
 
   ngOnInit() {
     let userId = this.activatedRoute.snapshot.queryParamMap.get('userId');
     let code = this.activatedRoute.snapshot.queryParamMap.get('code');
-    let tenantKey = this.activatedRoute.snapshot.queryParamMap.get('tenantKey');
+    let tenantKey = this.activatedRoute.snapshot.queryParamMap.get('tenant');
 
     if (!userId || !code || !tenantKey) {
       setTimeout(() => {
@@ -35,7 +37,7 @@ export class ConfirmEmailComponent implements OnInit {
       }, 3000);
     } else {
       this.confirmEmail(userId, code, tenantKey);
-      this.getTenantInfoByTenantId(tenantKey);
+      // this.getTenantInfoByTenantId(tenantKey);
     }
   }
   getTenantInfoByTenantId(tenantidentifier: string) {
@@ -51,16 +53,12 @@ export class ConfirmEmailComponent implements OnInit {
   }
   confirmEmail(userId: string, code: string, tenantKey: string) {
     this.loading = true;
+    this.localStorageService.setTenantIdentifier(tenantKey)
     this.authService.confirmEmail(userId, code, tenantKey).subscribe(x => {
-      if (x.succeeded) {
+      if (x) {
         this.loading = false;
         this.isEmailConfirmed = true;
         this.getPasswordResetToken(userId, tenantKey);
-      } else {
-        if (x.data) {
-          this.loading = false;
-          this.isEmailConfirmed = false;
-        }
       }
     },
       err => {
@@ -70,6 +68,7 @@ export class ConfirmEmailComponent implements OnInit {
   }
 
   getPasswordResetToken(userId: string, tenantKey: string) {
+    this.localStorageService.setTenantIdentifier(tenantKey);
     this.authService.getPasswordResetToken(userId, undefined, tenantKey).subscribe(x => {
       if (x.succeeded) {
         let url = this.removeDomainFromUrl(x.data)

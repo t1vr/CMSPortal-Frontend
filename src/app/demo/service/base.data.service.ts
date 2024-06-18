@@ -7,49 +7,49 @@ import { mergeRoutePaths } from './route.helper';
 @Injectable({ providedIn: 'root' })
 export class BaseDataService {
 
-    baseUrl = 'https://localhost:5001/api/';
+  baseUrl = 'https://localhost:5001/api/';
 
-    protected getHttpHeaders(isMultiPart: boolean) {
-        const headers = new HttpHeaders({
-            'Accept': 'application/json',
-        });
+  protected getHttpHeaders(isMultiPart: boolean) {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+    });
 
-        if (isMultiPart) {
-            return headers.append('Content-Type', 'multipart/form-data');
-        }
-        return headers.append('Content-Type', 'application/json');
+    if (isMultiPart) {
+      return headers.append('Content-Type', 'multipart/form-data');
+    }
+    return headers.append('Content-Type', 'application/json');
+  }
+
+  protected getHttpOptions(isMultiPart: boolean, isAuthorized: boolean, observeResponse: boolean, params?: HttpParams) {
+    let httpOptions = {
+      headers: new HttpHeaders(),
+      params: params ?? new HttpParams(),
+      "observe?": "response"
+    };
+
+    if (observeResponse) {
+      httpOptions = {
+        headers: new HttpHeaders(),
+        params: new HttpParams(),
+        "observe?": "response",
+      };
     }
 
-    protected getHttpOptions(isMultiPart: boolean, isAuthorized: boolean, observeResponse: boolean) {
-        let httpOptions = {
-            headers: new HttpHeaders(),
-            params: new HttpParams(),
-            "observe?": "response"
-        };
+    let headers = this.getHttpHeaders(isMultiPart);
+    headers = headers.set(TenantIdentifierKey, localStorage.getItem('tenantIdentifier') as string ?? 'public');
 
-        if (observeResponse) {
-            httpOptions = {
-                headers: new HttpHeaders(),
-                params: new HttpParams(),
-                "observe?": "response",
-            };
-        }
-
-        let headers = this.getHttpHeaders(isMultiPart);
-        headers = headers.set(TenantIdentifierKey, localStorage.getItem('tenantIdentifier') as string ?? 'public');
-
-        if (isAuthorized) {
-            headers = headers.set(TokenHeaderKey, TokenPrefix + localStorage.getItem(TokenKey) as string);
-        }
-
-        httpOptions.headers = headers;
-        return httpOptions;
+    if (isAuthorized) {
+      headers = headers.set(TokenHeaderKey, TokenPrefix + localStorage.getItem(TokenKey) as string);
     }
 
-    /**
-   * @param url specific url endpoint like (users/sign_in)
-   * @returns full api url like http://test-api/v1/api/users/sign_in
-   */
+    httpOptions.headers = headers;
+    return httpOptions;
+  }
+
+  /**
+ * @param url specific url endpoint like (users/sign_in)
+ * @returns full api url like http://test-api/v1/api/users/sign_in
+ */
   protected getFullApiUrl(module: string, url: string,): string {
     const apiBaseUrl = this.baseUrl;
     return mergeRoutePaths([apiBaseUrl, module, url]);
