@@ -18,7 +18,7 @@ export class TokenApiConstants {
 }
 
 export class AuthApiConstants {
-  public static readonly AUTH_MODULE = "auth"
+  public static readonly AUTH_MODULE = "users"
   public static readonly CONFIRM_EMAIL = "confirm-email";
   public static readonly GET_RESET_PASSWORD_TOKEN = "reset-password-token";
   public static readonly RESET_PASSWORD = "reset-password";
@@ -27,6 +27,14 @@ export class AuthApiConstants {
 
 export class ProgramApiConstants {
   public static readonly PROGRAM_MODULE = "programs"
+  public static readonly CREATE_ENDPOINT = "";
+  public static readonly UPDATE_ENDPOINT = "";
+  public static readonly GET_ALL_ENDPOINT = "";
+  public static readonly GET_BY_ID_ENDPOINT = "";
+}
+
+export class RoleApiConstants {
+  public static readonly ROLE_MODULE = "roles"
   public static readonly CREATE_ENDPOINT = "";
   public static readonly UPDATE_ENDPOINT = "";
   public static readonly GET_ALL_ENDPOINT = "";

@@ -61,6 +61,7 @@ export class AppMenuComponent implements OnInit {
 
             ]
           },
+          { label: 'Access Controls', icon: 'pi pi-fw pi-lock', routerLink: ['/', tenantIdentifier, 'access-controls'] },
         ]
       },
       {

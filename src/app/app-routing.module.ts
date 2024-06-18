@@ -41,6 +41,8 @@ import { CanLoadGuard } from './guards/canLoad.guard';
           { path: 'manage-courses', loadChildren: () => import('./demo/components/course-manager/course-manager.module').then(m => m.CourseManagerModule) },
           { path: 'manage-curriculums', loadChildren: () => import('./demo/components/curriculum/curriculum.module').then(m => m.CurriculumModule) },
           { path: 'manage-faculties', loadChildren: () => import('./demo/components/faculty-manager/faculty-manager.module').then(m => m.FacultyManagerModule) },
+          { path: 'access-controls', loadChildren: () => import('./demo/components/access-control-manager/access-control-manager.module').then(m => m.AccessControlManagerModule) },
+
         ]
       },
       { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
