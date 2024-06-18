@@ -7,7 +7,7 @@ import { mergeRoutePaths } from './route.helper';
 @Injectable({ providedIn: 'root' })
 export class BaseDataService {
 
-    baseUrl = 'https://localhost:7061/api/';
+    baseUrl = 'https://localhost:5001/api/';
 
     protected getHttpHeaders(isMultiPart: boolean) {
         const headers = new HttpHeaders({

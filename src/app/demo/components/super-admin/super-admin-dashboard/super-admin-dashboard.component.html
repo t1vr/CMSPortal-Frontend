@@ -1,0 +1,91 @@
+<div class="w-9 m-auto">
+    <div class="font-medium text-2xl text-900 mb-3">All Tenants</div>
+
+    <div class="surface-section mb-4">
+        <p-tabMenu
+            [model]="items"
+            [activeItem]="activeItem"
+            (activeItemChange)="onActiveItemChange($event)"
+        />
+    </div>
+
+    <div class="surface-section">
+        <p-table
+            #dt1
+            [value]="tenants"
+            selectionMode="single"
+            dataKey="code"
+            [tableStyle]="{ 'min-width': '70rem' }"
+            class="curriculum-course-table"
+            styleClass="p-datatable-gridlines"
+            [globalFilterFields]="['title']"
+        >
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-between">
+                    <div>
+                        <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search keyword"
+                            />
+                        </span>
+                    </div>
+
+                    <div class="flex justify-content-between">
+                        <p-button
+                            icon="pi pi-plus"
+                            label="Create"
+                            (click)="showTenantCreateDialog()"
+                            size="small"
+                            [text]="true"
+                            styleClass="table-header-btn"
+                        ></p-button>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        <i class="pi pi-align-left"></i>
+                        Name
+                    </th>
+                    <th>
+                        <i class="pi pi-arrow-circle-right"></i>
+                        Status
+                    </th>
+                    <th>
+                        <i class="pi pi-arrow-circle-right"></i>
+                        Action
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-tenant>
+                <tr>
+                    <td class="text-base">
+                        <p-button [label]="tenant.name" [text]="true" [plain]="true"></p-button>
+                    </td>
+
+                    <!-- <td>{{ course.creditHour }}</td> -->
+                    <td>
+                        <p-tag severity="success" *ngIf="tenant.isActive" value="Active" />
+                        <p-tag severity="warning" *ngIf="!tenant.isActive" value="Inactive" />
+                    </td>
+                    <td>
+                        <p-button
+                            severity="info"
+                            styleClass="bg-bluegray-100"
+                            [label]="'Edit'"
+                            (click)="onClickEditTenant(tenant)"
+                        ></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-toast />

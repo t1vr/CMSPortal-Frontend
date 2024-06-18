@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AuthDataService } from './auth.data.service';
-import { LoginRequestModel, LoginResponseModel } from 'src/app/models/tenant.model';
+import { BaseResponse, LoginRequestModel, LoginResponseModel } from 'src/app/models/tenant.model';
 import { LocalStorageService } from './local.storage.service';
 import { JWTTokenService } from './jwt.token.service';
 import { ResetPasswordRequest } from '../components/auth/reset-password/reset-password.component';
@@ -19,12 +19,12 @@ export class AuthService {
     private localStorageService: LocalStorageService,
     private jwtTokenService: JWTTokenService) { }
 
-  login(loginRequestModel: LoginRequestModel): Observable<LoginResponseModel> {
+  login(loginRequestModel: LoginRequestModel): Observable<BaseResponse<LoginResponseModel>> {
     this.localStorageService.setTenantIdentifier(loginRequestModel.tenantIdentifier);
     return this.authDataService.login(loginRequestModel).pipe(tap(x => {
-      this.jwtTokenService.setToken(x.token);
-      this.localStorageService.setUserToken(x.token);
-      this.localStorageService.setUser(x.userResponse);
+      this.jwtTokenService.setToken(x.data.token);
+      this.localStorageService.setUserToken(x.data.token);
+      this.localStorageService.setUser(x.data.userResponse);
     }));
   }
 

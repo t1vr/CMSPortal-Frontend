@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { BaseResponse, SignUpTenantRequestModel, SignUpTenantResponseModel, Tenant } from 'src/app/models/tenant.model';
 import { LocalStorageService } from './local.storage.service';
 import { TenantDataService } from './tenant.data.service';
+import { TenantUpdateRequest } from '../components/super-admin/tenant-upsert/tenant-upsert.component';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,10 @@ export class TenantService {
 
   signUpTenant(signupTenantRequestModel: SignUpTenantRequestModel): Observable<SignUpTenantResponseModel> {
     return this.tenantDataService.signUpTenant(signupTenantRequestModel);
+  }
+
+  updateTenant(id:string, tenantUpdateRequest: TenantUpdateRequest): Observable<string> {
+    return this.tenantDataService.updateTenant(id,tenantUpdateRequest);
   }
 
   getAllTenants() {

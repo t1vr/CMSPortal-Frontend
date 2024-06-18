@@ -1,0 +1,49 @@
+::ng-deep .curriculum-course-table .p-datatable .p-datatable-header {
+    background: white;
+    border-width: 0;
+    margin-bottom: 1rem;
+}
+
+.curriculum-course-table td {
+    padding: 0rem 1rem;
+    height: 40px;
+}
+
+.curriculum-course-table th {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    height: 40px;
+    font-size: 0.875rem;
+    font-weight: 900;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.curriculum-course-table th i {
+    margin-right: 0.2rem;
+    font-size: 0.875rem;
+    font-weight: 900;
+}
+
+::ng-deep .curriculum-course-table .p-button {
+    font-weight: 500;
+    color: #374151;
+    height: 2.28571em;
+    padding: 0px 10px;
+    font-size: 14px;
+}
+
+::ng-deep .curriculum-course-table .p-button:hover {
+    color: #374151;
+
+    background-color: rgba(9, 30, 66, 0.08);
+}
+
+::ng-deep .curriculum-course-table .p-button:hover {
+    color: #1f6dda !important;
+    /* background-color: rgba(179, 212, 255, 0.6); */
+    background: #c2cedf;
+}
+
+::ng-deep .course-filter-panel-menu .p-multiselect {
+    width: 100%;
+}

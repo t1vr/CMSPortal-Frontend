@@ -28,7 +28,7 @@ export class ProgramDataService extends BaseDataService {
   }
 
   signUpTenant(signUpTenantRequestModel: SignUpTenantRequestModel): Observable<SignUpTenantResponseModel> {
-    return this.httpClient.post<SignUpTenantRequestModel>(
+    return this.httpClient.post<SignUpTenantResponseModel>(
       this.getFullApiUrl(TenantApiConstants.TENANT_MODULE, TenantApiConstants.CREATE_ENDPOINT),
       signUpTenantRequestModel,
       this.getHttpOptions(false, true, false));

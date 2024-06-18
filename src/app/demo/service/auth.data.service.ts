@@ -15,8 +15,8 @@ export class AuthDataService extends BaseDataService {
     super();
   }
 
-  login(loginRequestModel: LoginRequestModel): Observable<LoginResponseModel> {
-    return this.httpClient.post<LoginResponseModel>(
+  login(loginRequestModel: LoginRequestModel): Observable<BaseResponse<LoginResponseModel>> {
+    return this.httpClient.post<BaseResponse<LoginResponseModel>>(
       this.getFullApiUrl(TokenApiConstants.Token_MODULE, TokenApiConstants.LOGIN),
       loginRequestModel,
       this.getHttpOptions(false, false, false));

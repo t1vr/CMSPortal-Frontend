@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/demo/service/auth.service';
-import { LoginRequestModel, SignUpTenantRequestModel, SignUpTenantResponseModel, Tenant } from 'src/app/models/tenant.model';
+import { BaseResponse, LoginRequestModel, SignUpTenantRequestModel, SignUpTenantResponseModel, Tenant } from 'src/app/models/tenant.model';
 import { LoginResponseModel } from '../../../../models/tenant.model';
 import { TenantService } from 'src/app/demo/service/tenant.service';
 
@@ -55,9 +55,15 @@ export class LoginComponent {
     }
     this.isLoading = true;
     this.authService.login(this.logInForm.value as LoginRequestModel).subscribe(
-      (_: LoginResponseModel) => {
-        this.isLoading = false;
-        this.router.navigate([this.logInForm.value.tenantIdentifier])
+      (x: BaseResponse<LoginResponseModel>) => {
+        if (x.succeeded && x.data?.userResponse) {
+          this.isLoading = false;
+          if (x.data.userResponse.tenantId === 'root')
+            this.router.navigate(['/super-admin'])
+          else
+            this.router.navigate([this.logInForm.value.tenantIdentifier])
+
+        }
       }
     )
   }

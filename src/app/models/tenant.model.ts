@@ -2,10 +2,11 @@ import { FormControl } from "@angular/forms";
 
 //Tenant
 export class SignUpTenantRequestModel {
-  identifier!: string;
+  id: string;
   name!: string;
   adminEmail!: string;
-  password!: string;
+  description: string;
+  isActive: boolean;
 }
 
 export class SignUpTenantResponseModel {
@@ -13,6 +14,8 @@ export class SignUpTenantResponseModel {
   name!: string;
   adminEmail!: string;
   password!: string;
+  description: string;
+  isActive: string;
 }
 
 
