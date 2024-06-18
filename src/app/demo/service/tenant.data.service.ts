@@ -12,9 +12,17 @@ export class TenantDataService extends BaseDataService {
     super();
   }
 
+  getAllTenants() {
+    return this.httpClient.get<BaseResponse<Tenant[]>>(
+      this.getFullApiUrl(TenantApiConstants.TENANT_MODULE, TenantApiConstants.GET_ALL_ENDPOINT),
+      this.getHttpOptions(false, false, false)
+    );
+  }
+
+
   getTenantByIdentifier(tenantIdentifier: string): Observable<BaseResponse<Tenant>> {
     return this.httpClient.get<BaseResponse<Tenant>>(
-      this.getFullApiUrl(TenantApiConstants.TENANT_MODULE,TenantApiConstants.GET_BY_ID_ENDPOINT) + tenantIdentifier,
+      this.getFullApiUrl(TenantApiConstants.TENANT_MODULE, TenantApiConstants.GET_BY_ID_ENDPOINT) + tenantIdentifier,
       this.getHttpOptions(false, false, false)
     );
   }

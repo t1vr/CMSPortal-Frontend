@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { CreateCourseRequest, BaseResponse, CourseItem, UpdateCourseRequest } from 'src/app/models/tenant.model';
+import { CreateCourseRequest, BaseResponse, CourseItem, UpdateCourseRequest, UpdateCourseRevisionStatusRequest, AssignReviewersForCourseRevisionRequest } from 'src/app/models/tenant.model';
 import { CourseDataService } from './course.data.service';
-import { AssignReviewersForCourseRevisionRequest, UpdateCourseRevisionStatusRequest } from '../components/course-manager/course-details/course-details.component';
+
 @Injectable({ providedIn: 'root' })
 export class CourseService {
   updateCourseRevisionStatus(courseRevisionId: number, request: UpdateCourseRevisionStatusRequest) {
@@ -51,7 +51,13 @@ export class CourseService {
   }
 
   getCourseRevisionsByCourseId(courseId: number) {
-    return this.courseDataService.getCourseRevisionsByCourseId(courseId);
+    return this.courseDataService.getCourseRevisionsByCourseId(courseId).pipe(tap(x =>
+      x.data?.map(course => {
+        course.authorId = course.author?.id;
+        if (course.author)
+          course.authorName = course.author?.firstName + ' ' + course.author?.lastName
+        return course;
+      })))
   }
 
   addCourseToCurriculum(courseId: number, request: AddCourseToCurriculumRequest) {

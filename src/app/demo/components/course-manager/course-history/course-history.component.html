@@ -1,4 +1,20 @@
-<p-card styleClass="h-full">
+<div>
+    <div class="surface-section px-4 py-5">
+        <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+            <div>
+                <div class="font-medium text-3xl text-900">
+                    {{ latestCourseRevision?.title }}
+                </div>
+                <div class="flex align-items-center text-700 flex-wrap">
+                    <div class="flex align-items-center mt-3">
+                        <i class="pi pi-clock mr-2"></i>
+                        <span>{{ courseRevisions?.length }} revisions has been made</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <p-timeline [value]="courseRevisions" styleClass="course-history-timeline">
         <ng-template pTemplate="content" let-courseRevision>
             <div
@@ -13,7 +29,10 @@
                         [routerLink]="['../../', courseRevision.id]"
                         size="small"
                     ></p-button>
-                    <p-button label="Author: Tanvir Ahmed" [text]="true" size="small"></p-button>
+                    <!-- <p-button label="Author: Tanvir Ahmed" [text]="true" size="small"></p-button> -->
+                    <div class="text-black-900 text-sm font-bold" style="padding-left: 0.562625rem">
+                        Author: {{ courseRevision.authorName }}
+                    </div>
                 </div>
 
                 <p-button
@@ -26,4 +45,4 @@
             </div>
         </ng-template>
     </p-timeline>
-</p-card>
+</div>

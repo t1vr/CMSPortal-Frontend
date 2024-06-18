@@ -5,6 +5,7 @@ export class AppRouteUrlConstant {
 
 export class TenantApiConstants {
   public static readonly TENANT_MODULE = "tenants"
+  public static readonly GET_ALL_ENDPOINT = "";
   public static readonly CREATE_ENDPOINT = "";
   public static readonly GET_BY_ID_ENDPOINT = "";
 }

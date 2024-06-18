@@ -1,46 +1,57 @@
-<div class="surface-section course-compare-header flex justify-content-between">
-    <div class="">
-        <p-dropdown
-            [options]="sourceCourseRevisions"
-            [(ngModel)]="sourceCourseRevisionId"
-            optionLabel="reasonForRevision"
-            optionValue="id"
-            [showClear]="true"
-            placeholder="Select source course"
-        ></p-dropdown>
-        <p-dropdown
-            [options]="targetCourseRevisions"
-            [(ngModel)]="targetCourseRevisionId"
-            optionLabel="reasonForRevision"
-            optionValue="id"
-            [showClear]="true"
-            placeholder="Select target course"
-        ></p-dropdown>
+<div class="w-full md:w-10 m-auto compare-course-container">
+    <div class="surface-section course-compare-header flex justify-content-between">
+        <div class="">
+            <p-dropdown
+                [options]="sourceCourseRevisions"
+                [(ngModel)]="sourceCourseRevisionId"
+                optionLabel="reasonForRevision"
+                optionValue="id"
+                placeholder="Select source course"
+                styleClass="mr-3"
+            ></p-dropdown>
+            <p-dropdown
+                [options]="targetCourseRevisions"
+                [(ngModel)]="targetCourseRevisionId"
+                optionLabel="reasonForRevision"
+                optionValue="id"
+                placeholder="Select target course"
+            ></p-dropdown>
+        </div>
+
+        <p-button (click)="compare()" label="Compare" severity="success" size="small"></p-button>
+    </div>
+    <div class="surface-section course-container" styleClass="mt-3">
+        <ng-container *ngIf="sourceCourseRevision">
+            <h5 class="text-primary">{{ sourceCourseRevision.reasonForRevision }}</h5>
+            <p-divider />
+
+            <div [innerHTML]="sourceCourseRevision.description" class="w-full"></div>
+        </ng-container>
     </div>
 
-    <p-button (click)="compare()" label="Compare" severity="success" size="small"></p-button>
-</div>
-<div class="surface-section course-container" styleClass="mt-3">
-    <ng-container *ngIf="sourceCourseRevision">
-        <h5 class="text-primary">{{ sourceCourseRevision.reasonForRevision }}</h5>
-        <p-divider />
+    <div class="surface-section course-container" styleClass="mt-3">
+        <div *ngIf="sourceCourseRevision && targetCourseRevision">
+            <h5 class="text-primary">Changes</h5>
+            <p-divider />
+            <div
+                [innerHTML]="diffOutput"
+                *ngIf="sourceCourseRevision?.id !== targetCourseRevision?.id; else showEmptyChange"
+            ></div>
 
-        <div [innerHTML]="sourceCourseRevision.description" class="w-full"></div>
-    </ng-container>
-</div>
-
-<div class="surface-section course-container" styleClass="mt-3">
-    <div>
-        <h5 class="text-primary">Changes</h5>
-        <p-divider />
-        <div [innerHTML]="diffOutput"></div>
+            <ng-template #showEmptyChange>
+                <div>
+                    You have selected the course revisions for comparision, hence no change will be
+                    found
+                </div>
+            </ng-template>
+        </div>
     </div>
-</div>
 
-<div class="surface-section course-container" styleClass="mt-3">
-    <ng-container *ngIf="targetCourseRevision">
-        <h5 class="text-primary">{{ targetCourseRevision.reasonForRevision }}</h5>
-        <p-divider />
-        <div [innerHTML]="targetCourseRevision.description"></div>
-    </ng-container>
+    <div class="surface-section course-container" styleClass="mt-3">
+        <ng-container *ngIf="targetCourseRevision">
+            <h5 class="text-primary">{{ targetCourseRevision.reasonForRevision }}</h5>
+            <p-divider />
+            <div [innerHTML]="targetCourseRevision.description"></div>
+        </ng-container>
+    </div>
 </div>

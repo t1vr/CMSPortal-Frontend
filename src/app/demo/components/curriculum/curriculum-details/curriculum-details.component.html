@@ -1,3 +1,5 @@
+<div class="font-medium text-2xl text-900 mb-3">All Courses</div>
+
 <div class="surface-section">
     <p-table
         #dt1
@@ -54,14 +56,24 @@
 
         <ng-template pTemplate="header">
             <tr>
-                <th>Title</th>
-                <th>Credit Hours</th>
-                <th>Author</th>
+                <th>
+                    <i class="pi pi-align-left"></i>
+                    Title
+                </th>
+                <!-- <th>Credit Hours</th> -->
+                <th>
+                    <i class="pi pi-at"></i>
+                    Author
+                </th>
+                <th>
+                    <i class="pi pi-arrow-circle-right"></i>
+                    Status
+                </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-course>
             <tr>
-                <td>
+                <td class="text-base">
                     <p-button
                         [label]="course.title"
                         [text]="true"
@@ -71,7 +83,7 @@
                     ></p-button>
                 </td>
 
-                <td>{{ course.creditHour }}</td>
+                <!-- <td>{{ course.creditHour }}</td> -->
                 <td [pEditableColumn]="course.authorId" pEditableColumnField="authorId">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
@@ -89,6 +101,35 @@
                             <p-tag [value]="course.authorName ?? 'Not Assigned'" />
                         </ng-template>
                     </p-cellEditor>
+                </td>
+                <td>
+                    <span
+                        class="text-black-900 text-sm font-medium"
+                        *ngIf="course.courseRevisionStatus === CourseRevisionStatus.Unassigned"
+                    >
+                        Unassigned
+                    </span>
+                    <span
+                        class="text-black-900 text-sm font-medium"
+                        *ngIf="course.courseRevisionStatus === CourseRevisionStatus.ToDo"
+                    >
+                        To Do
+                    </span>
+                    <p-tag
+                        severity="primary"
+                        *ngIf="course.courseRevisionStatus === CourseRevisionStatus.InProgress"
+                        value="In Progress"
+                    />
+                    <p-tag
+                        severity="warning"
+                        *ngIf="course.courseRevisionStatus === CourseRevisionStatus.UnderReview"
+                        value="Under Review"
+                    />
+                    <p-tag
+                        severity="success"
+                        *ngIf="course.courseRevisionStatus === CourseRevisionStatus.Approved"
+                        value="Approved"
+                    />
                 </td>
             </tr>
         </ng-template>

@@ -16,6 +16,7 @@ export class CourseHistoryComponent implements OnInit {
   courseRevisions: CourseItem[] = [];
   courseId: number;
   events: any[];
+  latestCourseRevision: CourseItem;
 
   constructor(private courseService: CourseService,
     private curriculumService: CurriculumService,
@@ -32,6 +33,9 @@ export class CourseHistoryComponent implements OnInit {
     this.courseService.getCourseRevisionsByCourseId(courseId).subscribe(x => {
       if (x.data) {
         this.courseRevisions = x.data;
+        this.latestCourseRevision = this.courseRevisions.reduce((maxObj, currentObj) =>
+          currentObj.id > maxObj.id ? currentObj : maxObj
+        );
       }
     })
   }

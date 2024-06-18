@@ -1,13 +1,23 @@
 <div class="surface-section faculty-list-header">
     <div class="flex justify-content-end">
-        <p-button
+        <!-- <p-button
             icon="pi pi-plus"
             severity="primary"
             label="Create"
             [text]="true"
             size="small"
             (click)="onClickAddNewFacultyBtn()"
-        ></p-button>
+        ></p-button> -->
+        <div class="flex justify-content-end">
+            <p-button
+                label="New"
+                icon="pi pi-plus"
+                class="p-button-success mr-2"
+                [routerLink]="['create']"
+                size="small"
+                (click)="onClickAddNewFacultyBtn()"
+            ></p-button>
+        </div>
     </div>
 </div>
 <!-- <p-dataView #dv [value]="faculties" [layout]="'list'">

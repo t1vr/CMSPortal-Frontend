@@ -1,3 +1,62 @@
-<p>
-  course-review-request works!
-</p>
+<div class="font-medium text-xl text-900 mb-3">Review Requests</div>
+
+<p-table
+    [value]="coursesUnderReview"
+    [scrollable]="true"
+    scrollHeight="400px"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    class="course-review-table"
+>
+    <ng-template pTemplate="header">
+        <tr class="surface-section course-list-header">
+            <th class="w-6">
+                <i class="pi pi-align-left"></i>
+                Title
+            </th>
+            <th class="w-3">
+                <i class="pi pi-at"></i>
+                Author
+            </th>
+            <th class="w-3">
+                <i class="pi pi-arrow-circle-right"></i>
+                Reviewer
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-course>
+        <tr>
+            <td class="w-6 text-md font-bold font-medium">
+                <p-button
+                    [label]="course.title"
+                    [text]="true"
+                    [link]="true"
+                    [plain]="true"
+                    [routerLink]="['/geo/manage-courses/', course.id]"
+                    styleClass="text-900"
+                ></p-button>
+            </td>
+            <td class="w-3 text-black-900 text-sm font-medium">{{ course.authorName }}</td>
+            <td class="w-3 text-black-900 text-sm font-medium">
+                {{ course.reviewerName }}
+                <!-- <p-button
+                    icon="pi pi-pencil"
+                    label="Edit"
+                    (click)="onClickEditFaculty(faculty)"
+                    size="small"
+                    [text]="true"
+                    [plain]="true"
+                    severity="info"
+                ></p-button>
+                <p-button
+                    icon="pi pi-trash"
+                    label="Delete"
+                    (click)="onClickDeleteBtn(faculty.id)"
+                    size="small"
+                    [text]="true"
+                    [plain]="true"
+                    severity="warning"
+                ></p-button> -->
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

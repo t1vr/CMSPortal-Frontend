@@ -34,6 +34,7 @@ import { InplaceModule } from 'primeng/inplace';
 import { CurriculumSettingsComponent } from './curriculum-settings/curriculum-settings.component';
 import { InterdisciplinaryCoursesComponent } from './interdisciplinary-courses/interdisciplinary-courses.component';
 import { CourseReviewRequestComponent } from './course-review-request/course-review-request.component';
+import { EditorModule } from 'primeng/editor';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -77,7 +78,8 @@ const routes: Routes = [
     DividerModule,
     SplitterModule,
     InplaceModule,
-    InputGroupModule
+    InputGroupModule,
+    EditorModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,

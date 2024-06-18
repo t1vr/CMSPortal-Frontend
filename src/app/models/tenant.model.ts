@@ -1,5 +1,4 @@
 import { FormControl } from "@angular/forms";
-import { CourseRevisionStatus } from "../demo/components/course-manager/course-details/course-details.component";
 
 //Tenant
 export class SignUpTenantRequestModel {
@@ -170,6 +169,14 @@ export class CreateCurriculumRequest {
   effectiveTillYear: Date;
 }
 
+export class UpdateCurriculumRequest {
+  title: string;
+  description: string;
+  programIds: number[];
+  effectiveFromYear: Date;
+  effectiveTillYear: Date;
+}
+
 export interface CurriculumForm {
   title: FormControl<string>;
   description: FormControl<string>;
@@ -278,4 +285,21 @@ export interface CreateCourseDisciplineRequest {
 
 export interface UpdateCourseDisciplineRequest {
   title: string;
+}
+
+
+export enum CourseRevisionStatus {
+  Unassigned,
+  ToDo,
+  InProgress,
+  UnderReview,
+  Approved
+}
+
+export interface UpdateCourseRevisionStatusRequest {
+  courseRevisionStatus: CourseRevisionStatus;
+}
+
+export interface AssignReviewersForCourseRevisionRequest {
+  reviewerIds: string[];
 }

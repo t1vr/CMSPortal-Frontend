@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { CourseDisciplineService } from 'src/app/demo/service/course-discipline.service';
 import { CourseService } from 'src/app/demo/service/course.service';
 import { UserService } from 'src/app/demo/service/user.service';
-import { BaseResponse, CourseDisciplineItem, CourseForm, CourseItem, CourseType, UpdateCourseRequest, UserItem } from 'src/app/models/tenant.model';
+import { AssignReviewersForCourseRevisionRequest, BaseResponse, CourseDisciplineItem, CourseForm, CourseItem, CourseRevisionStatus, CourseType, UpdateCourseRequest, UpdateCourseRevisionStatusRequest, UserItem } from 'src/app/models/tenant.model';
 
 @Component({
   selector: 'app-course-details',
@@ -14,10 +14,6 @@ import { BaseResponse, CourseDisciplineItem, CourseForm, CourseItem, CourseType,
   providers: [MessageService]
 })
 export class CourseDetailsComponent implements OnInit {
-  onClickSaveBtn() {
-    this.updateCourse(this.course.title);
-  }
-
   courseForm: FormGroup<CourseForm>;
   courseRevisionId: number;
   course: CourseItem;
@@ -27,6 +23,7 @@ export class CourseDetailsComponent implements OnInit {
   faculties: UserItem[];
   isLoading = false;
   isTitleInputActive = false;
+  semesterName: string;
 
   semesters: any[] = [
     { label: '1st Year 1st Semester', value: 1 },
@@ -46,7 +43,9 @@ export class CourseDetailsComponent implements OnInit {
     private messageService: MessageService,
     private fb: FormBuilder,
     private courseDisciplineService: CourseDisciplineService
-  ) { }
+  ) {
+    console.log('------>   ', this.CourseRevisionStatus);
+  }
 
   ngOnInit() {
     this.courseRevisionId = this.activatedRoute.snapshot.paramMap.get('courseRevisionId') as unknown as number;
@@ -87,6 +86,10 @@ export class CourseDetailsComponent implements OnInit {
     this.updateCourse();
   }
 
+  onClickSaveBtn() {
+    this.updateCourse(this.course.title);
+  }
+
   updateCourse(title?: string) {
     let request = this.courseForm.value as UpdateCourseRequest;
     request.title = title ?? request.title;
@@ -104,7 +107,6 @@ export class CourseDetailsComponent implements OnInit {
       });
   }
 
-  semesterName: string;
   getCourseById(courseRevisionId: number) {
     this.courseService.getCourseById(courseRevisionId).subscribe(x => {
       if (x.data) {
@@ -151,6 +153,28 @@ export class CourseDetailsComponent implements OnInit {
     })
   }
 
+  isLoadingReviewBtn = false;
+  onClickSetToReviewBtn() {
+    this.isLoadingReviewBtn = true;
+
+    let statusToBeSaved = this.course.courseRevisionStatus && this.course.courseRevisionStatus === CourseRevisionStatus.InProgress
+      ? CourseRevisionStatus.UnderReview
+      : CourseRevisionStatus.InProgress
+    let request: UpdateCourseRevisionStatusRequest = {
+      courseRevisionStatus: statusToBeSaved
+    }
+    this.courseService.updateCourseRevisionStatus(this.courseRevisionId, request).subscribe((x) => {
+      this.isLoadingReviewBtn = false;
+      if (x.succeeded) {
+        this.course = x.data;
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Set it for review' });
+      }
+    }, () => {
+      this.isLoadingReviewBtn = false;
+
+    })
+  }
+
   onChangeReviewerName(event) {
     let reviewerId = event.value;
     let request: AssignReviewersForCourseRevisionRequest = {
@@ -162,19 +186,4 @@ export class CourseDetailsComponent implements OnInit {
       }
     })
   }
-}
-
-export enum CourseRevisionStatus {
-  Assigned,
-  InProgress,
-  InReview,
-  Approved
-}
-
-export interface UpdateCourseRevisionStatusRequest {
-  courseRevisionStatus: CourseRevisionStatus;
-}
-
-export interface AssignReviewersForCourseRevisionRequest {
-  reviewerIds: string[];
 }

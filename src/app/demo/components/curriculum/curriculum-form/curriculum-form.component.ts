@@ -8,7 +8,8 @@ import { BaseResponse, CurriculumForm, CreateCurriculumRequest, CurriculumItem, 
 @Component({
   selector: 'app-curriculum-form',
   templateUrl: './curriculum-form.component.html',
-  styleUrls: ['./curriculum-form.component.css']
+  styleUrls: ['./curriculum-form.component.css'],
+  providers: [MessageService]
 })
 export class CurriculumFormComponent implements OnInit {
   onSelectDuration() {

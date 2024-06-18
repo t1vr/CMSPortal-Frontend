@@ -42,5 +42,9 @@ export class TenantService {
     return this.tenantDataService.signUpTenant(signupTenantRequestModel);
   }
 
+  getAllTenants() {
+    return this.tenantDataService.getAllTenants();
+  }
+
 }
 

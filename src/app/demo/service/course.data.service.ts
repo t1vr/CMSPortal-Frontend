@@ -4,10 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { BaseDataService } from './base.data.service';
 import { Observable } from 'rxjs';
 import { CourseApiConstants, CurriculumApiConstants } from 'src/app/constants/api.constants';
-import { BaseResponse, CourseItem, CreateCourseRequest, UpdateCourseRequest } from 'src/app/models/tenant.model';
+import { AssignReviewersForCourseRevisionRequest, BaseResponse, CourseItem, CreateCourseRequest, UpdateCourseRequest, UpdateCourseRevisionStatusRequest } from 'src/app/models/tenant.model';
 import { AddCourseToCurriculumRequest, AssignAuthorsToCourseRevisionRequest } from './course.service';
-import { CurriculumModule } from '../components/curriculum/curriculum.module';
-import { AssignReviewersForCourseRevisionRequest, UpdateCourseRevisionStatusRequest } from '../components/course-manager/course-details/course-details.component';
 
 @Injectable({ providedIn: "root" })
 export class CourseDataService extends BaseDataService {

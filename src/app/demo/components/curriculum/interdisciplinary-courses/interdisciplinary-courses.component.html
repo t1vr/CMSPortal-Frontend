@@ -1,16 +1,4 @@
-<div class="surface-section px-4 py-5">
-    <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
-        <div>
-            <div class="font-medium text-3xl text-900">Interdisciplinary Courses</div>
-            <!-- <div class="flex align-items-center text-700 flex-wrap">
-                <div class="mr-5 flex align-items-center mt-3">
-                    <i class="pi pi-users mr-2"></i>
-                    <span>30 Faculties</span>
-                </div>
-            </div> -->
-        </div>
-    </div>
-</div>
+<div class="font-medium text-2xl text-900 mb-3">Interdisciplinary Courses</div>
 
 <div>
     <div class="surface-section course-list-header">
@@ -33,11 +21,13 @@
         [scrollable]="true"
         scrollHeight="400px"
         [tableStyle]="{ 'min-width': '50rem' }"
-        class="course-list"
+        class="inter-disciplinary-course-list"
     >
         <ng-template pTemplate="header">
             <tr class="surface-section course-list-header">
                 <th class="w-6">Title</th>
+                <th>Total Courses</th>
+                <th>Total Credit</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-course>

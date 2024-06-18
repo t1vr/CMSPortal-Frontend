@@ -6,7 +6,7 @@ import { CurrentUserService } from 'src/app/demo/service/current.user.service';
 import { CurriculumService } from 'src/app/demo/service/curriculum.service';
 import { UiMessageService } from 'src/app/demo/service/ui-message.service';
 import { UserService } from 'src/app/demo/service/user.service';
-import { CourseItem, CurriculumItem, UserItem } from 'src/app/models/tenant.model';
+import { CourseItem, CourseRevisionStatus, CurriculumItem, UserItem } from 'src/app/models/tenant.model';
 
 @Component({
   selector: 'app-curriculum-details',
@@ -14,8 +14,6 @@ import { CourseItem, CurriculumItem, UserItem } from 'src/app/models/tenant.mode
   styleUrls: ['./curriculum-details.component.css'],
 })
 export class CurriculumDetailsComponent implements OnInit {
-
-
   curriculumId: number;
   curriculum: CurriculumItem;
   courses: CourseItem[] = [];
@@ -33,6 +31,7 @@ export class CurriculumDetailsComponent implements OnInit {
       isSelected: false
     }
   };
+  CourseRevisionStatus = CourseRevisionStatus;
 
   constructor(private curriculumService: CurriculumService,
     private userService: UserService,

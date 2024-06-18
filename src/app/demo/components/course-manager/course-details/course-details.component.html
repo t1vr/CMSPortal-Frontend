@@ -35,6 +35,21 @@
                     *ngIf="course?.courseRevisionStatus !== CourseRevisionStatus.Approved"
                 ></p-button>
             </ng-container>
+            <ng-container>
+                <p-button
+                    (click)="onClickSetToReviewBtn()"
+                    icon="pi pi-history"
+                    [label]="
+                        course?.courseRevisionStatus === CourseRevisionStatus.UnderReview
+                            ? 'Set In Progress'
+                            : 'Request For Review'
+                    "
+                    severity="secondary"
+                    size="small"
+                    [text]="true"
+                    [loading]="isLoadingReviewBtn"
+                ></p-button>
+            </ng-container>
             <p-button
                 (click)="onClickHistoryBtn()"
                 icon="pi pi-history"
@@ -50,7 +65,10 @@
                 severity="info"
                 size="small"
                 [text]="true"
-                *ngIf="course?.courseRevisionStatus !== CourseRevisionStatus.Approved"
+                *ngIf="
+                    course?.courseRevisionStatus !== CourseRevisionStatus.Approved &&
+                    course?.courseRevisionStatus !== CourseRevisionStatus.UnderReview
+                "
             ></p-button>
         </div>
     </div>
@@ -225,6 +243,5 @@
         ></p-button>
     </div>
 </div>
-
 
 <p-toast></p-toast>

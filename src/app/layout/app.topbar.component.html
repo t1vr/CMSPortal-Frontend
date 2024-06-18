@@ -26,14 +26,21 @@
             'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible
         }"
     >
-        <button class="p-link layout-topbar-button">
+        <!-- <button class="p-link layout-topbar-button">
             <i class="pi pi-calendar"></i>
             <span>Calendar</span>
-        </button>
-        <button class="p-link layout-topbar-button" (click)="menu.toggle($event)">
+        </button> -->
+        <!-- <button class="p-link layout-topbar-button" (click)="menu.toggle($event)">
             <i class="pi pi-user"></i>
             <span>Profile</span>
-        </button>
+        </button> -->
+        <p-avatar
+            image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+            styleClass="mr-2 cursor-pointer"
+            size="large"
+            shape="square"
+            (click)="menu.toggle($event)"
+        />
         <p-menu #menu [model]="profileMenuItems" [popup]="true" />
 
         <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
