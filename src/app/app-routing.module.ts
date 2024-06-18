@@ -2,8 +2,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
-import { CanActivateWithRoleGuard, CanLoadGuard } from './guards/canLoad.guard';
-import { Role } from './models/tenant.model';
+import { CanLoadGuard } from './guards/canLoad.guard';
 
 @NgModule({
   imports: [
@@ -19,11 +18,17 @@ import { Role } from './models/tenant.model';
           { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) }
         ]
       },
+      {
+        path: 'super-admin', component: AppLayoutComponent,
+        children: [
+          { path: '', loadChildren: () => import('./demo/components/super-admin/super-admin.module').then(m => m.SuperAdminModule) },
+        ]
+      },
       { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
       {
         path: ':tenantIdentifier', component: AppLayoutComponent,
-        canActivate: [CanActivateWithRoleGuard],
-        data: { role: [Role.Admin, Role.Faculty] },
+        // canActivate: [CanActivateWithRoleGuard],
+        // data: { role: [Role.Admin, Role.Faculty] },
         children: [
           {
             path: '',

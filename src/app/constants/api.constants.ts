@@ -7,12 +7,13 @@ export class TenantApiConstants {
   public static readonly TENANT_MODULE = "tenants"
   public static readonly GET_ALL_ENDPOINT = "";
   public static readonly CREATE_ENDPOINT = "";
+  public static readonly UPDATE_ENDPOINT = "";
   public static readonly GET_BY_ID_ENDPOINT = "";
 }
 
 export class TokenApiConstants {
-  public static readonly Token_MODULE = "token"
-  public static readonly LOGIN = "login";
+  public static readonly Token_MODULE = "tokens"
+  public static readonly LOGIN = "";
   public static readonly SIGNUP = "";
 }
 

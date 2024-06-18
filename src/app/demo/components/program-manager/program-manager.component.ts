@@ -51,6 +51,7 @@ export class ProgramManagerComponent implements OnInit {
     });
 
     this.ref.onClose.subscribe((_) => {
+      this.getAllPrograms();
       this.messageService.add({ severity: 'info', summary: 'Product Selected' });
     });
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/demo/service/auth.service";
+import { LocalStorageService } from "src/app/demo/service/local.storage.service";
 import { TenantService } from "src/app/demo/service/tenant.service";
 import { LayoutService } from "src/app/layout/service/app.layout.service";
 import { SignUpTenantRequestModel, SignUpTenantResponseModel } from "src/app/models/tenant.model";
@@ -26,7 +27,8 @@ export class SignupComponent {
   constructor(public layoutService: LayoutService,
     private fb: FormBuilder,
     private router: Router,
-    private tenantService: TenantService) { }
+    private tenantService: TenantService,
+    private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
     this.signupForm = this.fb.group<SignupForm>({
@@ -48,13 +50,14 @@ export class SignupComponent {
     if (this.signupForm.invalid) {
       return;
     }
-
     let signUpTenantRequestModel: SignUpTenantRequestModel = {
       adminEmail: this.signupForm.value.adminEmail,
       name: this.signupForm.value.name,
-      identifier: this.signupForm.value.identifier,
-      password: this.signupForm.value.password
+      id: this.signupForm.value.identifier,
+      description: "",
+      isActive: false,
     }
+    this.localStorageService.setTenantIdentifier(signUpTenantRequestModel.id);
 
     this.tenantService.signUpTenant(signUpTenantRequestModel).subscribe(
       (_: SignUpTenantResponseModel) => {

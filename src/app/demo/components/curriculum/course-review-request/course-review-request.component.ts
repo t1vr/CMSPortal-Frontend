@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CurriculumService } from 'src/app/demo/service/curriculum.service';
+import { LocalStorageService } from 'src/app/demo/service/local.storage.service';
+import { TenantService } from 'src/app/demo/service/tenant.service';
 import { UiMessageService } from 'src/app/demo/service/ui-message.service';
 import { CourseItem, CurriculumItem } from 'src/app/models/tenant.model';
 
@@ -15,6 +17,7 @@ export class CourseReviewRequestComponent implements OnInit {
   curriculumId: number;
 
   constructor(private curriculumService: CurriculumService,
+    private localStorageService: LocalStorageService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private uiMessageService: UiMessageService,
@@ -35,5 +38,10 @@ export class CourseReviewRequestComponent implements OnInit {
         // this.getAllCourses();
       }
     })
+  }
+
+  onclickTitle(courseRevisionId: number) {
+    let currentTenant = this.localStorageService.getTenantIdentifier()
+    this.router.navigate(['/', currentTenant, 'manage-courses', courseRevisionId]);
   }
 }

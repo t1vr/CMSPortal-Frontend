@@ -31,7 +31,7 @@
                     [text]="true"
                     [link]="true"
                     [plain]="true"
-                    [routerLink]="['/geo/manage-courses/', course.id]"
+                    (click)="onclickTitle(course.id)"
                     styleClass="text-900"
                 ></p-button>
             </td>

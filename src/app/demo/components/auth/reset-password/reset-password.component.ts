@@ -16,7 +16,7 @@ export class ResetPasswordComponent implements OnInit {
   email: string;
   code: string;
   tenantKey: string;
-
+  isLoading = false;
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
@@ -52,12 +52,17 @@ export class ResetPasswordComponent implements OnInit {
       token: this.code,
       tenantId: this.tenantKey
     }
+    this.isLoading = true;
     this.authService.resetPassword(request).subscribe(x => {
       if (x.succeeded) {
         this.router.navigate(['/auth/login']);
       } else {
         this.messageService.add({ severity: 'error', summary: 'error', detail: 'Something went wrong' });
       }
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+      this.messageService.add({ severity: 'error', summary: 'error', detail: 'Something went wrong' });
     })
   }
 
