@@ -296,7 +296,8 @@ export enum CourseRevisionStatus {
   ToDo,
   InProgress,
   UnderReview,
-  Approved
+  Approved,
+  Rejected
 }
 
 export interface UpdateCourseRevisionStatusRequest {

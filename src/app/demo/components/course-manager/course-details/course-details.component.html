@@ -7,6 +7,7 @@
             <p-inputGroup styleClass="my-4">
                 <input type="text" pInputText [(ngModel)]="course.title" />
                 <button
+                    *ngIf="hasCourseMetaDataPermission"
                     type="button"
                     pButton
                     [loading]="isLoading"
@@ -20,11 +21,18 @@
 </div>
 
 <div class="w-10 m-auto">
-    <div class="flex justify-content-end flex-column-reverse md:flex-row align-items-center">
+    <div class="flex justify-content-between flex-column-reverse md:flex-row align-items-center">
+        <div>
+            <p-tag
+                *ngIf="course?.courseRevisionStatus === CourseRevisionStatus.UnderReview"
+                severity="warning"
+                value="Under Review"
+            />
+        </div>
         <div
-            class="flex flex-wrap justify-content-center md:justify-content-start gap-3 course-details-menu mb-4 course-details-header"
+            class="flex flex-wrap justify-content-between md:justify-content-start gap-3 course-details-menu mb-4 course-details-header"
         >
-            <ng-container *hasPermission="['Admin']">
+            <ng-container *ngIf="hasCourseApprovePermission">
                 <p-button
                     (click)="onClickApproveBtn()"
                     icon="pi pi-history"
@@ -37,13 +45,20 @@
             </ng-container>
             <ng-container>
                 <p-button
+                    *ngIf="hasCourseSetInProgressPermission"
                     (click)="onClickSetToReviewBtn()"
                     icon="pi pi-history"
-                    [label]="
-                        course?.courseRevisionStatus === CourseRevisionStatus.UnderReview
-                            ? 'Set In Progress'
-                            : 'Request For Review'
-                    "
+                    [label]="'Set In Progress'"
+                    severity="secondary"
+                    size="small"
+                    [text]="true"
+                    [loading]="isLoadingReviewBtn"
+                ></p-button>
+                <p-button
+                    *ngIf="hasCourseSetToReviewPermission"
+                    (click)="onClickSetToReviewBtn()"
+                    icon="pi pi-history"
+                    [label]="'Request For Review'"
                     severity="secondary"
                     size="small"
                     [text]="true"
@@ -51,6 +66,7 @@
                 ></p-button>
             </ng-container>
             <p-button
+                *hasPermission="['Permissions.Courses.History']"
                 (click)="onClickHistoryBtn()"
                 icon="pi pi-history"
                 label="History"
@@ -65,10 +81,7 @@
                 severity="info"
                 size="small"
                 [text]="true"
-                *ngIf="
-                    course?.courseRevisionStatus !== CourseRevisionStatus.Approved &&
-                    course?.courseRevisionStatus !== CourseRevisionStatus.UnderReview
-                "
+                *ngIf="hasCourseEditPermission"
             ></p-button>
         </div>
     </div>
@@ -182,7 +195,7 @@
                     <div class="flex justify-content-between summary-input-container">
                         <div>Updated on {{ course?.lastModifiedAt | date : "medium" }}</div>
                     </div>
-                    <div class="ui-g-12">
+                    <div *ngIf="hasCourseMetaDataPermission">
                         <button pButton type="submit" label="Save"></button>
                     </div>
                 </div>

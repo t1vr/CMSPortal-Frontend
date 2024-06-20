@@ -29,8 +29,8 @@ export class CurrentUserService {
     return user?.roles;
   }
 
-  isLoggedIn() {
-
+  getPermissions(): string[] {
+    return this.localStorageService.getUserPermissions();
   }
 
 }

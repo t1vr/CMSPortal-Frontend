@@ -4,8 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CourseDisciplineService } from 'src/app/demo/service/course-discipline.service';
 import { CourseService } from 'src/app/demo/service/course.service';
+import { CurrentUserService } from 'src/app/demo/service/current.user.service';
 import { UserService } from 'src/app/demo/service/user.service';
 import { AssignReviewersForCourseRevisionRequest, BaseResponse, CourseDisciplineItem, CourseForm, CourseItem, CourseRevisionStatus, CourseType, UpdateCourseRequest, UpdateCourseRevisionStatusRequest, UserItem } from 'src/app/models/tenant.model';
+import { PermissionService } from '../../../service/permission.service';
 
 @Component({
   selector: 'app-course-details',
@@ -19,7 +21,7 @@ export class CourseDetailsComponent implements OnInit {
   course: CourseItem;
   CourseRevisionStatus = CourseRevisionStatus;
   courseTypes = [];
-
+  hasCourseEditPermission = true;
   faculties: UserItem[];
   isLoading = false;
   isTitleInputActive = false;
@@ -36,13 +38,19 @@ export class CourseDetailsComponent implements OnInit {
     { label: '4th Year 2nd Semester', value: 8 }
   ]
   courseType: string;
+  hasCourseSetInProgressPermission: boolean;
+  hasCourseSetToReviewPermission: boolean;
+  hasCourseApprovePermission: boolean;
+  hasCourseMetaDataPermission: boolean;
   constructor(private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
     private userService: UserService,
     private router: Router,
     private messageService: MessageService,
     private fb: FormBuilder,
-    private courseDisciplineService: CourseDisciplineService
+    private courseDisciplineService: CourseDisciplineService,
+    private currentUser: CurrentUserService,
+    private permissionService: PermissionService
   ) {
     console.log('------>   ', this.CourseRevisionStatus);
   }
@@ -111,6 +119,27 @@ export class CourseDetailsComponent implements OnInit {
     this.courseService.getCourseById(courseRevisionId).subscribe(x => {
       if (x.data) {
         this.course = x.data;
+        this.hasCourseEditPermission = this.course.authorId === this.currentUser.getCurrentUser()?.id
+          && this.permissionService.hasPermissions(['Permissions.Courses.Update'])
+          && this.course?.courseRevisionStatus !== CourseRevisionStatus.Approved
+          && this.course?.courseRevisionStatus !== CourseRevisionStatus.UnderReview
+
+        this.hasCourseSetInProgressPermission = this.permissionService.hasPermissions(['Permissions.Courses.Update'])
+          && (this.course.authorId === this.currentUser.getCurrentUser()?.id || this.course.reviewerId === this.currentUser.getCurrentUser()?.id)
+          && this.course?.courseRevisionStatus !== CourseRevisionStatus.Approved
+          && this.course?.courseRevisionStatus !== CourseRevisionStatus.InProgress
+
+        this.hasCourseSetToReviewPermission = this.permissionService.hasPermissions(['Permissions.Courses.Update'])
+          && (this.course.authorId === this.currentUser.getCurrentUser()?.id)
+          && this.course?.courseRevisionStatus !== CourseRevisionStatus.Approved
+          && this.course?.courseRevisionStatus !== CourseRevisionStatus.UnderReview
+
+        this.hasCourseApprovePermission = this.permissionService.hasPermissions(['Permissions.Courses.Approve'])
+          && (this.course.reviewerId === this.currentUser.getCurrentUser()?.id)
+          && this.course?.courseRevisionStatus === CourseRevisionStatus.UnderReview
+
+        this.hasCourseMetaDataPermission = this.hasCourseSetInProgressPermission;
+
         this.semesterName = this.semesters.find(semester => semester.value === x.data.semesterOffered)?.label;
         this.courseType = CourseType[x.data.courseType];
         this.courseForm.patchValue({ ...x.data, authorId: x.data.author.id, courseDisciplineId: x.data.courseDisciplineResponse?.id });

@@ -21,7 +21,7 @@ import { AttachCourseToCurriculumFormComponent } from './attach-course-to-curric
 import { CompareCourseComponent } from './compare-course/compare-course.component';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { DividerModule } from 'primeng/divider';
-import { HasPermissionDirective, IsAuthorizedToEditResolverService } from 'src/app/guards/canLoad.guard';
+import { IsAuthorizedToEditResolverService } from 'src/app/guards/canLoad.guard';
 import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { TooltipModule } from 'primeng/tooltip';
@@ -30,6 +30,8 @@ import { PanelModule } from 'primeng/panel';
 import { InplaceModule } from 'primeng/inplace';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupModule } from 'primeng/inputgroup';
+import { TagModule } from 'primeng/tag';
+import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
@@ -67,15 +69,16 @@ const routes: Routes = [
     PanelModule,
     InplaceModule,
     InputTextModule,
-    InputGroupModule
+    InputGroupModule,
+    TagModule,
+    SharedModule
   ],
   declarations: [CourseManagerComponent,
     CourseUpsertComponent,
     CourseDetailsComponent,
     CourseHistoryComponent,
     AttachCourseToCurriculumFormComponent,
-    CompareCourseComponent,
-    HasPermissionDirective
+    CompareCourseComponent
   ]
 })
 export class CourseManagerModule { }

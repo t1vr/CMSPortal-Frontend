@@ -1,0 +1,21 @@
+::ng-deep .permission-container .p-button {
+    font-weight: 500;
+    color: #374151;
+    height: 2.28571em;
+    padding: 0px 10px;
+    font-size: 14px;
+}
+
+.permission-table th {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    height: 40px;
+    font-size: 0.875rem;
+    font-weight: 900;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.permission-table td {
+    padding: 0rem 1rem;
+    height: 40px;
+}

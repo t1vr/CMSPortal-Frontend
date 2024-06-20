@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Injectable, Input, OnInit, TemplateRef, ViewContainerRef } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, CanLoad, Resolve, Route, Router, RouterStateSnapshot } from "@angular/router";
 import { AuthService } from "../demo/service/auth.service";
 import { TokenKey } from "../constants/constants";
@@ -109,48 +109,3 @@ export class IsAuthorizedToEditResolverService implements Resolve<boolean> {
 
 
 
-@Directive({
-  selector: '[hasPermission]'
-})
-export class HasPermissionDirective implements OnInit {
-  private currentUser;
-  private permissions = [];
-
-  constructor(
-    private element: ElementRef,
-    private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef,
-    private currentUserService: CurrentUserService,
-    private permissionService: PermissionService) {
-  }
-
-  ngOnInit() {
-    this.currentUser = this.currentUserService.getCurrentUser();
-  }
-
-  @Input()
-  set hasPermission(val) {
-    this.permissions = val;
-    this.updateView();
-  }
-
-  private updateView() {
-    if (this.permissionService.hasRoles(this.permissions)) {
-      this.viewContainer.createEmbeddedView(this.templateRef);
-    } else {
-      this.viewContainer.clear();
-    }
-  }
-
-  private checkPermission() {
-    let hasPermission = false;
-
-    if (this.currentUser && this.currentUser.permissions) {
-      for (const checkPermission of this.permissions) {
-        const permissionFound = this.currentUser.permissions.find(x => x.toUpperCase() === checkPermission.toUpperCase());
-      }
-    }
-
-    return hasPermission;
-  }
-}

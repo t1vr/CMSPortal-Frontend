@@ -1,6 +1,12 @@
 <div class="flex justify-content-between">
     <span class="font-bold text-xl">Ongoing programs</span>
-    <p-button label="Add" [text]="true" [raised]="true" (click)="onClickCreateBtn()"></p-button>
+    <p-button
+        *hasPermission="['Permissions.Programs.Create']"
+        label="Add"
+        [text]="true"
+        [raised]="true"
+        (click)="onClickCreateBtn()"
+    ></p-button>
 </div>
 <ng-container *ngFor="let program of programs">
     <p-panel [toggleable]="true" styleClass="mb-3">

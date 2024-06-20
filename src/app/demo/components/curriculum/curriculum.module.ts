@@ -35,6 +35,7 @@ import { CurriculumSettingsComponent } from './curriculum-settings/curriculum-se
 import { InterdisciplinaryCoursesComponent } from './interdisciplinary-courses/interdisciplinary-courses.component';
 import { CourseReviewRequestComponent } from './course-review-request/course-review-request.component';
 import { EditorModule } from 'primeng/editor';
+import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -79,7 +80,8 @@ const routes: Routes = [
     SplitterModule,
     InplaceModule,
     InputGroupModule,
-    EditorModule
+    EditorModule,
+    SharedModule
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,

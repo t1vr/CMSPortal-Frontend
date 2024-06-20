@@ -27,6 +27,7 @@
 
                 <div class="flex justify-content-between">
                     <p-button
+                        *hasPermission="['Permissions.Courses.Import']"
                         icon="pi pi-file-import"
                         label="Import"
                         (click)="showDialog()"
@@ -35,6 +36,7 @@
                         styleClass="table-header-btn"
                     ></p-button>
                     <p-button
+                        *hasPermission="['Permissions.Courses.Create']"
                         icon="pi pi-plus"
                         label="New"
                         [routerLink]="['../../../manage-courses/create', curriculumId]"

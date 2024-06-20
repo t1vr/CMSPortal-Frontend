@@ -5,6 +5,14 @@ import { AppUser } from 'src/app/models/tenant.model';
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
 
+  setUserPermissions(permissions: string[]): void {
+    localStorage.setItem('permissions', JSON.stringify(permissions));
+  }
+
+  getUserPermissions(): string[] {
+    return JSON.parse(localStorage.getItem('permissions'));
+  }
+
   setTenantIdentifier(tenantIdentifier: string): void {
     localStorage.setItem('tenantIdentifier', tenantIdentifier);
   }
@@ -29,10 +37,11 @@ export class LocalStorageService {
     return JSON.parse(localStorage.getItem(CurrentUserKey));
   }
 
-  clearProfile(){
+  clearProfile() {
     localStorage.removeItem('tenantIdentifier')
     localStorage.removeItem(TokenKey)
     localStorage.removeItem(CurrentUserKey)
+    localStorage.removeItem('permissions')
   }
 
 }

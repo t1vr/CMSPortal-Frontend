@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/demo/service/auth.service';
 import { BaseResponse, LoginRequestModel, SignUpTenantRequestModel, SignUpTenantResponseModel, Tenant } from 'src/app/models/tenant.model';
 import { LoginResponseModel } from '../../../../models/tenant.model';
 import { TenantService } from 'src/app/demo/service/tenant.service';
+import { UserService } from 'src/app/demo/service/user.service';
+import { LocalStorageService } from 'src/app/demo/service/local.storage.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +39,9 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private tenantService: TenantService) { }
+    private tenantService: TenantService,
+    private localStorageService: LocalStorageService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.logInForm = this.fb.group<LogInForm>({
@@ -63,8 +67,16 @@ export class LoginComponent {
           else
             this.router.navigate([this.logInForm.value.tenantIdentifier])
 
+          if (x.data?.userResponse?.id) {
+            this.userService.getPermissionsByUserId()
+              .subscribe(
+                (x) => this.localStorageService.setUserPermissions(x),
+                () => { }
+              )
+          }
         }
-      }
+      },
+      (_) => { this.isLoading = false; }
     )
   }
 

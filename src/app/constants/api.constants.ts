@@ -39,6 +39,7 @@ export class RoleApiConstants {
   public static readonly UPDATE_ENDPOINT = "";
   public static readonly GET_ALL_ENDPOINT = "";
   public static readonly GET_BY_ID_ENDPOINT = "";
+  public static readonly ALL_PERMISSIONS_ENDPOINT = "all-permissions";
 }
 
 export class CourseDisciplineApiConstants {
@@ -78,11 +79,23 @@ export class CurriculumApiConstants {
 }
 
 export class UserApiConstants {
-  public static readonly USER_MODULE = "user"
+  public static readonly USER_MODULE = "users"
   public static readonly CREATE_ENDPOINT = "";
   public static readonly UPDATE_ENDPOINT = "";
   public static readonly DELETE_ENDPOINT = "";
   public static readonly GET_ALL_ENDPOINT = "";
   public static readonly GET_BY_ID_ENDPOINT = "";
+  public static readonly GET_PERMISSIONS = 'permissions';
+
+}
+
+export class PersonalApiConstants {
+  public static readonly PERSONAL_MODULE = "personal"
+  public static readonly CREATE_ENDPOINT = "";
+  public static readonly UPDATE_ENDPOINT = "";
+  public static readonly DELETE_ENDPOINT = "";
+  public static readonly GET_ALL_ENDPOINT = "";
+  public static readonly GET_BY_ID_ENDPOINT = "";
+  public static readonly GET_PERMISSIONS = 'permissions';
 
 }

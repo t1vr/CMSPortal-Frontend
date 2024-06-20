@@ -7,6 +7,9 @@ import { UserDataService } from './user.data.service';
   providedIn: 'root'
 })
 export class UserService {
+  getPermissionsByUserId() {
+    return this.userDataService.getPermissionsByUserId();
+  }
 
   constructor(private userDataService: UserDataService) { }
 
@@ -22,7 +25,7 @@ export class UserService {
       })));
   }
 
-  createUser(createUserRequest: CreateUserRequest): Observable<BaseResponse<UserItem>> {
+  createUser(createUserRequest: CreateUserRequest): Observable<UserItem> {
     return this.userDataService.createUser(createUserRequest);
   }
 

@@ -1,8 +1,5 @@
 import { Injectable } from "@angular/core";
-import { LocalStorageService } from "./local.storage.service";
-import { JWTTokenService } from "./jwt.token.service";
 import { AuthService } from "./auth.service";
-import { CourseService } from "./course.service";
 import { CurrentUserService } from "./current.user.service";
 
 @Injectable({
@@ -10,14 +7,9 @@ import { CurrentUserService } from "./current.user.service";
 })
 export class PermissionService {
 
-  constructor(private localStorageService: LocalStorageService,
-    private jwtTokenService: JWTTokenService,
-    private authService: AuthService,
-    private courseService: CourseService,
+  constructor(private authService: AuthService,
     private currenUserService: CurrentUserService) {
   }
-
-
 
   hasRoles(roles: string[]) {
     if (!this.authService.isLoggedIn())
@@ -36,18 +28,35 @@ export class PermissionService {
     return roleFound;
   }
 
-  async isCurrentUserAuthorizedToEditCourse(courseRevisionId) {
-    let abc = await this.courseService.getCourseById(courseRevisionId).toPromise();
-    console.log(abc);
-    // await this.courseService.getCourseById(courseRevisionId).subscribe((x) => {
-    //   if (x.data) {
-    //     let currentUser = this.currenUserService.getCurrentUser();
+  hasPermissions(permissions: string[]) {
+    if (!this.authService.isLoggedIn())
+      return false;
 
-    //     if (currentUser.id === x.data.authorId)
-    //       return true;
-    //     return false;
-    //   }
-    // });
+    let userPermissions = this.currenUserService.getPermissions();
 
+    let permissionFound = false;
+
+    for (const permission of permissions) {
+      if (userPermissions.includes(permission)) {
+        permissionFound = true;
+      }
+    }
+
+    return permissionFound;
   }
+
+  // async isCurrentUserAuthorizedToEditCourse(courseRevisionId) {
+  //   let abc = await this.courseService.getCourseById(courseRevisionId).toPromise();
+  //   console.log(abc);
+  //   // await this.courseService.getCourseById(courseRevisionId).subscribe((x) => {
+  //   //   if (x.data) {
+  //   //     let currentUser = this.currenUserService.getCurrentUser();
+
+  //   //     if (currentUser.id === x.data.authorId)
+  //   //       return true;
+  //   //     return false;
+  //   //   }
+  //   // });
+
+  // }
 }

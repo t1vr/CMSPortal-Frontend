@@ -66,26 +66,30 @@ export class FacultyUpsertComponent implements OnInit {
     if (!this.faculty) {
       let facultyCreateRequest = this.facultyForm.value as CreateUserRequest;
 
-      this.userService.createUser(facultyCreateRequest).subscribe(x => {
-        if (x.data) {
-          this.isLoading = false;
-          this.closeModal();
-          this.messageService.add({ severity: 'info', summary: 'Faculty created successfully', life: 3000 });
-          return;
-        }
-      })
+      this.userService.createUser(facultyCreateRequest).subscribe(
+        x => {
+          if (x) {
+            this.isLoading = false;
+            this.closeModal();
+            this.messageService.add({ severity: 'info', summary: 'Faculty created successfully', life: 3000 });
+            return;
+          }
+        },
+        () => { })
     }
     else {
       let facultyUpdateRequest = this.facultyForm.value as UpdateUserRequest;
 
-      this.userService.updateUserById(this.faculty.id, facultyUpdateRequest).subscribe(x => {
-        if (x.data) {
-          this.isLoading = false;
-          this.closeModal();
-          this.messageService.add({ severity: 'info', summary: 'Faculty updated successfully', life: 3000 });
-          return;
-        }
-      })
+      this.userService.updateUserById(this.faculty.id, facultyUpdateRequest).subscribe(
+        x => {
+          if (x) {
+            this.isLoading = false;
+            this.closeModal();
+            this.messageService.add({ severity: 'info', summary: 'Faculty updated successfully', life: 3000 });
+            return;
+          }
+        },
+        () => { })
     }
 
 

@@ -28,6 +28,7 @@
                         <div class="flex flex-column md:align-items-end gap-5">
                             <div class="flex flex-row-reverse md:flex-row gap-2">
                                 <p-button
+                                    *hasPermission="['Permissions.Curriculums.View']"
                                     severity="info"
                                     [text]="true"
                                     [routerLink]="[curriculum.id]"

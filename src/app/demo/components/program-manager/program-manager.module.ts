@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { ProgramFormComponent } from '../program-form/program-form.component';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
   { path: "", component: ProgramManagerComponent }
@@ -22,9 +23,11 @@ const routes: Routes = [
     ButtonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    DynamicDialogModule
+    DynamicDialogModule,
+    SharedModule
   ],
   declarations: [ProgramFormComponent,
     ProgramManagerComponent]
 })
-export class ProgramManagerModule { }
+export class ProgramManagerModule {
+}
