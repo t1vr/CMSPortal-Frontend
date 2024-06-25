@@ -134,11 +134,11 @@ export enum CourseType {
 
 export interface CreateCourseRequest {
   title: string;
-  courseCode: string;
-  creditHour: number;
-  semesterOffered: number;
-  authorId: string;
-  description: string;
+  courseCode: string | null;
+  creditHour: number | null;
+  semesterOffered: number | null;
+  authorId: string | null;
+  description: string | null;
   curriculumId: number;
 }
 
@@ -159,8 +159,8 @@ export class CurriculumItem {
   title: string;
   description: string;
   programResponses: ProgramItem[];
-  EffectiveFromYear: Date;
-  EffectiveTillYear: Date;
+  effectiveFromYear: Date;
+  effectiveTillYear: Date;
   courseResponses: CourseItem[];
 }
 

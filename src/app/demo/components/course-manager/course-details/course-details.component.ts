@@ -51,9 +51,7 @@ export class CourseDetailsComponent implements OnInit {
     private courseDisciplineService: CourseDisciplineService,
     private currentUser: CurrentUserService,
     private permissionService: PermissionService
-  ) {
-    console.log('------>   ', this.CourseRevisionStatus);
-  }
+  ) { }
 
   ngOnInit() {
     this.courseRevisionId = this.activatedRoute.snapshot.paramMap.get('courseRevisionId') as unknown as number;
@@ -123,6 +121,7 @@ export class CourseDetailsComponent implements OnInit {
           && this.permissionService.hasPermissions(['Permissions.Courses.Update'])
           && this.course?.courseRevisionStatus !== CourseRevisionStatus.Approved
           && this.course?.courseRevisionStatus !== CourseRevisionStatus.UnderReview
+          && this.course?.courseRevisionStatus === CourseRevisionStatus.InProgress
 
         this.hasCourseSetInProgressPermission = this.permissionService.hasPermissions(['Permissions.Courses.Update'])
           && (this.course.authorId === this.currentUser.getCurrentUser()?.id || this.course.reviewerId === this.currentUser.getCurrentUser()?.id)

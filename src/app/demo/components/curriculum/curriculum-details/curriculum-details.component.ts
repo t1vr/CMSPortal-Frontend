@@ -6,7 +6,7 @@ import { CurrentUserService } from 'src/app/demo/service/current.user.service';
 import { CurriculumService } from 'src/app/demo/service/curriculum.service';
 import { UiMessageService } from 'src/app/demo/service/ui-message.service';
 import { UserService } from 'src/app/demo/service/user.service';
-import { CourseItem, CourseRevisionStatus, CurriculumItem, UserItem } from 'src/app/models/tenant.model';
+import { BaseResponse, CourseItem, CourseRevisionStatus, CreateCourseRequest, CurriculumItem, UserItem } from 'src/app/models/tenant.model';
 
 @Component({
   selector: 'app-curriculum-details',
@@ -14,6 +14,7 @@ import { CourseItem, CourseRevisionStatus, CurriculumItem, UserItem } from 'src/
   styleUrls: ['./curriculum-details.component.css'],
 })
 export class CurriculumDetailsComponent implements OnInit {
+
   curriculumId: number;
   curriculum: CurriculumItem;
   courses: CourseItem[] = [];
@@ -32,7 +33,9 @@ export class CurriculumDetailsComponent implements OnInit {
     }
   };
   CourseRevisionStatus = CourseRevisionStatus;
-
+  courseTitle: string;
+  isCourseTitleLoading = false;
+  isSaveCourseBtnVisible = false;
   constructor(private curriculumService: CurriculumService,
     private userService: UserService,
     private courseService: CourseService,
@@ -151,6 +154,37 @@ export class CurriculumDetailsComponent implements OnInit {
     if (this.appliedFilters.assignee.selectedAuthors.length === 0) {
       this.filteredCourses = this.curriculum.courseResponses;
     }
+  }
+
+  onClickCreateBtn() {
+    this.isSaveCourseBtnVisible = true;
+    this.saveCourse();
+  }
+  saveCourse() {
+    this.isCourseTitleLoading = true;
+    let request: CreateCourseRequest = {
+      title: this.courseTitle,
+      curriculumId: this.curriculumId,
+      courseCode: null,
+      creditHour: 0,
+      semesterOffered: null,
+      authorId: null,
+      description: ""
+    }
+    this.courseService.createCourse(request)
+      .subscribe(
+        (x: BaseResponse<CourseItem>) => {
+          if (x.succeeded) {
+            // this.router.navigate(['../../'], { relativeTo: this.activatedRoute });
+            this.getCurriculumById(this.curriculumId);
+            this.isCourseTitleLoading = false;
+            this.isSaveCourseBtnVisible = false;
+          }
+        },
+        () => {
+          this.isCourseTitleLoading = false;
+          this.isSaveCourseBtnVisible = false;
+        });
   }
 
   members = [

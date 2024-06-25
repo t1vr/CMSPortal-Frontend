@@ -24,7 +24,6 @@ export class CurriculumDetailsParentComponent implements OnInit {
   constructor(private curriculumService: CurriculumService,
     private userService: UserService,
     private courseService: CourseService,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private uiMessageService: UiMessageService) { }
 

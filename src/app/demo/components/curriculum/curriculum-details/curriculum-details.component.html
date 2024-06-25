@@ -38,8 +38,8 @@
                     <p-button
                         *hasPermission="['Permissions.Courses.Create']"
                         icon="pi pi-plus"
-                        label="New"
-                        [routerLink]="['../../../manage-courses/create', curriculumId]"
+                        label="Create"
+                        (click)="isSaveCourseBtnVisible = true"
                         size="small"
                         [text]="true"
                         styleClass="table-header-btn"
@@ -136,6 +136,19 @@
             </tr>
         </ng-template>
     </p-table>
+    <div class="flex justify-content-end mt-3" *ngIf="isSaveCourseBtnVisible">
+        <p-inputGroup>
+            <input type="text" pInputText [(ngModel)]="courseTitle" />
+            <button
+                type="button"
+                pButton
+                [loading]="isCourseTitleLoading"
+                label="Add"
+                class="p-button-primary"
+                (click)="onClickCreateBtn()"
+            ></button>
+        </p-inputGroup>
+    </div>
 </div>
 
 <p-dialog

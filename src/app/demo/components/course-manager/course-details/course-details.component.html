@@ -1,26 +1,26 @@
-<div class="surface-section course-list-header">
-    <p-inplace [active]="isTitleInputActive">
-        <ng-template pTemplate="display">
-            <div class="font-medium text-3xl text-900">{{ course?.title }}</div>
-        </ng-template>
-        <ng-template pTemplate="content">
-            <p-inputGroup styleClass="my-4">
-                <input type="text" pInputText [(ngModel)]="course.title" />
-                <button
-                    *ngIf="hasCourseMetaDataPermission"
-                    type="button"
-                    pButton
-                    [loading]="isLoading"
-                    label="Save"
-                    class="p-button-primary"
-                    (click)="onClickSaveBtn()"
-                ></button>
-            </p-inputGroup>
-        </ng-template>
-    </p-inplace>
-</div>
+<div class="w-full md:w-10 m-auto">
+    <div class="surface-section course-list-header">
+        <p-inplace [active]="isTitleInputActive">
+            <ng-template pTemplate="display">
+                <div class="font-medium text-3xl text-900">{{ course?.title }}</div>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <p-inputGroup styleClass="my-4">
+                    <input type="text" pInputText [(ngModel)]="course.title" />
+                    <button
+                        *ngIf="hasCourseMetaDataPermission"
+                        type="button"
+                        pButton
+                        [loading]="isLoading"
+                        label="Save"
+                        class="p-button-primary"
+                        (click)="onClickSaveBtn()"
+                    ></button>
+                </p-inputGroup>
+            </ng-template>
+        </p-inplace>
+    </div>
 
-<div class="w-10 m-auto">
     <div class="flex justify-content-between flex-column-reverse md:flex-row align-items-center">
         <div>
             <p-tag

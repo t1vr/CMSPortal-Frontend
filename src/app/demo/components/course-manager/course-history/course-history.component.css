@@ -21,3 +21,22 @@
 :host {
     height: 100%;
 }
+
+.history-item {
+    background: #fbfafd;
+    border-top: 1px #e0e0e0 solid;
+    border-bottom: 1px #e0e0e0 solid;
+    padding: 0 1rem;
+}
+
+.course-title {
+    color: #333238; /* Change the text color to blue (commonly used for links) */
+}
+.course-title:hover {
+    text-decoration: underline; /* Underline the text */
+    cursor: pointer; /* Change the cursor to pointer */
+}
+
+.course-info {
+    color: #737278;
+}

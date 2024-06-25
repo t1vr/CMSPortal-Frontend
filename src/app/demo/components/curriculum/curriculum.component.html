@@ -1,16 +1,26 @@
-<div class="surface-section curriculum-list-header">
-    <div class="flex justify-content-between">
-        <span class="font-bold text-xl">Curriculums</span>
-        <p-button
-            *hasPermission="['Permissions.Curriculums.Create']"
-            icon="pi pi-plus"
-            severity="primary"
-            label="Create"
-            [text]="true"
-            (click)="onClickCreateBtn()"
-        ></p-button>
+<div class="w-full md:w-10 m-auto">
+    <div class="font-bold text-xl mb-4">Curriculum List</div>
+
+    <div class="mb-4">
+        Below is a detailed list of our curriculum offerings for the upcoming academic year. Each
+        course is designed to meet the educational needs and interests of our students, ensuring a
+        comprehensive and enriching learning journey.
     </div>
-</div>
-<div>
-    <app-curriculum-list [curriculums]="curriculums"></app-curriculum-list>
+
+    <div class="surface-section curriculum-list-header">
+        <div class="flex justify-content-between">
+            <div></div>
+            <p-button
+                *hasPermission="['Permissions.Curriculums.Create']"
+                label="Create"
+                icon="pi pi-plus"
+                class="p-button-success mr-2"
+                size="small"
+                (click)="onClickCreateBtn()"
+            ></p-button>
+        </div>
+    </div>
+    <div class="">
+        <app-curriculum-list [curriculums]="curriculums"></app-curriculum-list>
+    </div>
 </div>

@@ -1,8 +1,8 @@
-<div>
+<div class="w-full md:w-10 m-auto">
     <div class="surface-section px-4 py-5">
         <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
             <div>
-                <div class="font-medium text-3xl text-900">
+                <div class="font-medium text-3xl text-primary text-900">
                     {{ latestCourseRevision?.title }}
                 </div>
                 <div class="flex align-items-center text-700 flex-wrap">
@@ -15,34 +15,38 @@
         </div>
     </div>
 
-    <p-timeline [value]="courseRevisions" styleClass="course-history-timeline">
-        <ng-template pTemplate="content" let-courseRevision>
+    <div
+        *ngFor="let courseRevision of courseRevisions"
+        class="content-container flex justify-content-between align-items-center flex-wrap history-item"
+    >
+        <div class="flex flex-column">
             <div
-                class="content-container flex justify-content-between align-items-center flex-wrap"
+                [routerLink]="['../../', courseRevision.id]"
+                class="course-title text-xl hover:text-primary font-bold font-medium my-2"
             >
-                <div class="flex flex-column">
-                    <p-button
-                        [label]="courseRevision.reasonForRevision"
-                        [text]="true"
-                        [link]="true"
-                        [plain]="true"
-                        [routerLink]="['../../', courseRevision.id]"
-                        size="small"
-                    ></p-button>
-                    <!-- <p-button label="Author: Tanvir Ahmed" [text]="true" size="small"></p-button> -->
-                    <div class="text-black-900 text-sm font-bold" style="padding-left: 0.562625rem">
-                        Author: {{ courseRevision.authorName }}
-                    </div>
-                </div>
-
-                <p-button
-                    label="See Changes"
-                    [text]="true"
-                    [link]="true"
-                    size="small"
-                    (click)="goToComparePage(courseRevision.id)"
-                ></p-button>
+                {{ courseRevision.title }}
             </div>
-        </ng-template>
-    </p-timeline>
+            <div></div>
+            <!-- <p-button label="Author: Tanvir Ahmed" [text]="true" size="small"></p-button> -->
+            <div class="text-sm mb-2 course-info">
+                <!-- <span class="font-bold">Author:</span> -->
+                proposed by
+                <span class="author-name font-medium hover:text-primary cursor-pointer">
+                    {{ courseRevision.authorName }}
+                </span>
+                for
+                <span class="curriculum-title font-medium hover:text-primary cursor-pointer">
+                    {{ courseRevision.reasonForRevision }}
+                </span>
+            </div>
+        </div>
+
+        <p-button
+            label="See Changes"
+            [text]="true"
+            [link]="true"
+            size="small"
+            (click)="goToComparePage(courseRevision.id)"
+        ></p-button>
+    </div>
 </div>

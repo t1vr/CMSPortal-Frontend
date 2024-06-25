@@ -32,6 +32,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { TagModule } from 'primeng/tag';
 import { SharedModule } from '../../shared/shared.module';
+import { DataViewModule } from 'primeng/dataview';
 
 const routes: Routes = [
   { path: "", component: CourseManagerComponent },
@@ -71,7 +72,8 @@ const routes: Routes = [
     InputTextModule,
     InputGroupModule,
     TagModule,
-    SharedModule
+    SharedModule,
+    DataViewModule
   ],
   declarations: [CourseManagerComponent,
     CourseUpsertComponent,
