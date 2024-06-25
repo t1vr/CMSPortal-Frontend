@@ -66,9 +66,14 @@ export class CurriculumSummaryComponent implements OnInit {
 
   getCurriculumById(curriculumId: number) {
     this.curriculumService.getCurriculumById(curriculumId).subscribe(x => {
-      if (x.data) {
+      if (x.succeeded && x.data) {
         this.curriculum = x.data;
-        this.curriculumForm.patchValue(this.curriculum)
+        console.log(x.data.effectiveFromYear, x.data.effectiveTillYear)
+        let xx = [x.data.effectiveFromYear, x.data.effectiveTillYear]
+        let programIds = [2, 3]
+        let curriculumData = { ...x.data, programIds: programIds }
+        console.log(curriculumData)
+        this.curriculumForm.patchValue(curriculumData)
       }
     })
   }

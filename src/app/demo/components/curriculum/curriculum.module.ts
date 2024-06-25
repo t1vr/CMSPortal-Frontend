@@ -36,6 +36,9 @@ import { InterdisciplinaryCoursesComponent } from './interdisciplinary-courses/i
 import { CourseReviewRequestComponent } from './course-review-request/course-review-request.component';
 import { EditorModule } from 'primeng/editor';
 import { SharedModule } from '../../shared/shared.module';
+import { PreviewCurriculumComponent } from './preview-curriculum/preview-curriculum.component';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { CurriculumSummaryPublicComponent } from './curriculum-summary-public/curriculum-summary-public.component';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -46,6 +49,7 @@ const routes: Routes = [
       { path: 'list', component: CurriculumDetailsComponent },
       { path: 'review-request', component: CourseReviewRequestComponent },
       { path: 'interdisciplinary-courses', component: InterdisciplinaryCoursesComponent },
+      { path: 'preview', component: PreviewCurriculumComponent },
       { path: 'settings', component: CurriculumSettingsComponent }
     ]
   },
@@ -81,7 +85,9 @@ const routes: Routes = [
     InplaceModule,
     InputGroupModule,
     EditorModule,
-    SharedModule
+    SharedModule,
+    TabMenuModule,
+
   ],
   declarations: [CurriculumComponent,
     CurriculumFormComponent,
@@ -92,6 +98,8 @@ const routes: Routes = [
     CurriculumSummaryComponent,
     CurriculumSettingsComponent,
     CourseReviewRequestComponent,
-    InterdisciplinaryCoursesComponent]
+    InterdisciplinaryCoursesComponent,
+    PreviewCurriculumComponent,
+    CurriculumSummaryPublicComponent]
 })
 export class CurriculumModule { }

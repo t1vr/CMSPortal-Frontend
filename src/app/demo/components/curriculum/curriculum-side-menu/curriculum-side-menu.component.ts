@@ -43,6 +43,11 @@ export class CurriculumSideMenuComponent implements OnInit {
         route: ["./interdisciplinary-courses"]
       },
       {
+        label: "Preview Curriculum",
+        icon: PrimeIcons.SITEMAP,
+        route: ["./preview"]
+      },
+      {
         label: "Settings",
         icon: "pi pi-cog",
         route: ["./settings"]

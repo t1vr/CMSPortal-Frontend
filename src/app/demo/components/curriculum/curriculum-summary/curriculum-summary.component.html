@@ -108,11 +108,13 @@
         styleClass="w-full mb-3"
     ></p-multiSelect>
 
-    <button
-        pButton
-        [disabled]="!curriculumForm.valid"
-        pRipple
-        label="Submit"
-        class="w-full"
-    ></button>
+    <div class="flex justify-content-end">
+        <button
+            pButton
+            [disabled]="!curriculumForm.valid"
+            pRipple
+            label="Submit"
+            class="w-2"
+        ></button>
+    </div>
 </form>

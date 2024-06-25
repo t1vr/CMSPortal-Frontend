@@ -1,0 +1,31 @@
+<div>
+    <div class="font-medium text-3xl text-900 mb-3">{{ curriculum?.title }}</div>
+    <!-- <div class="text-500 mb-5">
+        <span [innerHTML]="curriculum.description"></span>
+    </div> -->
+</div>
+<div class="surface-section">
+    <p-tabMenu
+        [model]="items"
+        [activeItem]="activeItem"
+        (activeItemChange)="onActiveItemChange($event)"
+    />
+</div>
+
+<div class="surface-section">
+    <ng-container *ngIf="activeItem?.label === 'Introduction'">
+        <span [innerHTML]="curriculum?.description"></span>
+    </ng-container>
+
+    <ng-container *ngIf="activeItem?.label === 'Summary'">
+        <span [innerHTML]="curriculum?.description"></span>
+    </ng-container>
+
+    <ng-container *ngIf="activeItem?.label === 'Course list'">
+        <span [innerHTML]="curriculum?.description"></span>
+    </ng-container>
+
+    <ng-container *ngIf="activeItem?.label === 'Misc'">
+        <span [innerHTML]="curriculum?.description"></span>
+    </ng-container>
+</div>
