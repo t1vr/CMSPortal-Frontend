@@ -39,6 +39,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { PreviewCurriculumComponent } from './preview-curriculum/preview-curriculum.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CurriculumSummaryPublicComponent } from './curriculum-summary-public/curriculum-summary-public.component';
+import { CurriculumCoursesPublicComponent } from './curriculum-courses-public/curriculum-courses-public.component';
 
 const routes: Routes = [
   { path: "", component: CurriculumComponent },
@@ -100,6 +101,7 @@ const routes: Routes = [
     CourseReviewRequestComponent,
     InterdisciplinaryCoursesComponent,
     PreviewCurriculumComponent,
-    CurriculumSummaryPublicComponent]
+    CurriculumSummaryPublicComponent,
+    CurriculumCoursesPublicComponent]
 })
 export class CurriculumModule { }

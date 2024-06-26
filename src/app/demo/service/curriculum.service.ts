@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, tap } from "rxjs";
-import { BaseResponse, CreateCurriculumRequest, CurriculumItem, UpdateCurriculumRequest } from "src/app/models/tenant.model";
+import { BaseResponse, CreateCurriculumRequest, CurriculumItem, UpdateCurriculumRequest, allSemesters } from "src/app/models/tenant.model";
 import { CurriculumDataService } from "./curriculum.data.service";
 
 @Injectable({
@@ -19,6 +19,8 @@ export class CurriculumService {
           if (course.reviewer)
             course.reviewerName = course.reviewer?.firstName + ' ' + course.reviewer?.lastName;
         }
+        course.semesterName = allSemesters.find(semester => semester.value === course.semesterOffered)?.label;
+
         return course;
       })));
   }

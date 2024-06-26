@@ -1,0 +1,83 @@
+<div class="surface-section">
+    <p-table
+        #dt1
+        [value]="courses"
+        selectionMode="single"
+        dataKey="code"
+        [tableStyle]="{ 'min-width': '70rem' }"
+        class="curriculum-course-table"
+        styleClass="p-datatable-gridlines"
+        [globalFilterFields]="['title']"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-between">
+                <div>
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input
+                            pInputText
+                            type="text"
+                            (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                            placeholder="Search keyword"
+                        />
+                    </span>
+                </div>
+
+                <div class="flex justify-content-between">
+                    <p-button
+                        icon="pi pi-filter-fill"
+                        label="Filters"
+                        (click)="op.toggle($event)"
+                        size="small"
+                        [text]="true"
+                        styleClass="table-header-btn"
+                    ></p-button>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="w-9rem">
+                    <i class="pi pi-align-left"></i>
+                    Course Code
+                </th>
+                <th>
+                    <i class="pi pi-align-left"></i>
+                    Title
+                </th>
+                <!-- <th>Credit Hours</th> -->
+                <th>
+                    <i class="pi pi-at"></i>
+                    Credit Hour
+                </th>
+                <th>
+                    <i class="pi pi-arrow-circle-right"></i>
+                    Semester
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-course>
+            <tr>
+                <td>
+                    {{ course.courseCode }}
+                </td>
+                <td class="text-base">
+                    <p-button
+                        [label]="course.title"
+                        [text]="true"
+                        [link]="true"
+                        [plain]="true"
+                        (click)="goToCourseDetails(course.id)"
+                    ></p-button>
+                </td>
+                <td>
+                    {{ course.creditHour }}
+                </td>
+                <td class="text-sm">
+                    {{ course.semesterName }}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

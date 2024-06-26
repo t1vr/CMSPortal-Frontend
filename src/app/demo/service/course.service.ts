@@ -37,6 +37,9 @@ export class CourseService {
       if (x.data?.reviewer) {
         x.data.reviewerName = x.data.reviewer?.firstName + ' ' + x.data.reviewer?.lastName;
       }
+      if (x.data?.courseDiscipline) {
+        x.data.courseDisciplineId = x.data.courseDiscipline.id;
+      }
       return x;
     }
     ));

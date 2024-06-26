@@ -22,7 +22,9 @@
     </ng-container>
 
     <ng-container *ngIf="activeItem?.label === 'Course list'">
-        <span [innerHTML]="curriculum?.description"></span>
+        <app-curriculum-courses-public
+            [courses]="curriculum.courseResponses"
+        ></app-curriculum-courses-public>
     </ng-container>
 
     <ng-container *ngIf="activeItem?.label === 'Misc'">
