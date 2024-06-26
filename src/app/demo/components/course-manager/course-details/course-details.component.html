@@ -169,8 +169,7 @@
                                 <ng-template pTemplate="display">
                                     <span>
                                         {{
-                                            course?.courseDisciplineResponse?.title ??
-                                                "Select disciplines"
+                                            course?.courseDiscipline?.title ?? "Select disciplines"
                                         }}
                                     </span>
                                 </ng-template>
@@ -233,27 +232,6 @@
                 </div>
             </div>
         </p-panel>
-    </div>
-    <div
-        class="flex flex-wrap justify-content-start md:justify-content-start gap-3 course-content-footer"
-    >
-        <p-button
-            (click)="onClickHistoryBtn()"
-            icon="pi pi-history"
-            label="History"
-            severity="secondary"
-            size="small"
-            [text]="true"
-        ></p-button>
-        <p-button
-            (click)="goToEditCourse(courseRevisionId)"
-            icon="pi pi-pencil"
-            label="Edit"
-            severity="info"
-            size="small"
-            [text]="true"
-            *ngIf="course?.courseRevisionStatus !== CourseRevisionStatus.Approved"
-        ></p-button>
     </div>
 </div>
 

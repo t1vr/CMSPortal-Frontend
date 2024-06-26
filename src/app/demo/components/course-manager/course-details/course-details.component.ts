@@ -6,7 +6,7 @@ import { CourseDisciplineService } from 'src/app/demo/service/course-discipline.
 import { CourseService } from 'src/app/demo/service/course.service';
 import { CurrentUserService } from 'src/app/demo/service/current.user.service';
 import { UserService } from 'src/app/demo/service/user.service';
-import { AssignReviewersForCourseRevisionRequest, BaseResponse, CourseDisciplineItem, CourseForm, CourseItem, CourseRevisionStatus, CourseType, UpdateCourseRequest, UpdateCourseRevisionStatusRequest, UserItem } from 'src/app/models/tenant.model';
+import { AssignReviewersForCourseRevisionRequest, BaseResponse, CourseDisciplineItem, CourseForm, CourseItem, CourseRevisionStatus, CourseType, UpdateCourseRequest, UpdateCourseRevisionStatusRequest, UserItem, allSemesters } from 'src/app/models/tenant.model';
 import { PermissionService } from '../../../service/permission.service';
 
 @Component({
@@ -26,22 +26,12 @@ export class CourseDetailsComponent implements OnInit {
   isLoading = false;
   isTitleInputActive = false;
   semesterName: string;
-
-  semesters: any[] = [
-    { label: '1st Year 1st Semester', value: 1 },
-    { label: '1st Year 2nd Semester', value: 2 },
-    { label: '2nd Year 1st Semester', value: 3 },
-    { label: '2nd Year 2nd Semester', value: 4 },
-    { label: '3rd Year 1st Semester', value: 5 },
-    { label: '3rd Year 2nd Semester', value: 6 },
-    { label: '4th Year 1st Semester', value: 7 },
-    { label: '4th Year 2nd Semester', value: 8 }
-  ]
+  semesters = allSemesters;
   courseType: string;
   hasCourseSetInProgressPermission: boolean;
   hasCourseSetToReviewPermission: boolean;
   hasCourseApprovePermission: boolean;
-  hasCourseMetaDataPermission: boolean;
+  hasCourseMetaDataPermission = false;
   constructor(private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
     private userService: UserService,
@@ -137,11 +127,12 @@ export class CourseDetailsComponent implements OnInit {
           && (this.course.reviewerId === this.currentUser.getCurrentUser()?.id)
           && this.course?.courseRevisionStatus === CourseRevisionStatus.UnderReview
 
-        this.hasCourseMetaDataPermission = this.hasCourseSetInProgressPermission;
+        this.hasCourseMetaDataPermission = this.hasCourseSetInProgressPermission || this.hasCourseSetToReviewPermission;
 
-        this.semesterName = this.semesters.find(semester => semester.value === x.data.semesterOffered)?.label;
+        this.semesterName = allSemesters.find(semester => semester.value === x.data.semesterOffered)?.label;
         this.courseType = CourseType[x.data.courseType];
-        this.courseForm.patchValue({ ...x.data, authorId: x.data.author.id, courseDisciplineId: x.data.courseDisciplineResponse?.id });
+        let abc = { ...x.data, authorId: x.data.author.id, courseDisciplineId: x.data.courseDiscipline?.id }
+        this.courseForm.patchValue(abc);
         this.getAllCourseDisciplines(x.data.curriculumId);
       }
     })

@@ -118,10 +118,23 @@ export interface CourseItem extends BaseAuditableResponse {
   reviewer: UserItem;
   courseRevisionStatus: CourseRevisionStatus;
   semesterOffered: number;
+  semesterName: string;
   courseCategory: CourseCategory;
-  courseDisciplineResponse: CourseDisciplineItem;
+  courseDisciplineId: number;
+  courseDiscipline: CourseDisciplineItem;
   courseType: CourseType
 }
+
+export const allSemesters: any[] = [
+  { label: '1st Year 1st Semester', value: 1 },
+  { label: '1st Year 2nd Semester', value: 2 },
+  { label: '2nd Year 1st Semester', value: 3 },
+  { label: '2nd Year 2nd Semester', value: 4 },
+  { label: '3rd Year 1st Semester', value: 5 },
+  { label: '3rd Year 2nd Semester', value: 6 },
+  { label: '4th Year 1st Semester', value: 7 },
+  { label: '4th Year 2nd Semester', value: 8 }
+]
 
 export enum CourseType {
   Theory,
